@@ -1,0 +1,52 @@
+# Project Overview Rules
+
+## Project Context
+
+This is an enterprise-level social media management web application that:
+- Integrates with Gmail accounts via Google OAuth
+- Creates social media accounts automatically when needed
+- Generates AI-powered content
+- Schedules and distributes content across multiple platforms
+- Provides analytics and reporting
+
+## Development Methodology
+
+This project uses the **BMAD (Breakthrough Method for Agile AI-Driven Development)** methodology:
+- AI agents work in iterative loops
+- Tasks are broken down into small, focused units (Ralph-Wiggum tasks)
+- Continuous integration and testing
+- Automated code review and quality checks
+
+## Key Principles
+
+1. **Always refer to PROJECT_OVERVIEW.md** for high-level requirements
+2. **Break tasks into tiny, focused units** that can be completed in one iteration
+3. **Test thoroughly** before considering any task complete
+4. **Update documentation** as you learn and build
+5. **Follow coding standards** defined in code-standards.mdc
+6. **Think ahead** to ensure code fits with current and future requirements
+
+## Architecture Overview
+
+- **Frontend**: React application
+- **Backend**: Node.js/Express RESTful API
+- **Database**: PostgreSQL
+- **Caching/Queues**: Redis
+- **Authentication**: Google OAuth 2.0
+- **Content Generation**: AI/ML Services
+- **Task Queue**: Bull (Redis-based)
+
+## Key Files
+
+- `PROJECT_OVERVIEW.md`: Product Requirements Document (PRD)
+- `AGENTS.md`: AI agent instructions and workflow
+- `docs/ARCHITECTURE.md`: Technical architecture details
+- `docs/EPICS_STORIES.md`: Development roadmap
+- `docs/TASKS.md`: Current tasks and progress
+
+## Non-Programming User Considerations
+
+- Code should be well-documented with clear comments
+- User-facing features should have intuitive interfaces
+- Error messages should be user-friendly
+- Documentation should explain concepts in plain language

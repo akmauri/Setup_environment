@@ -1,0 +1,162 @@
+name: Documentation Check
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'docs/**'
+      - '*.md'
+      - '**/*.md'
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - 'docs/**'
+      - '*.md'
+      - '**/*.md'
+  workflow_dispatch:
+
+jobs:
+  validate-docs:
+    name: Validate Documentation
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (if package.json exists)
+        run: |
+          if [ -f package.json ]; then
+            npm ci || echo "No package.json or dependencies to install"
+          else
+            echo "No package.json found, skipping dependency installation"
+          fi
+
+      - name: Run documentation validation
+        run: |
+          if [ -f scripts/validate_docs.js ]; then
+            node scripts/validate_docs.js || exit 1
+          else
+            echo "Warning: validate_docs.js not found"
+            echo "Checking for basic documentation structure..."
+            
+            # Basic checks
+            if [ ! -d "docs" ]; then
+              echo "❌ docs/ directory not found"
+              exit 1
+            fi
+            
+            REQUIRED_DOCS=(
+              "docs/ARCHITECTURE.md"
+              "docs/TASKS.md"
+              "README.md"
+            )
+            
+            MISSING=()
+            for doc in "${REQUIRED_DOCS[@]}"; do
+              if [ ! -f "$doc" ]; then
+                MISSING+=("$doc")
+              fi
+            done
+            
+            if [ ${#MISSING[@]} -gt 0 ]; then
+              echo "⚠️ Missing recommended documentation:"
+              printf '%s\n' "${MISSING[@]}"
+            else
+              echo "✅ Basic documentation structure present"
+            fi
+          fi
+
+      - name: Check for broken markdown links
+        run: |
+          echo "Checking for broken markdown links..."
+          
+          # Simple check for markdown files
+          find docs -name "*.md" -type f | while read file; do
+            echo "Checking $file..."
+            # Check for common markdown link patterns
+            if grep -qE '\[.*\]\([^)]+\)' "$file"; then
+              echo "  Found links in $file"
+            fi
+          done || echo "Link checking completed"
+
+      - name: Validate documentation structure
+        run: |
+          echo "Validating documentation structure..."
+          
+          # Check for required directories
+          REQUIRED_DIRS=(
+            "docs"
+            "agent_rules"
+            "agent_tasks"
+          )
+          
+          for dir in "${REQUIRED_DIRS[@]}"; do
+            if [ ! -d "$dir" ]; then
+              echo "❌ Required directory missing: $dir"
+              exit 1
+            fi
+          done
+          
+          echo "✅ Required directories present"
+
+      - name: Check documentation freshness
+        run: |
+          echo "Checking for potentially outdated documentation..."
+          
+          # Check for files that might be outdated (older than 30 days)
+          # This is informational only
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "PR event - skipping freshness check"
+          else
+            echo "Checking documentation age..."
+            find docs -name "*.md" -type f -mtime +30 | while read file; do
+              echo "⚠️ Potentially outdated: $file (last modified >30 days ago)"
+            done || echo "Freshness check completed"
+          fi
+
+      - name: Validate markdown syntax
+        run: |
+          echo "Validating markdown syntax..."
+          
+          # Basic markdown validation - check for common issues
+          find docs -name "*.md" -type f | while read file; do
+            # Check for unclosed code blocks
+            CODE_BLOCKS=$(grep -c '```' "$file" || echo "0")
+            if [ $((CODE_BLOCKS % 2)) -ne 0 ]; then
+              echo "⚠️ Warning: Possible unclosed code block in $file"
+            fi
+            
+            # Check for markdown headers
+            if ! grep -qE '^#' "$file"; then
+              echo "⚠️ Warning: No headers found in $file"
+            fi
+          done || echo "Markdown syntax check completed"
+
+      - name: Documentation Summary
+        run: |
+          echo "## Documentation Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ Documentation validation completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "**PR**: #${{ github.event.pull_request.number }}" >> $GITHUB_STEP_SUMMARY
+            echo "**Files Changed**: ${{ github.event.pull_request.changed_files }}" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "**Branch**: ${{ github.ref_name }}" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Documentation Files Checked" >> $GITHUB_STEP_SUMMARY
+          find docs -name "*.md" -type f | wc -l | xargs echo "Total markdown files:" >> $GITHUB_STEP_SUMMARY

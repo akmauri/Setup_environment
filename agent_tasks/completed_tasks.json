@@ -1,0 +1,6 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Archive of completed tasks with lessons learned",
+  "version": "1.0.0",
+  "completed_tasks": []
+}

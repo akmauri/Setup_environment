@@ -1,0 +1,219 @@
+# Code Standards & Best Practices
+
+## General Principles
+
+1. **Readability First**: Code should be self-documenting with clear naming
+2. **DRY (Don't Repeat Yourself)**: Avoid code duplication
+3. **SOLID Principles**: Follow object-oriented design principles
+4. **Error Handling**: Always handle errors gracefully
+5. **Documentation**: Comment complex logic and public APIs
+6. **Testing**: Write tests for all features
+7. **Security**: Follow security best practices
+8. **Performance**: Consider performance implications
+
+## Code Style
+
+### JavaScript/TypeScript
+- Use ES6+ features
+- Use `const` by default, `let` when reassignment needed, avoid `var`
+- Use arrow functions for callbacks
+- Use template literals for string interpolation
+- Use async/await over promises when possible
+- Use meaningful variable and function names
+- Functions should do one thing (Single Responsibility)
+
+### Naming Conventions
+- **Variables/Functions**: camelCase (`userName`, `getUserData`)
+- **Classes/Components**: PascalCase (`UserProfile`, `LoginForm`)
+- **Constants**: UPPER_SNAKE_CASE (`API_BASE_URL`, `MAX_RETRY_COUNT`)
+- **Files**: kebab-case for components (`user-profile.tsx`, `api-client.js`)
+- **Boolean variables**: Use `is`, `has`, `should` prefix (`isLoggedIn`, `hasPermission`)
+
+### File Organization
+```
+src/
+├── components/        # Reusable UI components
+├── pages/            # Page components
+├── services/         # API and business logic
+├── utils/            # Helper functions
+├── hooks/            # Custom React hooks
+├── types/            # TypeScript type definitions
+├── constants/        # Application constants
+├── config/           # Configuration files
+└── __tests__/        # Test files
+```
+
+### Function Guidelines
+- Keep functions small and focused (prefer < 50 lines)
+- Use pure functions when possible
+- Extract complex logic into separate functions
+- Use descriptive function names that explain intent
+- Document public APIs with JSDoc comments
+
+### Error Handling
+- Use try-catch blocks for async operations
+- Provide meaningful error messages
+- Log errors appropriately (don't log sensitive data)
+- Handle errors at the appropriate level
+- Return error objects rather than throwing when possible
+
+## React/Frontend Standards
+
+### Component Structure
+```jsx
+// 1. Imports
+import React from 'react';
+import { useState } from 'react';
+
+// 2. Type definitions (if TypeScript)
+interface Props {
+  // ...
+}
+
+// 3. Component
+const ComponentName: React.FC<Props> = ({ prop1, prop2 }) => {
+  // 4. Hooks
+  const [state, setState] = useState();
+  
+  // 5. Helper functions
+  const handleClick = () => {
+    // ...
+  };
+  
+  // 6. Effects
+  useEffect(() => {
+    // ...
+  }, []);
+  
+  // 7. Render
+  return (
+    <div>
+      {/* JSX */}
+    </div>
+  );
+};
+
+// 8. Export
+export default ComponentName;
+```
+
+### React Best Practices
+- Use functional components and hooks
+- Keep components small and focused
+- Extract reusable logic into custom hooks
+- Use PropTypes or TypeScript for type checking
+- Avoid prop drilling (use context or state management)
+- Optimize re-renders (use React.memo, useMemo, useCallback when needed)
+- Handle loading and error states
+
+## Node.js/Backend Standards
+
+### API Design
+- Use RESTful conventions
+- Use appropriate HTTP methods (GET, POST, PUT, DELETE, PATCH)
+- Return consistent response formats
+- Use proper HTTP status codes
+- Implement pagination for list endpoints
+- Validate all input
+- Handle errors consistently
+
+### Express.js Structure
+```javascript
+// Route handler example
+router.post('/users', async (req, res, next) => {
+  try {
+    // 1. Validate input
+    const { name, email } = req.body;
+    if (!name || !email) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    // 2. Business logic
+    const user = await userService.createUser({ name, email });
+    
+    // 3. Return response
+    res.status(201).json({ data: user });
+  } catch (error) {
+    next(error);
+  }
+});
+```
+
+### Database
+- Use parameterized queries (prevent SQL injection)
+- Use transactions for multi-step operations
+- Index frequently queried columns
+- Use migrations for schema changes
+- Don't store sensitive data in plain text
+
+## Testing Standards
+
+### Unit Tests
+- Test individual functions/components in isolation
+- Use descriptive test names (`should return user when valid ID provided`)
+- Follow AAA pattern (Arrange, Act, Assert)
+- Mock external dependencies
+- Test edge cases and error conditions
+
+### Integration Tests
+- Test interactions between components
+- Test API endpoints end-to-end
+- Use test database
+- Clean up test data
+
+### Test Coverage
+- Aim for 80%+ code coverage
+- Focus on critical paths
+- Don't test implementation details
+- Test behavior, not implementation
+
+## Documentation
+
+### Code Comments
+- Explain **why**, not **what**
+- Comment complex algorithms
+- Document public APIs
+- Keep comments up to date
+- Remove commented-out code
+
+### README Files
+- Include setup instructions
+- Document environment variables
+- Include usage examples
+- Document API endpoints (if applicable)
+
+## Security Best Practices
+
+- Never commit secrets or API keys
+- Use environment variables for configuration
+- Validate and sanitize all user input
+- Use HTTPS in production
+- Implement authentication and authorization
+- Use parameterized queries (prevent SQL injection)
+- Keep dependencies updated
+- Follow OWASP security guidelines
+
+## Performance Considerations
+
+- Optimize database queries (avoid N+1 queries)
+- Use caching when appropriate
+- Minimize bundle size (code splitting)
+- Lazy load components when possible
+- Optimize images and assets
+- Monitor performance metrics
+
+## Git Commit Messages
+
+Use clear, descriptive commit messages:
+```
+feat: Add user authentication endpoint
+fix: Resolve timezone issue in scheduler
+docs: Update API documentation
+refactor: Extract user validation logic
+test: Add tests for content generation service
+chore: Update dependencies
+```
+
+Format: `type: short description`
+
+Types: feat, fix, docs, style, refactor, test, chore

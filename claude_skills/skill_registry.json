@@ -1,0 +1,7 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Registry of all available Claude skills",
+  "version": "1.0.0",
+  "last_updated": "2026-01-XX",
+  "skills": []
+}

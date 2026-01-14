@@ -1,0 +1,130 @@
+# Development Workflow Rules
+
+## BMAD Iterative Process
+
+Follow this iterative workflow for all development tasks:
+
+### 1. Understand Progress & Scope
+- Review `PROJECT_OVERVIEW.md` for high-level goals
+- Check `docs/TASKS.md` for current status
+- Review `docs/ARCHITECTURE.md` for technical context
+- Understand what's been completed and what's next
+
+### 2. Pick a Task
+- Select the highest priority task from `docs/TASKS.md`
+- Ensure all dependencies are satisfied
+- Verify the task is well-defined and actionable
+- If task is too large, break it down further (Ralph-Wiggum approach)
+
+### 3. Understand Next Tasks
+- Review related tasks to understand integration points
+- Check for dependencies with other features
+- Ensure implementation fits current and future code architecture
+- Consider impact on existing functionality
+
+### 4. Implement/Test/Debug/Fix/Test Loop
+- Implement the feature according to specifications
+- Write tests (unit, integration) alongside code
+- Debug issues as they arise
+- Fix problems systematically
+- Re-test until all tests pass
+- Ensure code integrates properly with existing codebase
+- Follow best practices and coding standards
+
+### 5. Review & Integrate
+- Request code review (use `.cursor/commands/review-code.md`)
+- Make necessary adjustments based on feedback
+- Update relevant documentation
+- Mark task as complete in `docs/TASKS.md`
+- Commit code with clear, descriptive messages
+
+### 6. Iterate
+- Return to step 1
+- Pick the next logical task
+- Continue the cycle
+
+## Ralph-Wiggum Tasks (Tiny Tasks Principle)
+
+Tasks must be broken down into small, focused units:
+- ✅ **Good**: "Create React component for login form with email/password fields"
+- ❌ **Bad**: "Implement user authentication system"
+
+Each task should:
+- Be completable in a single development cycle
+- Have clear acceptance criteria
+- Be independently testable
+- Have minimal dependencies
+- Take 2-4 hours maximum to complete
+
+## Task Workflow States
+
+Tasks in `docs/TASKS.md` should be marked with status:
+- `[PENDING]`: Not yet started
+- `[IN_PROGRESS]`: Currently being worked on
+- `[REVIEW]`: Completed, awaiting review
+- `[BLOCKED]`: Cannot proceed due to dependency/issue
+- `[COMPLETED]`: Finished and integrated
+- `[DEFERRED]`: Postponed to later phase
+
+## Quality Gates
+
+Before marking any task as complete:
+1. ✅ Code implemented and follows standards
+2. ✅ Tests written and passing (unit + integration)
+3. ✅ Code review completed (if applicable)
+4. ✅ Documentation updated (code comments, docs files)
+5. ✅ No linter errors or warnings
+6. ✅ Follows code standards (see code-standards.mdc)
+7. ✅ Integrates properly with existing code
+8. ✅ No breaking changes (or properly documented)
+
+## Multi-Agent Coordination
+
+When multiple agents are working:
+1. PM Agent coordinates task assignment
+2. Developer Agent implements features
+3. QA Agent tests in parallel or sequentially
+4. Reviewer Agent reviews before integration
+5. Architect Agent provides guidance on complex decisions
+
+All agents must:
+- Update `docs/TASKS.md` with progress
+- Document blockers immediately
+- Refer to shared documentation
+- Follow established workflow
+- Communicate clearly about dependencies
+
+## Git Workflow
+
+- Create feature branches for new work
+- Commit frequently with clear messages
+- Keep commits focused (one logical change per commit)
+- Write descriptive commit messages
+- Update documentation in same commit as code changes
+- Merge to main only after review and approval
+
+## Documentation Updates
+
+Always update documentation when:
+- Adding new features
+- Changing architecture
+- Fixing bugs that reveal misunderstandings
+- Learning something new about requirements
+- Completing a task (update TASKS.md)
+
+## Error Handling
+
+- Handle errors gracefully
+- Provide user-friendly error messages
+- Log errors appropriately
+- Don't fail silently
+- Test error scenarios
+
+## Testing Requirements
+
+- Write tests for all new features
+- Maintain test coverage above 80%
+- Test both happy paths and edge cases
+- Test error conditions
+- Update tests when fixing bugs
+- Run tests before committing

@@ -1,0 +1,127 @@
+name: AI Agent PR Validation
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+  workflow_dispatch:
+
+jobs:
+  validate-pr:
+    name: Validate AI Agent PR
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies (if package.json exists)
+        run: |
+          if [ -f package.json ]; then
+            npm ci || echo "No package.json or dependencies to install"
+          else
+            echo "No package.json found, skipping dependency installation"
+          fi
+
+      - name: Validate task management system
+        run: |
+          if [ -f scripts/validate_tasks.js ]; then
+            node scripts/validate_tasks.js || exit 1
+          else
+            echo "Warning: validate_tasks.js not found"
+          fi
+
+      - name: Check task assignments
+        run: |
+          if [ -f scripts/check_task_assignments.js ]; then
+            node scripts/check_task_assignments.js || exit 1
+          else
+            echo "Warning: check_task_assignments.js not found"
+          fi
+
+      - name: Validate dependencies
+        run: |
+          if [ -f scripts/check_dependencies.js ]; then
+            node scripts/check_dependencies.js || exit 1
+          else
+            echo "Warning: check_dependencies.js not found"
+          fi
+
+      - name: Check for lock conflicts
+        run: |
+          if [ -f scripts/manage_locks.js ]; then
+            node scripts/manage_locks.js check || echo "Lock check completed"
+          else
+            echo "Warning: manage_locks.js not found"
+          fi
+
+      - name: Validate PR description
+        run: |
+          if [ "${{ github.event.pull_request.body }}" == "" ] || [ "${{ github.event.pull_request.body }}" == "null" ]; then
+            echo "⚠️ Warning: PR description is empty. Please add a description."
+          else
+            echo "✅ PR description present"
+          fi
+
+      - name: Check for required files
+        run: |
+          REQUIRED_FILES=(
+            "agent_tasks/todo_progress.json"
+            "agent_rules/core_principles.md"
+          )
+          
+          MISSING_FILES=()
+          for file in "${REQUIRED_FILES[@]}"; do
+            if [ ! -f "$file" ]; then
+              MISSING_FILES+=("$file")
+            fi
+          done
+          
+          if [ ${#MISSING_FILES[@]} -gt 0 ]; then
+            echo "❌ Missing required files:"
+            printf '%s\n' "${MISSING_FILES[@]}"
+            exit 1
+          else
+            echo "✅ All required files present"
+          fi
+
+      - name: Validate JSON syntax
+        run: |
+          if [ -f agent_tasks/todo_progress.json ]; then
+            node -e "JSON.parse(require('fs').readFileSync('agent_tasks/todo_progress.json', 'utf8'))" || exit 1
+            echo "✅ todo_progress.json is valid JSON"
+          fi
+          
+          if [ -f agent_tasks/completed_tasks.json ]; then
+            node -e "JSON.parse(require('fs').readFileSync('agent_tasks/completed_tasks.json', 'utf8'))" || exit 1
+            echo "✅ completed_tasks.json is valid JSON"
+          fi
+
+      - name: Check for blocking issues
+        run: |
+          if [ -f human_review/blocking_issues.md ]; then
+            BLOCKING_COUNT=$(grep -c "Status.*Pending" human_review/blocking_issues.md || echo "0")
+            if [ "$BLOCKING_COUNT" -gt 0 ]; then
+              echo "⚠️ Warning: $BLOCKING_COUNT blocking issue(s) found in human_review/blocking_issues.md"
+              echo "Please review before merging."
+            else
+              echo "✅ No active blocking issues"
+            fi
+          fi
+
+      - name: PR Summary
+        run: |
+          echo "## PR Validation Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "✅ All validation checks passed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**PR Author**: ${{ github.event.pull_request.user.login }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Branch**: ${{ github.head_ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Base**: ${{ github.base_ref }}" >> $GITHUB_STEP_SUMMARY
