@@ -19,6 +19,7 @@ build/
 .next/
 out/
 *.tsbuildinfo
+.turbo/
 
 # Lock files (agent coordination)
 .lock/

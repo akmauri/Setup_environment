@@ -9,8 +9,20 @@ Before starting any work, every agent MUST:
 1. **Check `agent_tasks/todo_progress.json`** - Verify task assignment and status
 2. **Verify Task Assignment** - Never work on unassigned tasks
 3. **Check Dependencies** - Ensure all dependencies are completed
-4. **Review Agent Rules** - Read relevant agent rules files
+4. **Review Agent Rules** - Read relevant agent rules files (see `.cursor/rules/agent_context.md` for required rules)
 5. **Check for Locks** - Verify no other agent is working on related tasks
+
+### Optional: Task-Specific File Creation
+
+For **iterative tasks** (analysis, extraction, review, data collection), consider creating task-specific files:
+
+1. **Context File** (`agent_tasks/context/[task_id]_context.md`) - Goal, scope, constraints
+2. **Todos File** (`agent_tasks/todos/[task_id]_todos.md`) - Trackable items with check-offs
+3. **Insights File** (`agent_tasks/insights/[task_id]_insights.md`) - Findings collected iteratively
+
+**When to use**: Tasks that process multiple items, collect insights over time, or may span memory compaction events.
+
+**See**: `agent_rules/iterative_work_pattern.md` for complete pattern and guidelines.
 
 ## Task Management Rules
 
@@ -82,14 +94,7 @@ This system integrates with the existing BMAD framework:
 
 ## Context Loading
 
-When starting work, agents should load context in this order:
-
-1. `agent_tasks/todo_progress.json` - Current task status
-2. `agent_rules/core_principles.md` - This file
-3. `agent_rules/error_handling.md` - Error protocols
-4. `agent_rules/parallel_coordination.md` - Coordination rules
-5. Task-specific documentation in `docs/`
-6. Related code files
+For detailed context loading procedures and priority order, see `.cursor/rules/agent_context.md`.
 
 ## File Organization
 
@@ -114,6 +119,7 @@ Before marking a task complete:
 5. ✅ Task status updated in `todo_progress.json`
 6. ✅ Lock file removed
 7. ✅ Communication sent if needed
+8. ✅ No loops detected (see `agent_rules/loop_guard.md`)
 
 ## Violations
 

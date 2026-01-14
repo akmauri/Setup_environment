@@ -110,12 +110,18 @@ This document defines naming conventions, directory structure, and file placemen
 - Task JSON: `agent_tasks/todo_progress.json`
 - Completed tasks: `agent_tasks/completed_tasks.json`
 - Blocked tasks: `agent_tasks/blocked_tasks.md`
+- Task context: `agent_tasks/context/[task_id]_context.md` (for iterative tasks)
+- Task todos: `agent_tasks/todos/[task_id]_todos.md` (for iterative tasks)
+- Task insights: `agent_tasks/insights/[task_id]_insights.md` (for iterative tasks)
 
 ### Agent Rules
 - Core principles: `agent_rules/core_principles.md`
 - Error handling: `agent_rules/error_handling.md`
 - Coordination: `agent_rules/parallel_coordination.md`
 - Updates: `agent_rules/update_protocol.md`
+- Autonomy: `agent_rules/autonomy_protocol.md`
+- Loop guard: `agent_rules/loop_guard.md`
+- Iterative work pattern: `agent_rules/iterative_work_pattern.md`
 
 ### Specs
 - One file per topic: `specs/[topic].md`

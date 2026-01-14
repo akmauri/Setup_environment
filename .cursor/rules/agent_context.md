@@ -1,6 +1,6 @@
 # Agent Context Guide
 
-This document defines what context each agent should load and in what order.
+This document is the **single source of truth** for context loading procedures. All agents must follow the context loading priority defined here.
 
 ## Context Loading Priority
 
@@ -16,6 +16,9 @@ When an agent starts work, it should load context in this order:
 - `agent_rules/error_handling.md` - Error handling protocol
 - `agent_rules/parallel_coordination.md` - Coordination rules
 - `agent_rules/update_protocol.md` - Rule update process
+- `agent_rules/autonomy_protocol.md` - Autonomous execution with red line checks
+- `agent_rules/loop_guard.md` - Loop detection and recovery procedures
+- `agent_rules/iterative_work_pattern.md` - Pattern for iterative tasks (if applicable)
 
 ### 3. Project Context (Required)
 - `docs/ARCHITECTURE.md` - System architecture
@@ -98,6 +101,32 @@ When using BMAD agents:
 - Update context when requirements change
 - Refresh context if working on task for extended time
 - Reload context after errors or blockers
+
+### Memory Compaction Recovery
+
+**When memory compaction occurs** (or when resuming work after a break), you MUST:
+
+1. **Check for Task-Specific Context Files**:
+   - Look for `agent_tasks/context/[task_id]_context.md`
+   - If found, load it first to restore task understanding
+   - Review goal, scope, and success criteria
+
+2. **Load Task Progress Files**:
+   - Load `agent_tasks/todos/[task_id]_todos.md` if it exists
+   - Load `agent_tasks/insights/[task_id]_insights.md` if it exists
+   - These files preserve progress across memory compaction
+
+3. **Verify Continuity**:
+   - Confirm you understand where work left off
+   - Verify no critical information was lost
+   - Review any notes or findings already collected
+
+4. **Continue from Last State**:
+   - Resume from the last unprocessed item
+   - Don't repeat work that's already been done
+   - Build on insights already collected
+
+**For iterative tasks**, see `agent_rules/iterative_work_pattern.md` for the complete pattern.
 
 ## Context Sources
 
