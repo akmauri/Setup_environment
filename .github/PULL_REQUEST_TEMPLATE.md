@@ -7,6 +7,7 @@
 ## Related Task/Story
 
 <!-- Link to related task in agent_tasks/todo_progress.json or story/epic -->
+
 - Task ID: `task-xxx`
 - Epic ID: `epic-x` (if applicable)
 - Story ID: `story-x.x` (if applicable)
@@ -36,16 +37,16 @@
 
 <!-- List the key changes in this PR -->
 
-- 
-- 
-- 
+-
+-
+-
 
 ## Files Changed
 
 <!-- List major files changed (or use "See diff" if many files) -->
 
-- 
-- 
+-
+-
 
 ## Validation
 
@@ -69,21 +70,25 @@
 - [ ] No testing required (documentation/infrastructure only)
 
 **Test Steps**:
-1. 
-2. 
-3. 
+
+1.
+2.
+3.
 
 ## Task Status Updates
 
 <!-- If this PR completes tasks, list them here -->
 
 **Tasks Completed**:
+
 - `task-xxx`: Description
 
 **Tasks Updated**:
+
 - `task-xxx`: Status change (e.g., in_progress → review)
 
 **Tasks Blocked** (if any):
+
 - `task-xxx`: Reason
 
 ## Dependencies
@@ -99,11 +104,11 @@
 <!-- If this is a breaking change, describe the impact and migration path -->
 
 **Impact**:
-- 
 
-**Migration Steps**:
-1. 
-2. 
+- **Migration Steps**:
+
+1.
+2.
 
 ## Screenshots/Demo
 
@@ -135,7 +140,8 @@
 
 ---
 
-**Note for AI Agents**: 
+**Note for AI Agents**:
+
 - Ensure `agent_tasks/todo_progress.json` is updated if tasks are completed
 - Move completed tasks to `agent_tasks/completed_tasks.json` if appropriate
 - Log any autonomous decisions in `logs/autonomy/`

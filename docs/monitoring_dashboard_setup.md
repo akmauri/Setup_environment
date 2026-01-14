@@ -9,12 +9,14 @@ This document provides instructions for setting up a monitoring dashboard to tra
 **Location**: `monitoring/dashboard.html`
 
 **Features**:
+
 - Real-time task status
 - Agent activity
 - Error tracking
 - Performance metrics
 
 **Setup**:
+
 1. Create `monitoring/` directory
 2. Copy dashboard template (see below)
 3. Open `dashboard.html` in browser
@@ -28,12 +30,14 @@ This document provides instructions for setting up a monitoring dashboard to tra
 **Location**: `apps/monitoring/` (if using monorepo)
 
 **Features**:
+
 - Real-time updates (WebSocket)
 - Interactive charts
 - Filtering and search
 - Historical data
 
 **Setup**:
+
 1. Create Next.js app in `apps/monitoring/`
 2. Implement dashboard components
 3. Connect to task JSON and logs
@@ -47,12 +51,14 @@ This document provides instructions for setting up a monitoring dashboard to tra
 **Location**: External Grafana instance
 
 **Features**:
+
 - Professional dashboards
 - Alerting
 - Historical analysis
 - Multiple data sources
 
 **Setup**:
+
 1. Set up Grafana instance
 2. Configure data sources (JSON files, logs)
 3. Create dashboards
@@ -70,96 +76,123 @@ Create `monitoring/dashboard.html`:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>AI Agent Development Dashboard</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .metric { display: inline-block; margin: 10px; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
-        .metric-value { font-size: 24px; font-weight: bold; }
-        .metric-label { font-size: 12px; color: #666; }
-        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .metric {
+        display: inline-block;
+        margin: 10px;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      .metric-value {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .metric-label {
+        font-size: 12px;
+        color: #666;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 20px;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <h1>AI Agent Development Dashboard</h1>
     <p>Last updated: <span id="lastUpdate"></span></p>
-    
+
     <div class="metrics">
-        <div class="metric">
-            <div class="metric-value" id="totalTasks">-</div>
-            <div class="metric-label">Total Tasks</div>
-        </div>
-        <div class="metric">
-            <div class="metric-value" id="pendingTasks">-</div>
-            <div class="metric-label">Pending</div>
-        </div>
-        <div class="metric">
-            <div class="metric-value" id="inProgressTasks">-</div>
-            <div class="metric-label">In Progress</div>
-        </div>
-        <div class="metric">
-            <div class="metric-value" id="completedTasks">-</div>
-            <div class="metric-label">Completed</div>
-        </div>
-        <div class="metric">
-            <div class="metric-value" id="blockedTasks">-</div>
-            <div class="metric-label">Blocked</div>
-        </div>
+      <div class="metric">
+        <div class="metric-value" id="totalTasks">-</div>
+        <div class="metric-label">Total Tasks</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="pendingTasks">-</div>
+        <div class="metric-label">Pending</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="inProgressTasks">-</div>
+        <div class="metric-label">In Progress</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="completedTasks">-</div>
+        <div class="metric-label">Completed</div>
+      </div>
+      <div class="metric">
+        <div class="metric-value" id="blockedTasks">-</div>
+        <div class="metric-label">Blocked</div>
+      </div>
     </div>
-    
+
     <h2>Recent Activity</h2>
     <table id="activityTable">
-        <thead>
-            <tr>
-                <th>Time</th>
-                <th>Agent</th>
-                <th>Task</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
+      <thead>
+        <tr>
+          <th>Time</th>
+          <th>Agent</th>
+          <th>Task</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
     </table>
-    
+
     <script>
-        // Load task data (requires local server or CORS setup)
-        async function loadDashboard() {
-            try {
-                const response = await fetch('../agent_tasks/todo_progress.json');
-                const data = await response.json();
-                
-                const tasks = data.tasks || [];
-                const statusCounts = tasks.reduce((acc, task) => {
-                    acc[task.status] = (acc[task.status] || 0) + 1;
-                    return acc;
-                }, {});
-                
-                document.getElementById('totalTasks').textContent = tasks.length;
-                document.getElementById('pendingTasks').textContent = statusCounts.pending || 0;
-                document.getElementById('inProgressTasks').textContent = statusCounts.in_progress || 0;
-                document.getElementById('completedTasks').textContent = statusCounts.completed || 0;
-                document.getElementById('blockedTasks').textContent = statusCounts.blocked || 0;
-                
-                document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
-            } catch (error) {
-                console.error('Error loading dashboard:', error);
-            }
+      // Load task data (requires local server or CORS setup)
+      async function loadDashboard() {
+        try {
+          const response = await fetch('../agent_tasks/todo_progress.json');
+          const data = await response.json();
+
+          const tasks = data.tasks || [];
+          const statusCounts = tasks.reduce((acc, task) => {
+            acc[task.status] = (acc[task.status] || 0) + 1;
+            return acc;
+          }, {});
+
+          document.getElementById('totalTasks').textContent = tasks.length;
+          document.getElementById('pendingTasks').textContent = statusCounts.pending || 0;
+          document.getElementById('inProgressTasks').textContent = statusCounts.in_progress || 0;
+          document.getElementById('completedTasks').textContent = statusCounts.completed || 0;
+          document.getElementById('blockedTasks').textContent = statusCounts.blocked || 0;
+
+          document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+        } catch (error) {
+          console.error('Error loading dashboard:', error);
         }
-        
-        // Load on page load
-        loadDashboard();
-        
-        // Auto-refresh every 30 seconds
-        setInterval(loadDashboard, 30000);
+      }
+
+      // Load on page load
+      loadDashboard();
+
+      // Auto-refresh every 30 seconds
+      setInterval(loadDashboard, 30000);
     </script>
-</body>
+  </body>
 </html>
 ```
 
 ### Setup Instructions
 
 1. **Create monitoring directory**:
+
    ```bash
    mkdir -p monitoring
    ```
@@ -167,10 +200,11 @@ Create `monitoring/dashboard.html`:
 2. **Create dashboard file**: Copy template above to `monitoring/dashboard.html`
 
 3. **Serve locally** (to avoid CORS issues):
+
    ```bash
    # Using Python
    python -m http.server 8000
-   
+
    # Or using Node.js
    npx http-server -p 8000
    ```
@@ -182,6 +216,7 @@ Create `monitoring/dashboard.html`:
 ## Metrics to Track
 
 ### Task Metrics
+
 - Total tasks
 - Tasks by status (pending, in_progress, completed, blocked)
 - Tasks by priority
@@ -190,6 +225,7 @@ Create `monitoring/dashboard.html`:
 - Tasks per agent
 
 ### Agent Metrics
+
 - Active agents
 - Agent workload
 - Agent activity (tasks completed)
@@ -197,6 +233,7 @@ Create `monitoring/dashboard.html`:
 - Agent communication
 
 ### Error Metrics
+
 - Error rate
 - Common errors
 - Error resolution time
@@ -204,6 +241,7 @@ Create `monitoring/dashboard.html`:
 - Blocked tasks
 
 ### Performance Metrics
+
 - Task completion rate
 - Average task time
 - Agent utilization
@@ -213,6 +251,7 @@ Create `monitoring/dashboard.html`:
 ## Data Sources
 
 ### Primary Sources
+
 - `agent_tasks/todo_progress.json` - Task status
 - `agent_tasks/completed_tasks.json` - Completed tasks
 - `logs/agent_activity/` - Agent activity logs
@@ -233,6 +272,7 @@ Create `scripts/generate_metrics.js` to aggregate metrics:
 ### Real-time Updates
 
 For real-time updates, consider:
+
 - WebSocket server
 - Server-Sent Events (SSE)
 - Polling with shorter intervals
@@ -240,6 +280,7 @@ For real-time updates, consider:
 ### Historical Data
 
 Store historical metrics:
+
 - Daily snapshots
 - Weekly summaries
 - Monthly reports
@@ -247,6 +288,7 @@ Store historical metrics:
 ### Alerts
 
 Set up alerts for:
+
 - High error rate
 - Many blocked tasks
 - Lock conflicts
@@ -255,6 +297,7 @@ Set up alerts for:
 ## Integration with Existing Systems
 
 If using monitoring tools (Prometheus, Grafana, etc.):
+
 - Export metrics in standard format
 - Use existing dashboards
 - Integrate with alerting systems

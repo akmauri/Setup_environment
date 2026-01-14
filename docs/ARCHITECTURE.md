@@ -1,15 +1,15 @@
-# MPCAS Fullstack Architecture Document
+# MPCAS2 Fullstack Architecture Document
 
 **Version:** 1.0  
 **Date:** January 2026  
 **Status:** Draft  
-**Project:** Multi-Platform Content Automation System (MPCAS)
+**Project:** Multi-Platform Content Automation System (MPCAS2)
 
 ---
 
 ## Introduction
 
-This document outlines the complete fullstack architecture for MPCAS, including backend systems, frontend implementation, and their integration. It serves as the single source of truth for AI-driven development, ensuring consistency across the entire technology stack.
+This document outlines the complete fullstack architecture for MPCAS2, including backend systems, frontend implementation, and their integration. It serves as the single source of truth for AI-driven development, ensuring consistency across the entire technology stack.
 
 This unified approach combines what would traditionally be separate backend and frontend architecture documents, streamlining the development process for modern fullstack applications where these concerns are increasingly intertwined.
 
@@ -35,9 +35,9 @@ This unified approach combines what would traditionally be separate backend and 
 
 ### Change Log
 
-| Date | Version | Description | Author |
-|------|---------|-------------|---------|
-| 2026-01-XX | 1.0 | Initial architecture document creation | Architect Agent |
+| Date       | Version | Description                            | Author          |
+| ---------- | ------- | -------------------------------------- | --------------- |
+| 2026-01-XX | 1.0     | Initial architecture document creation | Architect Agent |
 
 ---
 
@@ -45,13 +45,14 @@ This unified approach combines what would traditionally be separate backend and 
 
 ### Technical Summary
 
-MPCAS is built as a modern, scalable SaaS platform using a microservices architecture within a monorepo structure. The frontend is a Next.js 14+ React application with TypeScript, using the App Router for server-side rendering and client-side interactivity. The backend consists of modular Node.js/Express services with a Python-based AI service for ComfyUI integration. The system uses PostgreSQL 15+ with schema-per-tenant architecture for complete data isolation, Redis 7+ for caching and task queues, and S3-compatible storage for media assets. The architecture supports horizontal scaling across all services, with self-hosted AI infrastructure (ComfyUI, Ollama) handling 80% of AI workloads to reduce costs by 70-90% compared to cloud-only solutions. The platform integrates with 8 social media platforms via OAuth 2.0, uses n8n for workflow orchestration, and implements comprehensive monitoring, logging, and error tracking for production-grade reliability.
+MPCAS2 is built as a modern, scalable SaaS platform using a microservices architecture within a monorepo structure. The frontend is a Next.js 14+ React application with TypeScript, using the App Router for server-side rendering and client-side interactivity. The backend consists of modular Node.js/Express services with a Python-based AI service for ComfyUI integration. The system uses PostgreSQL 15+ with schema-per-tenant architecture for complete data isolation, Redis 7+ for caching and task queues, and S3-compatible storage for media assets. The architecture supports horizontal scaling across all services, with self-hosted AI infrastructure (ComfyUI, Ollama) handling 80% of AI workloads to reduce costs by 70-90% compared to cloud-only solutions. The platform integrates with 8 social media platforms via OAuth 2.0, uses n8n for workflow orchestration, and implements comprehensive monitoring, logging, and error tracking for production-grade reliability.
 
 ### Platform and Infrastructure Choice
 
 **Selected Platform:** AWS (Primary) with Multi-Cloud Strategy
 
 **Rationale:**
+
 - **AWS** provides comprehensive services for enterprise SaaS (EC2, RDS, S3, Lambda, ECS/EKS)
 - **Multi-cloud** approach: AWS for primary infrastructure, Cloudflare for CDN/DDoS protection, optional GCP for AI workloads
 - **Self-hosted GPU instances** (EC2 GPU instances or on-premise) for ComfyUI to reduce AI costs
@@ -59,6 +60,7 @@ MPCAS is built as a modern, scalable SaaS platform using a microservices archite
 - **Cloudflare CDN** for global content delivery and edge caching
 
 **Key Services:**
+
 - **Compute:** AWS ECS/EKS (Kubernetes) for containerized services, EC2 for GPU instances (ComfyUI)
 - **Database:** AWS RDS PostgreSQL 15+ (Multi-AZ for HA), ElastiCache Redis 7+
 - **Storage:** AWS S3 for media files, Cloudflare R2 as backup/alternative
@@ -70,6 +72,7 @@ MPCAS is built as a modern, scalable SaaS platform using a microservices archite
 - **CI/CD:** GitHub Actions or GitLab CI
 
 **Deployment Host and Regions:**
+
 - **Primary Region:** us-east-1 (Virginia) - Lowest latency for US users
 - **Secondary Region:** eu-west-1 (Ireland) - GDPR compliance, EU users
 - **CDN:** Cloudflare global network (200+ edge locations)
@@ -82,14 +85,16 @@ MPCAS is built as a modern, scalable SaaS platform using a microservices archite
 **Monorepo Tool:** Turborepo (recommended) or Nx
 
 **Rationale:**
+
 - Turborepo provides excellent caching and parallel execution for faster builds
 - Supports TypeScript workspaces natively
 - Easy to add new apps/packages as system grows
 - Unified dependency management and versioning
 
 **Package Organization:**
+
 ```
-mpcas/
+mpcas2/
 ├── apps/
 │   ├── web/              # Next.js frontend
 │   ├── api/              # Express API Gateway
@@ -118,30 +123,30 @@ graph TB
         WEB[Web Browser]
         MOBILE[Mobile Browser]
     end
-    
+
     subgraph "CDN & Edge"
         CF[Cloudflare CDN]
         CF --> WEB
         CF --> MOBILE
     end
-    
+
     subgraph "Load Balancer"
         ALB[AWS ALB]
         CF --> ALB
     end
-    
+
     subgraph "API Gateway"
         GATEWAY[API Gateway Service<br/>Auth, Rate Limiting, Routing]
         ALB --> GATEWAY
     end
-    
+
     subgraph "Frontend Services"
         NEXT[Next.js App<br/>SSR/SSG/CSR]
         ADMIN[Admin Dashboard<br/>Next.js]
         ALB --> NEXT
         ALB --> ADMIN
     end
-    
+
     subgraph "Backend Microservices"
         USER[User Service<br/>Node.js/Express]
         TENANT[Tenant Service<br/>Node.js/Express]
@@ -160,7 +165,7 @@ graph TB
         GATEWAY --> BILLING
         GATEWAY --> NOTIFY
     end
-    
+
     subgraph "AI Services"
         AI[AI Service<br/>Python/FastAPI]
         COMFY[ComfyUI Workers<br/>GPU Instances]
@@ -171,14 +176,14 @@ graph TB
         AI --> OPENAI[OpenAI API<br/>20% workload]
         AI --> ANTHROPIC[Anthropic API<br/>20% workload]
     end
-    
+
     subgraph "Workflow Engine"
         N8N[n8n Instance<br/>Self-hosted]
         WORKFLOW --> N8N
         N8N --> COMFY
         N8N --> PUBLISH
     end
-    
+
     subgraph "Data Layer"
         PG[(PostgreSQL 15+<br/>Schema-per-Tenant)]
         REDIS[(Redis 7+<br/>Cache & Queue)]
@@ -195,7 +200,7 @@ graph TB
         PUBLISH --> REDIS
         NOTIFY --> REDIS
     end
-    
+
     subgraph "External APIs"
         YT[YouTube API]
         IG[Instagram API]
@@ -214,7 +219,7 @@ graph TB
         PUBLISH --> PIN
         PUBLISH --> TH
     end
-    
+
     subgraph "External Services"
         STRIPE[Stripe<br/>Payments]
         SENDGRID[SendGrid<br/>Email]
@@ -223,7 +228,7 @@ graph TB
         NOTIFY --> SENDGRID
         NOTIFY --> TWILIO
     end
-    
+
     subgraph "Monitoring & Observability"
         PROM[Prometheus]
         GRAFANA[Grafana]
@@ -268,32 +273,32 @@ graph TB
 
 ## Tech Stack
 
-| Category | Technology | Version | Purpose | Rationale |
-|----------|------------|---------|---------|-----------|
-| Frontend Language | TypeScript | 5.3+ | Type-safe frontend development | Prevents runtime errors, improves DX, enables shared types with backend |
-| Frontend Framework | Next.js | 14+ (App Router) | React framework with SSR/SSG | Excellent performance, SEO, built-in routing, API routes, optimal for SaaS |
-| UI Component Library | shadcn/ui | Latest | Accessible UI components | Radix UI primitives, Tailwind CSS, fully customizable, excellent DX |
-| State Management | Zustand + React Query | 4.x / 5.x | Client state + server state | Zustand for UI state (simple, performant), React Query for server state (caching, sync) |
-| CSS Framework | Tailwind CSS | 3.4+ | Utility-first CSS | Rapid development, consistent design system, excellent performance |
-| Backend Language | TypeScript | 5.3+ | Type-safe backend development | Shared types with frontend, type safety across stack |
-| Backend Framework | Express.js | 4.18+ | Node.js web framework | Mature, flexible, large ecosystem, excellent middleware support |
-| API Style | REST API | OpenAPI 3.0 | Standard HTTP API | Simple, well-understood, excellent tooling, easy to document |
-| Database | PostgreSQL | 15+ | Primary database | ACID compliance, JSON support, excellent performance, schema-per-tenant support |
-| Cache | Redis | 7+ | Caching and queues | Fast in-memory storage, pub/sub, Bull queue support |
-| File Storage | S3-compatible (AWS S3 / Cloudflare R2) | - | Media file storage | Scalable, CDN integration, cost-effective |
-| Authentication | NextAuth.js / Passport.js | 5.x / 0.7+ | Auth framework | OAuth 2.0 support, JWT tokens, session management |
-| Frontend Testing | Vitest + React Testing Library | 1.x / 14.x | Unit and component tests | Fast, Vite-based, excellent React testing utilities |
-| Backend Testing | Jest + Supertest | 29.x / 6.x | Unit and integration tests | Mature, excellent mocking, API testing support |
-| E2E Testing | Playwright | 1.40+ | End-to-end tests | Cross-browser, reliable, excellent debugging |
-| Build Tool | Turborepo | 1.x | Monorepo build system | Fast builds, caching, parallel execution |
-| Bundler | Next.js (built-in) / Vite | - | Frontend bundling | Next.js handles bundling, Vite for admin app if separate |
-| IaC Tool | Terraform | 1.6+ | Infrastructure as Code | Declarative, provider-agnostic, excellent AWS support |
-| CI/CD | GitHub Actions | - | Continuous integration | Native GitHub integration, excellent workflow support |
-| Monitoring | Prometheus + Grafana | 2.x / 10.x | Metrics and dashboards | Industry standard, flexible, self-hosted option |
-| Logging | ELK Stack (Elasticsearch, Logstash, Kibana) | 8.x | Centralized logging | Powerful search, visualization, log aggregation |
-| Error Tracking | Sentry | Latest | Error monitoring | Real-time alerts, stack traces, performance monitoring |
-| AI Service Language | Python | 3.11+ | AI/ML service | Best ecosystem for AI (ComfyUI, Ollama, ML libraries) |
-| AI Service Framework | FastAPI | 0.104+ | Python web framework | Fast, async, automatic OpenAPI docs, excellent for AI services |
+| Category             | Technology                                  | Version          | Purpose                        | Rationale                                                                               |
+| -------------------- | ------------------------------------------- | ---------------- | ------------------------------ | --------------------------------------------------------------------------------------- |
+| Frontend Language    | TypeScript                                  | 5.3+             | Type-safe frontend development | Prevents runtime errors, improves DX, enables shared types with backend                 |
+| Frontend Framework   | Next.js                                     | 14+ (App Router) | React framework with SSR/SSG   | Excellent performance, SEO, built-in routing, API routes, optimal for SaaS              |
+| UI Component Library | shadcn/ui                                   | Latest           | Accessible UI components       | Radix UI primitives, Tailwind CSS, fully customizable, excellent DX                     |
+| State Management     | Zustand + React Query                       | 4.x / 5.x        | Client state + server state    | Zustand for UI state (simple, performant), React Query for server state (caching, sync) |
+| CSS Framework        | Tailwind CSS                                | 3.4+             | Utility-first CSS              | Rapid development, consistent design system, excellent performance                      |
+| Backend Language     | TypeScript                                  | 5.3+             | Type-safe backend development  | Shared types with frontend, type safety across stack                                    |
+| Backend Framework    | Express.js                                  | 4.18+            | Node.js web framework          | Mature, flexible, large ecosystem, excellent middleware support                         |
+| API Style            | REST API                                    | OpenAPI 3.0      | Standard HTTP API              | Simple, well-understood, excellent tooling, easy to document                            |
+| Database             | PostgreSQL                                  | 15+              | Primary database               | ACID compliance, JSON support, excellent performance, schema-per-tenant support         |
+| Cache                | Redis                                       | 7+               | Caching and queues             | Fast in-memory storage, pub/sub, Bull queue support                                     |
+| File Storage         | S3-compatible (AWS S3 / Cloudflare R2)      | -                | Media file storage             | Scalable, CDN integration, cost-effective                                               |
+| Authentication       | NextAuth.js / Passport.js                   | 5.x / 0.7+       | Auth framework                 | OAuth 2.0 support, JWT tokens, session management                                       |
+| Frontend Testing     | Vitest + React Testing Library              | 1.x / 14.x       | Unit and component tests       | Fast, Vite-based, excellent React testing utilities                                     |
+| Backend Testing      | Jest + Supertest                            | 29.x / 6.x       | Unit and integration tests     | Mature, excellent mocking, API testing support                                          |
+| E2E Testing          | Playwright                                  | 1.40+            | End-to-end tests               | Cross-browser, reliable, excellent debugging                                            |
+| Build Tool           | Turborepo                                   | 1.x              | Monorepo build system          | Fast builds, caching, parallel execution                                                |
+| Bundler              | Next.js (built-in) / Vite                   | -                | Frontend bundling              | Next.js handles bundling, Vite for admin app if separate                                |
+| IaC Tool             | Terraform                                   | 1.6+             | Infrastructure as Code         | Declarative, provider-agnostic, excellent AWS support                                   |
+| CI/CD                | GitHub Actions                              | -                | Continuous integration         | Native GitHub integration, excellent workflow support                                   |
+| Monitoring           | Prometheus + Grafana                        | 2.x / 10.x       | Metrics and dashboards         | Industry standard, flexible, self-hosted option                                         |
+| Logging              | ELK Stack (Elasticsearch, Logstash, Kibana) | 8.x              | Centralized logging            | Powerful search, visualization, log aggregation                                         |
+| Error Tracking       | Sentry                                      | Latest           | Error monitoring               | Real-time alerts, stack traces, performance monitoring                                  |
+| AI Service Language  | Python                                      | 3.11+            | AI/ML service                  | Best ecosystem for AI (ComfyUI, Ollama, ML libraries)                                   |
+| AI Service Framework | FastAPI                                     | 0.104+           | Python web framework           | Fast, async, automatic OpenAPI docs, excellent for AI services                          |
 
 ---
 
@@ -304,6 +309,7 @@ graph TB
 **Purpose:** Represents a multi-tenant organization. Each tenant has isolated schema and settings.
 
 **Key Attributes:**
+
 - `id`: UUID - Unique tenant identifier
 - `name`: string - Tenant/organization name
 - `subdomain`: string - Optional subdomain for white-label (e.g., "client1")
@@ -313,6 +319,7 @@ graph TB
 - `settings`: JSONB - Tenant-specific settings (branding, features, limits)
 
 **TypeScript Interface:**
+
 ```typescript
 interface Tenant {
   id: string;
@@ -335,6 +342,7 @@ interface Tenant {
 ```
 
 **Relationships:**
+
 - One-to-many with User (users belong to tenant)
 - One-to-many with Content (content belongs to tenant)
 - One-to-many with Workflow (workflows belong to tenant)
@@ -345,6 +353,7 @@ interface Tenant {
 **Purpose:** Represents a user account within a tenant. Supports team collaboration with roles.
 
 **Key Attributes:**
+
 - `id`: UUID - Unique user identifier
 - `tenant_id`: UUID - Foreign key to tenant
 - `email`: string - User email (unique per tenant)
@@ -358,6 +367,7 @@ interface Tenant {
 - `created_at`: timestamp - Account creation date
 
 **TypeScript Interface:**
+
 ```typescript
 interface User {
   id: string;
@@ -376,6 +386,7 @@ interface User {
 ```
 
 **Relationships:**
+
 - Many-to-one with Tenant (user belongs to tenant)
 - One-to-many with Content (user creates content)
 - One-to-many with Comment (user makes comments)
@@ -386,6 +397,7 @@ interface User {
 **Purpose:** Represents media content (videos, images, audio) stored in the system.
 
 **Key Attributes:**
+
 - `id`: UUID - Unique content identifier
 - `tenant_id`: UUID - Foreign key to tenant
 - `user_id`: UUID - Foreign key to user (creator)
@@ -401,6 +413,7 @@ interface User {
 - `created_at`: timestamp - Content creation date
 
 **TypeScript Interface:**
+
 ```typescript
 interface Content {
   id: string;
@@ -425,6 +438,7 @@ interface Content {
 ```
 
 **Relationships:**
+
 - Many-to-one with Tenant (content belongs to tenant)
 - Many-to-one with User (content created by user)
 - One-to-many with PublishJob (content can be published multiple times)
@@ -435,6 +449,7 @@ interface Content {
 **Purpose:** Represents a connected social media platform account (YouTube, Instagram, etc.).
 
 **Key Attributes:**
+
 - `id`: UUID - Unique account identifier
 - `tenant_id`: UUID - Foreign key to tenant
 - `user_id`: UUID - Foreign key to user (account owner)
@@ -450,12 +465,21 @@ interface Content {
 - `connected_at`: timestamp - Connection date
 
 **TypeScript Interface:**
+
 ```typescript
 interface SocialAccount {
   id: string;
   tenantId: string;
   userId: string;
-  platform: 'youtube' | 'instagram' | 'tiktok' | 'twitter' | 'linkedin' | 'facebook' | 'pinterest' | 'threads';
+  platform:
+    | 'youtube'
+    | 'instagram'
+    | 'tiktok'
+    | 'twitter'
+    | 'linkedin'
+    | 'facebook'
+    | 'pinterest'
+    | 'threads';
   platformAccountId: string;
   username: string;
   displayName: string;
@@ -470,6 +494,7 @@ interface SocialAccount {
 ```
 
 **Relationships:**
+
 - Many-to-one with Tenant (account belongs to tenant)
 - Many-to-one with User (account owned by user)
 - One-to-many with PublishJob (account used for publishing)
@@ -479,6 +504,7 @@ interface SocialAccount {
 **Purpose:** Represents a content generation workflow (n8n/ComfyUI workflow).
 
 **Key Attributes:**
+
 - `id`: UUID - Unique workflow identifier
 - `tenant_id`: UUID - Foreign key to tenant (null for marketplace workflows)
 - `user_id`: UUID - Foreign key to user (creator, null for marketplace)
@@ -495,6 +521,7 @@ interface SocialAccount {
 - `created_at`: timestamp - Workflow creation date
 
 **TypeScript Interface:**
+
 ```typescript
 interface Workflow {
   id: string;
@@ -516,6 +543,7 @@ interface Workflow {
 ```
 
 **Relationships:**
+
 - Many-to-one with Tenant (workflow belongs to tenant, null for marketplace)
 - Many-to-one with User (workflow created by user, null for marketplace)
 - One-to-many with WorkflowExecution (workflow executed multiple times)
@@ -525,6 +553,7 @@ interface Workflow {
 **Purpose:** Represents a scheduled or executed content publishing job to social platforms.
 
 **Key Attributes:**
+
 - `id`: UUID - Unique job identifier
 - `tenant_id`: UUID - Foreign key to tenant
 - `user_id`: UUID - Foreign key to user (publisher)
@@ -540,6 +569,7 @@ interface Workflow {
 - `platform_post_url`: string - URL to published post
 
 **TypeScript Interface:**
+
 ```typescript
 interface PublishJob {
   id: string;
@@ -547,7 +577,15 @@ interface PublishJob {
   userId: string;
   contentId: string;
   socialAccountId: string;
-  platform: 'youtube' | 'instagram' | 'tiktok' | 'twitter' | 'linkedin' | 'facebook' | 'pinterest' | 'threads';
+  platform:
+    | 'youtube'
+    | 'instagram'
+    | 'tiktok'
+    | 'twitter'
+    | 'linkedin'
+    | 'facebook'
+    | 'pinterest'
+    | 'threads';
   scheduledAt: Date;
   publishedAt: Date | null;
   status: 'scheduled' | 'processing' | 'published' | 'failed' | 'cancelled';
@@ -567,6 +605,7 @@ interface PublishJob {
 ```
 
 **Relationships:**
+
 - Many-to-one with Tenant (job belongs to tenant)
 - Many-to-one with User (job created by user)
 - Many-to-one with Content (job publishes content)
@@ -577,6 +616,7 @@ interface PublishJob {
 **Purpose:** Stores aggregated analytics data for published content across platforms.
 
 **Key Attributes:**
+
 - `id`: UUID - Unique analytics record identifier
 - `tenant_id`: UUID - Foreign key to tenant
 - `publish_job_id`: UUID - Foreign key to publish job
@@ -593,13 +633,22 @@ interface PublishJob {
 - `period`: enum - Hourly, Daily, Weekly, Monthly
 
 **TypeScript Interface:**
+
 ```typescript
 interface Analytics {
   id: string;
   tenantId: string;
   publishJobId: string;
   contentId: string;
-  platform: 'youtube' | 'instagram' | 'tiktok' | 'twitter' | 'linkedin' | 'facebook' | 'pinterest' | 'threads';
+  platform:
+    | 'youtube'
+    | 'instagram'
+    | 'tiktok'
+    | 'twitter'
+    | 'linkedin'
+    | 'facebook'
+    | 'pinterest'
+    | 'threads';
   platformPostId: string;
   views: number;
   likes: number;
@@ -614,6 +663,7 @@ interface Analytics {
 ```
 
 **Relationships:**
+
 - Many-to-one with Tenant (analytics belong to tenant)
 - Many-to-one with PublishJob (analytics for publish job)
 - Many-to-one with Content (analytics for content)
@@ -624,11 +674,11 @@ interface Analytics {
 
 ### REST API Specification
 
-**API Title:** MPCAS API  
+**API Title:** MPCAS2 API  
 **API Version:** 1.0.0  
 **API Description:** RESTful API for Multi-Platform Content Automation System
 
-**Base URL:** `https://api.mpcas.com/v1`
+**Base URL:** `https://api.mpcas2.com/v1`
 
 **Authentication:** Bearer JWT token in Authorization header
 
@@ -637,22 +687,22 @@ interface Analytics {
 ```yaml
 openapi: 3.0.0
 info:
-  title: MPCAS API
+  title: MPCAS2 API
   version: 1.0.0
   description: |
     RESTful API for Multi-Platform Content Automation System.
     All endpoints require authentication via JWT token.
     Multi-tenant architecture: tenant context determined from JWT token.
   contact:
-    name: MPCAS API Support
-    email: api@mpcas.com
+    name: MPCAS2 API Support
+    email: api@mpcas2.com
   license:
     name: Proprietary
 
 servers:
-  - url: https://api.mpcas.com/v1
+  - url: https://api.mpcas2.com/v1
     description: Production server
-  - url: https://api-staging.mpcas.com/v1
+  - url: https://api-staging.mpcas2.com/v1
     description: Staging server
   - url: http://localhost:3001/api/v1
     description: Local development server
@@ -879,7 +929,8 @@ paths:
               properties:
                 platform:
                   type: string
-                  enum: [youtube, instagram, tiktok, twitter, linkedin, facebook, pinterest, threads]
+                  enum:
+                    [youtube, instagram, tiktok, twitter, linkedin, facebook, pinterest, threads]
       responses:
         '200':
           description: OAuth URL returned
@@ -1276,6 +1327,7 @@ components:
 **Responsibility:** Central entry point for all API requests. Handles authentication, authorization, rate limiting, request validation, routing to microservices, and tenant context resolution.
 
 **Key Interfaces:**
+
 - `POST /api/v1/auth/*` - Authentication endpoints
 - `GET/POST/PUT/DELETE /api/v1/*` - All API endpoints with tenant routing
 - Internal service-to-service communication
@@ -1289,6 +1341,7 @@ components:
 **Responsibility:** User management, authentication, user profiles, team management, role-based access control.
 
 **Key Interfaces:**
+
 - User CRUD operations
 - Authentication (login, register, OAuth)
 - Team management (create teams, assign roles)
@@ -1303,6 +1356,7 @@ components:
 **Responsibility:** Multi-tenant management, schema creation/deletion, tenant settings, tenant context resolution.
 
 **Key Interfaces:**
+
 - Tenant CRUD operations
 - Schema creation/deletion (PostgreSQL)
 - Tenant settings management
@@ -1317,6 +1371,7 @@ components:
 **Responsibility:** Content CRUD operations, file upload/download, versioning, Digital Asset Management (DAM), content metadata.
 
 **Key Interfaces:**
+
 - Content CRUD (create, read, update, delete)
 - File upload (multipart/form-data)
 - File download (signed URLs)
@@ -1332,6 +1387,7 @@ components:
 **Responsibility:** Workflow management, marketplace, workflow execution orchestration, workflow scraping and curation.
 
 **Key Interfaces:**
+
 - Workflow CRUD operations
 - Marketplace browsing/searching
 - Workflow activation/deactivation
@@ -1347,6 +1403,7 @@ components:
 **Responsibility:** Platform integrations, content publishing to social platforms, scheduling, queue management, OAuth token management.
 
 **Key Interfaces:**
+
 - Publish content to platforms
 - Schedule publishing jobs
 - Manage OAuth tokens (refresh, validate)
@@ -1362,6 +1419,7 @@ components:
 **Responsibility:** Performance tracking, metrics aggregation, reporting generation, analytics data collection from platforms.
 
 **Key Interfaces:**
+
 - Analytics data collection (from platforms)
 - Metrics aggregation (views, engagement, etc.)
 - Report generation (CSV, PDF)
@@ -1377,6 +1435,7 @@ components:
 **Responsibility:** Content generation via ComfyUI, AI features (title generation, caption generation, trend detection), LLM orchestration.
 
 **Key Interfaces:**
+
 - Content generation (video, image)
 - AI feature endpoints (title, caption, trends)
 - Workflow execution (ComfyUI)
@@ -1391,6 +1450,7 @@ components:
 **Responsibility:** Subscription management, usage tracking, overage billing, payment processing (Stripe), invoicing.
 
 **Key Interfaces:**
+
 - Subscription CRUD
 - Usage tracking and aggregation
 - Overage calculation
@@ -1406,6 +1466,7 @@ components:
 **Responsibility:** Email, SMS, in-app notifications, webhooks, notification preferences.
 
 **Key Interfaces:**
+
 - Send email (SendGrid/AWS SES)
 - Send SMS (Twilio)
 - In-app notifications
@@ -1423,12 +1484,12 @@ graph TB
     subgraph "Client Layer"
         WEB[Next.js Frontend]
     end
-    
+
     subgraph "API Gateway"
         GATEWAY[API Gateway Service]
         WEB --> GATEWAY
     end
-    
+
     subgraph "Core Services"
         USER[User Service]
         TENANT[Tenant Service]
@@ -1447,13 +1508,13 @@ graph TB
         GATEWAY --> BILLING
         GATEWAY --> NOTIFY
     end
-    
+
     subgraph "AI Services"
         AI[AI Service]
         GATEWAY --> AI
         WORKFLOW --> AI
     end
-    
+
     subgraph "Data Layer"
         PG[(PostgreSQL)]
         REDIS[(Redis)]
@@ -1470,7 +1531,7 @@ graph TB
         PUBLISH --> REDIS
         NOTIFY --> REDIS
     end
-    
+
     subgraph "External Services"
         N8N[n8n]
         COMFY[ComfyUI]
@@ -1720,7 +1781,7 @@ sequenceDiagram
     Publishing Service->>Redis Queue: Queue jobs
     Publishing Service-->>API Gateway: Jobs queued
     API Gateway-->>Frontend: 202 Accepted
-    
+
     Worker->>Redis Queue: Poll for jobs
     Redis Queue-->>Worker: Publish job
     Worker->>Publishing Service: Get job details
@@ -1784,7 +1845,7 @@ sequenceDiagram
     Publishing Service-->>API Gateway: Auth URL
     API Gateway-->>Frontend: Auth URL
     Frontend-->>User: Redirect to platform
-    
+
     User->>Platform OAuth: Authorize app
     Platform OAuth-->>Frontend: OAuth callback (code)
     Frontend->>API Gateway: GET /auth/callback?code=xxx
@@ -1807,12 +1868,14 @@ sequenceDiagram
 ### Schema-Per-Tenant Architecture
 
 **Public Schema (System-Wide):**
+
 - `tenants` - Tenant metadata and settings
 - `migrations` - Database migration history
 - `shared_data` - Countries, timezones, platform metadata
 
 **Tenant Schema (Per Tenant):**
 Each tenant has isolated schema with tables:
+
 - `users` - User accounts
 - `content` - Media content
 - `social_accounts` - Connected platform accounts
@@ -1826,6 +1889,7 @@ Each tenant has isolated schema with tables:
 ### Key Tables (Tenant Schema)
 
 **Users Table:**
+
 ```sql
 CREATE TABLE users (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -1848,6 +1912,7 @@ CREATE INDEX idx_users_role ON users(tenant_id, role);
 ```
 
 **Content Table:**
+
 ```sql
 CREATE TABLE content (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -1872,6 +1937,7 @@ CREATE INDEX idx_content_created ON content(tenant_id, created_at DESC);
 ```
 
 **Publish Jobs Table:**
+
 ```sql
 CREATE TABLE publish_jobs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -1903,6 +1969,7 @@ CREATE INDEX idx_publish_jobs_content ON publish_jobs(tenant_id, content_id);
 ### Component Architecture
 
 **Component Organization:**
+
 ```
 apps/web/src/
 ├── components/
@@ -1927,6 +1994,7 @@ apps/web/src/
 ```
 
 **Component Template:**
+
 ```typescript
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
@@ -1937,7 +2005,7 @@ interface ComponentProps {
 
 export function Component({ ...props }: ComponentProps) {
   const [state, setState] = useState();
-  
+
   return (
     <div>
       {/* Component JSX */}
@@ -1949,11 +2017,13 @@ export function Component({ ...props }: ComponentProps) {
 ### State Management Architecture
 
 **State Structure:**
+
 - **Zustand Stores:** UI state (modals, sidebar, theme)
 - **React Query:** Server state (content, workflows, analytics)
 - **URL State:** Filters, pagination, search queries
 
 **State Management Patterns:**
+
 - Use React Query for all server data (caching, sync, background updates)
 - Use Zustand for global UI state (minimal, only when needed)
 - Use local state (useState) for component-specific state
@@ -1962,6 +2032,7 @@ export function Component({ ...props }: ComponentProps) {
 ### Routing Architecture
 
 **Route Organization:**
+
 ```
 app/
 ├── (auth)/
@@ -1982,6 +2053,7 @@ app/
 ```
 
 **Protected Route Pattern:**
+
 ```typescript
 // app/(dashboard)/layout.tsx
 import { redirect } from 'next/navigation';
@@ -1997,6 +2069,7 @@ export default async function DashboardLayout({ children }) {
 ### Frontend Services Layer
 
 **API Client Setup:**
+
 ```typescript
 // lib/api-client.ts
 import axios from 'axios';
@@ -2021,6 +2094,7 @@ export default apiClient;
 ```
 
 **Service Example:**
+
 ```typescript
 // services/content-service.ts
 import apiClient from '@/lib/api-client';
@@ -2031,12 +2105,12 @@ export const contentService = {
     const { data } = await apiClient.get('/content', { params });
     return data;
   },
-  
+
   async getById(id: string): Promise<Content> {
     const { data } = await apiClient.get(`/content/${id}`);
     return data;
   },
-  
+
   async create(formData: FormData): Promise<Content> {
     const { data } = await apiClient.post('/content', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -2053,6 +2127,7 @@ export const contentService = {
 ### Service Architecture
 
 **Controller/Route Organization:**
+
 ```
 apps/api/src/
 ├── routes/
@@ -2081,6 +2156,7 @@ apps/api/src/
 ```
 
 **Controller Template:**
+
 ```typescript
 // controllers/content.controller.ts
 import { Request, Response } from 'express';
@@ -2093,7 +2169,7 @@ export const contentController = {
     const content = await contentService.list(tenantId, { page, limit });
     res.json(content);
   },
-  
+
   async create(req: Request, res: Response) {
     const { tenantId } = req.tenant;
     const content = await contentService.create(tenantId, req.body);
@@ -2105,6 +2181,7 @@ export const contentController = {
 ### Database Architecture
 
 **Data Access Layer (Repository Pattern):**
+
 ```typescript
 // repositories/content.repository.ts
 import { db } from '../db';
@@ -2117,7 +2194,7 @@ export class ContentRepository {
     const result = await db.query('SELECT * FROM content WHERE ...');
     return result.rows;
   }
-  
+
   async create(tenantId: string, data: Partial<Content>): Promise<Content> {
     await db.query(`SET search_path TO tenant_${tenantId}`);
     const result = await db.query(
@@ -2132,6 +2209,7 @@ export class ContentRepository {
 ### Authentication and Authorization
 
 **Auth Flow:**
+
 ```mermaid
 sequenceDiagram
     participant Client
@@ -2151,21 +2229,18 @@ sequenceDiagram
 ```
 
 **Middleware/Guards:**
+
 ```typescript
 // middleware/auth.middleware.ts
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-export async function authMiddleware(
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export async function authMiddleware(req: Request, res: Response, next: NextFunction) {
   const token = req.headers.authorization?.replace('Bearer ', '');
   if (!token) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!);
     req.user = decoded.user;
@@ -2182,7 +2257,7 @@ export async function authMiddleware(
 ## Unified Project Structure
 
 ```
-mpcas/
+mpcas2/
 ├── .github/
 │   └── workflows/
 │       ├── ci.yaml
@@ -2255,6 +2330,7 @@ mpcas/
 ### Local Development Setup
 
 **Prerequisites:**
+
 ```bash
 # Required
 - Node.js 20+
@@ -2269,10 +2345,11 @@ mpcas/
 ```
 
 **Initial Setup:**
+
 ```bash
 # Clone repository
 git clone <repo-url>
-cd mpcas
+cd mpcas2
 
 # Install dependencies
 npm install
@@ -2292,6 +2369,7 @@ npm run dev
 ```
 
 **Development Commands:**
+
 ```bash
 # Start all services (frontend + backend)
 npm run dev
@@ -2322,7 +2400,7 @@ NEXT_PUBLIC_API_URL=http://localhost:3001/api/v1
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # Backend (.env)
-DATABASE_URL=postgresql://user:pass@localhost:5432/mpcas
+DATABASE_URL=postgresql://user:pass@localhost:5432/mpcas2
 REDIS_URL=redis://localhost:6379
 JWT_SECRET=your-secret-key
 JWT_REFRESH_SECRET=your-refresh-secret
@@ -2330,7 +2408,7 @@ JWT_REFRESH_SECRET=your-refresh-secret
 # S3 Storage
 AWS_ACCESS_KEY_ID=your-key
 AWS_SECRET_ACCESS_KEY=your-secret
-AWS_S3_BUCKET=mpcas-media
+AWS_S3_BUCKET=mpcas2-media
 AWS_REGION=us-east-1
 
 # Stripe
@@ -2358,12 +2436,14 @@ ANTHROPIC_API_KEY=sk-...
 ### Deployment Strategy
 
 **Frontend Deployment:**
+
 - **Platform:** Vercel (recommended) or AWS CloudFront + S3
 - **Build Command:** `npm run build`
 - **Output Directory:** `.next`
 - **CDN/Edge:** Vercel Edge Network or Cloudflare CDN
 
 **Backend Deployment:**
+
 - **Platform:** AWS ECS/EKS (Kubernetes)
 - **Build Command:** Docker build
 - **Deployment Method:** Containerized services, auto-scaling
@@ -2402,11 +2482,11 @@ jobs:
 
 ### Environments
 
-| Environment | Frontend URL | Backend URL | Purpose |
-|-------------|--------------|-------------|---------|
-| Development | http://localhost:3000 | http://localhost:3001 | Local development |
-| Staging | https://staging.mpcas.com | https://api-staging.mpcas.com | Pre-production testing |
-| Production | https://app.mpcas.com | https://api.mpcas.com | Live environment |
+| Environment | Frontend URL               | Backend URL                    | Purpose                |
+| ----------- | -------------------------- | ------------------------------ | ---------------------- |
+| Development | http://localhost:3000      | http://localhost:3001          | Local development      |
+| Staging     | https://staging.mpcas2.com | https://api-staging.mpcas2.com | Pre-production testing |
+| Production  | https://app.mpcas2.com     | https://api.mpcas2.com         | Live environment       |
 
 ---
 
@@ -2415,16 +2495,19 @@ jobs:
 ### Security Requirements
 
 **Frontend Security:**
+
 - CSP Headers: Strict Content Security Policy
 - XSS Prevention: React's built-in escaping, sanitize user input
 - Secure Storage: HTTP-only cookies for tokens, no localStorage for sensitive data
 
 **Backend Security:**
+
 - Input Validation: Zod schemas for all inputs
 - Rate Limiting: 100 requests/minute per user, 1000/minute per IP
 - CORS Policy: Whitelist frontend domains only
 
 **Authentication Security:**
+
 - Token Storage: HTTP-only cookies (recommended) or secure localStorage
 - Session Management: JWT with 15min expiry, refresh tokens with 30-day expiry
 - Password Policy: Min 8 chars, require uppercase, lowercase, number, special char
@@ -2432,11 +2515,13 @@ jobs:
 ### Performance Optimization
 
 **Frontend Performance:**
+
 - Bundle Size Target: <200KB initial bundle (gzipped)
 - Loading Strategy: Code splitting, lazy loading, SSR for critical pages
 - Caching Strategy: React Query caching, CDN for static assets
 
 **Backend Performance:**
+
 - Response Time Target: <200ms for 95th percentile
 - Database Optimization: Indexes on foreign keys, query optimization, connection pooling
 - Caching Strategy: Redis for frequently accessed data, 5min TTL default
@@ -2459,6 +2544,7 @@ jobs:
 ### Test Organization
 
 **Frontend Tests:**
+
 ```
 apps/web/tests/
 ├── unit/
@@ -2471,6 +2557,7 @@ apps/web/tests/
 ```
 
 **Backend Tests:**
+
 ```
 apps/api/tests/
 ├── unit/
@@ -2484,6 +2571,7 @@ apps/api/tests/
 ```
 
 **E2E Tests:**
+
 ```
 tests/e2e/
 ├── auth.spec.ts
@@ -2494,6 +2582,7 @@ tests/e2e/
 ### Test Examples
 
 **Frontend Component Test:**
+
 ```typescript
 import { render, screen } from '@testing-library/react';
 import { ContentCard } from '@/components/content/ContentCard';
@@ -2507,6 +2596,7 @@ describe('ContentCard', () => {
 ```
 
 **Backend API Test:**
+
 ```typescript
 import request from 'supertest';
 import { app } from '../src/app';
@@ -2517,7 +2607,7 @@ describe('POST /api/v1/content', () => {
       .post('/api/v1/content')
       .set('Authorization', `Bearer ${token}`)
       .send({ title: 'Test', type: 'video' });
-    
+
     expect(response.status).toBe(201);
     expect(response.body.title).toBe('Test');
   });
@@ -2540,14 +2630,14 @@ describe('POST /api/v1/content', () => {
 
 ### Naming Conventions
 
-| Element | Frontend | Backend | Example |
-|---------|----------|---------|---------|
-| Components | PascalCase | - | `UserProfile.tsx` |
-| Hooks | camelCase with 'use' | - | `useAuth.ts` |
-| API Routes | - | kebab-case | `/api/user-profile` |
-| Database Tables | - | snake_case | `user_profiles` |
-| Services | camelCase | camelCase | `contentService.ts` |
-| Types/Interfaces | PascalCase | PascalCase | `Content` |
+| Element          | Frontend             | Backend    | Example             |
+| ---------------- | -------------------- | ---------- | ------------------- |
+| Components       | PascalCase           | -          | `UserProfile.tsx`   |
+| Hooks            | camelCase with 'use' | -          | `useAuth.ts`        |
+| API Routes       | -                    | kebab-case | `/api/user-profile` |
+| Database Tables  | -                    | snake_case | `user_profiles`     |
+| Services         | camelCase            | camelCase  | `contentService.ts` |
+| Types/Interfaces | PascalCase           | PascalCase | `Content`           |
 
 ---
 
@@ -2606,19 +2696,14 @@ export function handleApiError(error: unknown) {
 
 ```typescript
 // middleware/error.middleware.ts
-export function errorHandler(
-  err: Error,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) {
+export function errorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
   const error = {
     code: err.name || 'INTERNAL_ERROR',
     message: err.message || 'Internal server error',
     timestamp: new Date().toISOString(),
     requestId: req.id,
   };
-  
+
   res.status(err.statusCode || 500).json({ error });
 }
 ```
@@ -2637,12 +2722,14 @@ export function errorHandler(
 ### Key Metrics
 
 **Frontend Metrics:**
+
 - Core Web Vitals (LCP, FID, CLS)
 - JavaScript errors
 - API response times
 - User interactions (clicks, page views)
 
 **Backend Metrics:**
+
 - Request rate (requests/second)
 - Error rate (errors/second)
 - Response time (p50, p95, p99)
@@ -2653,7 +2740,8 @@ export function errorHandler(
 
 **Document Status:** ✅ Complete  
 **Version:** 1.0  
-**Next Steps:** 
+**Next Steps:**
+
 1. Review architecture with team
 2. Set up development environment
 3. Begin Epic 1 implementation (Foundation & Core Infrastructure)

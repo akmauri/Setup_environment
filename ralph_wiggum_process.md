@@ -13,6 +13,7 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 **Goal**: Break work into the smallest possible units
 
 **Process**:
+
 1. **Analyze Requirements**: Understand what needs to be built
 2. **Identify Dependencies**: Map what depends on what
 3. **Break into Units**: Create tasks that pass the "One Sentence Without 'And'" test
@@ -20,15 +21,18 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 5. **Document Specs**: Create spec files in `specs/` directory
 
 **Output**:
+
 - Spec files in `specs/` (one per "Topic of Concern")
 - Task breakdown in `plan/IMPLEMENTATION_PLAN.md`
 - Dependency graph
 
 **Tools**:
+
 - Use `plan/PROMPT_PLANNING.md` for this phase
 - Create specs that are single, focused topics
 
 **Success Criteria**:
+
 - Each task can be described in one sentence without "and"
 - Dependencies are clearly identified
 - Complexity is estimated
@@ -39,6 +43,7 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 **Goal**: Assign tasks to agents based on specialty and load
 
 **Process**:
+
 1. **Load Task List**: Read `agent_tasks/todo_progress.json`
 2. **Identify Available Agents**: Check agent capabilities and current load
 3. **Match Tasks to Agents**: Assign based on:
@@ -51,17 +56,20 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 6. **Set Fallbacks**: Define what happens if agent fails
 
 **Output**:
+
 - Updated `agent_tasks/todo_progress.json` with assignments
 - Agent work queues
 - Timeout and fallback configurations
 
 **Rules**:
+
 - Maximum 3 agents on related modules simultaneously
 - Maximum 10 agents working total
 - Assign based on agent specialty
 - Balance workload across agents
 
 **Success Criteria**:
+
 - All tasks have assigned agents
 - Workload is balanced
 - Dependencies respected
@@ -72,6 +80,7 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 **Goal**: Execute independent units simultaneously
 
 **Process**:
+
 1. **Check Dependencies**: Agents verify dependencies are complete
 2. **Acquire Locks**: Agents acquire file locks for their work
 3. **Execute Tasks**: Agents work on assigned tasks in parallel
@@ -80,12 +89,14 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 6. **Progress Aggregation**: System aggregates progress
 
 **Coordination**:
+
 - File-based locking (`.lock/[task_id].lock`)
 - Agent communication (`agent_comms/`)
 - Status updates (`todo_progress.json`)
 - Dependency checking
 
 **Success Criteria**:
+
 - Independent tasks run simultaneously
 - Dependent tasks wait appropriately
 - No conflicts or race conditions
@@ -96,6 +107,7 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 **Goal**: Assemble completed units and validate
 
 **Process**:
+
 1. **Assemble Units**: Combine completed tasks
 2. **Run Integration Tests**: Test how units work together
 3. **Fix Integration Issues**: Resolve any conflicts or issues
@@ -103,12 +115,14 @@ The Ralph-Wiggum process is named after the principle of breaking work into "tin
 5. **Deploy or Iterate**: Deploy if complete, or iterate if needed
 
 **Output**:
+
 - Integrated system
 - Test results
 - Deployment artifacts (if ready)
 - Lessons learned
 
 **Success Criteria**:
+
 - All units integrate successfully
 - Tests pass
 - System works end-to-end
@@ -142,6 +156,7 @@ Each task must be describable in a single sentence without using "and". This ens
 **Naming**: `[topic].md` (e.g., `user-authentication.md`, `oauth-integration.md`)
 
 **Content**:
+
 - Clear description of the topic
 - Requirements
 - Acceptance criteria
@@ -149,27 +164,33 @@ Each task must be describable in a single sentence without using "and". This ens
 - Technical notes
 
 **Example**:
+
 ```markdown
 # User Authentication
 
 ## Description
+
 Implement Google OAuth 2.0 authentication for user login.
 
 ## Requirements
+
 - OAuth flow with Google
 - JWT token generation
 - Session management
 
 ## Acceptance Criteria
+
 - User can sign in with Google
 - JWT token is generated
 - Session is maintained
 
 ## Dependencies
+
 - Google OAuth credentials configured
 - Database user model exists
 
 ## Technical Notes
+
 - Use NextAuth.js for OAuth
 - Store tokens securely
 ```
@@ -221,6 +242,7 @@ done
 ```
 
 **Loop Steps**:
+
 1. Load context (specs, plan, code)
 2. Select top-priority task
 3. Implement task
@@ -230,6 +252,7 @@ done
 7. Loop
 
 **Exit Conditions**:
+
 - All tasks complete
 - Manual stop (Ctrl+C)
 - Error requiring intervention

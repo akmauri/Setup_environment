@@ -1,15 +1,15 @@
-# MPCAS UI/UX Specification
+# MPCAS2 UI/UX Specification
 
 **Version:** 1.0  
 **Date:** January 2026  
 **Status:** Draft  
-**Project:** Multi-Platform Content Automation System (MPCAS)
+**Project:** Multi-Platform Content Automation System (MPCAS2)
 
 ---
 
 ## Introduction
 
-This document defines the user experience goals, information architecture, user flows, and visual design specifications for MPCAS's user interface. It serves as the foundation for visual design and frontend development, ensuring a cohesive and user-centered experience that enables content creators, agencies, and resellers to efficiently manage multi-platform content automation.
+This document defines the user experience goals, information architecture, user flows, and visual design specifications for MPCAS2's user interface. It serves as the foundation for visual design and frontend development, ensuring a cohesive and user-centered experience that enables content creators, agencies, and resellers to efficiently manage multi-platform content automation.
 
 The specification addresses the unique challenges of managing 8 social media platforms, AI-powered content generation, workflow automation, and white-label customization while maintaining simplicity and usability for users with varying technical expertise.
 
@@ -20,6 +20,7 @@ The specification addresses the unique challenges of managing 8 social media pla
 ### Target User Personas
 
 **1. Content Creator (Primary Persona)**
+
 - **Demographics:** Age 18-45, $30K-$150K/year income, medium to high tech-savviness
 - **Goals:** Reduce manual posting time by 80%+, maintain consistent schedule, optimize content per platform, track performance, generate content ideas
 - **Pain Points:** Manual posting takes 2-3 hours per video, no unified analytics, limited AI tools, difficulty scaling
@@ -27,6 +28,7 @@ The specification addresses the unique challenges of managing 8 social media pla
 - **Usage Pattern:** Daily active use, 3-7 posts per week, manages 3-12 accounts
 
 **2. Agency Manager (Secondary Persona)**
+
 - **Demographics:** Company size 5-50 employees, manages 5-200 client accounts, $100K-$5M revenue
 - **Goals:** Scale to 100+ clients, increase profit margins, reduce operational overhead, improve client retention
 - **Pain Points:** Uses 3-5 different tools per client, manual reporting takes 5-10 hours/month, high client churn, limited scalability
@@ -34,6 +36,7 @@ The specification addresses the unique challenges of managing 8 social media pla
 - **Usage Pattern:** Heavy daily use, manages multiple clients simultaneously, needs bulk operations
 
 **3. Reseller (Tertiary Persona)**
+
 - **Demographics:** Entrepreneurs, consultants, agencies wanting to white-label
 - **Goals:** Charge $1,000-$2,000/month per client, manage 100+ sub-accounts, complete rebranding
 - **Pain Points:** No white-label solutions available, expensive existing options, complex setup
@@ -41,6 +44,7 @@ The specification addresses the unique challenges of managing 8 social media pla
 - **Usage Pattern:** Admin-focused, manages business operations, needs white-label customization
 
 **4. Team Member (Supporting Persona)**
+
 - **Demographics:** Part of agency team, various roles (Editor, Manager, Viewer)
 - **Goals:** Collaborate efficiently, maintain quality, follow brand guidelines
 - **Pain Points:** Unclear permissions, lack of collaboration tools, approval bottlenecks
@@ -78,9 +82,9 @@ The specification addresses the unique challenges of managing 8 social media pla
 
 ### Change Log
 
-| Date | Version | Description | Author |
-|------|---------|-------------|---------|
-| 2026-01-XX | 1.0 | Initial front-end specification creation | UX Expert Agent |
+| Date       | Version | Description                              | Author          |
+| ---------- | ------- | ---------------------------------------- | --------------- |
+| 2026-01-XX | 1.0     | Initial front-end specification creation | UX Expert Agent |
 
 ---
 
@@ -94,55 +98,55 @@ graph TD
     A --> A1[OAuth: Google/Microsoft/Okta]
     A --> A2[Email/Password]
     A --> A3[2FA Setup]
-    
+
     B --> B1[Overview Metrics]
     B --> B2[Recent Activity]
     B --> B3[Upcoming Posts]
     B --> B4[Quick Actions]
     B --> B5[AI Assistant]
-    
+
     B --> C[Content Library]
     C --> C1[Grid/List View]
     C --> C2[Folders]
     C --> C3[Search & Filters]
     C --> C4[Asset Details]
     C --> C5[Version History]
-    
+
     B --> D[Workflow Marketplace]
     D --> D1[Browse Workflows]
     D --> D2[Workflow Details]
     D --> D3[My Workflows]
     D --> D4[Workflow Builder]
-    
+
     B --> E[Content Calendar]
     E --> E1[Month View]
     E --> E2[Week View]
     E --> E3[Day View]
     E --> E4[Agenda View]
-    
+
     B --> F[Publishing Interface]
     F --> F1[Content Selection]
     F --> F2[Platform Selection]
     F --> F3[Metadata Per Platform]
     F --> F4[Scheduling Options]
-    
+
     B --> G[Analytics Dashboard]
     G --> G1[Cross-Platform Overview]
     G --> G2[Per-Video Analytics]
     G --> G3[A/B Test Results]
     G --> G4[Client Reports]
-    
+
     B --> H[Platform Connections]
     H --> H1[Connection Status]
     H --> H2[OAuth Flow]
     H --> H3[Account Management]
-    
+
     B --> I[Team Management]
     I --> I1[Team Members]
     I --> I2[Roles & Permissions]
     I --> I3[Activity Feed]
     I --> I4[Approval Queue]
-    
+
     B --> J[Settings]
     J --> J1[Profile]
     J --> J2[Billing & Subscription]
@@ -150,13 +154,13 @@ graph TD
     J --> J4[White Label Branding]
     J --> J5[API Keys]
     J --> J6[Integrations]
-    
+
     B --> K[Client Portals - Agencies]
     K --> K1[Client Dashboard]
     K --> K2[Client Content Library]
     K --> K3[Client Analytics]
     K --> K4[Client Requests]
-    
+
     B --> L[Admin Dashboard - System]
     L --> L1[User Management]
     L --> L2[Workflow Curation]
@@ -168,6 +172,7 @@ graph TD
 ### Navigation Structure
 
 **Primary Navigation (Desktop):**
+
 - **Horizontal Top Bar:** Logo, Primary Nav Items (Dashboard, Content, Workflows, Calendar, Analytics, Team, Settings), User Avatar Menu, Notifications, AI Assistant Icon
 - **Primary Nav Items:**
   - Dashboard (home icon)
@@ -179,16 +184,19 @@ graph TD
   - Settings (gear icon) - Profile, Billing, Preferences
 
 **Secondary Navigation (Contextual):**
+
 - **Left Sidebar (when applicable):** Context-specific navigation (e.g., Content Library: Folders, Tags, Filters; Analytics: Overview, Per-Video, A/B Tests)
 - **Breadcrumbs:** Show current location and parent sections for deep navigation
 - **Tabs:** Used within major sections (e.g., Analytics: Overview | Per-Video | A/B Tests | Reports)
 
 **Mobile Navigation:**
+
 - **Bottom Navigation Bar:** 5 primary items (Dashboard, Content, Calendar, Analytics, More)
 - **Hamburger Menu:** Access to secondary items (Workflows, Team, Settings)
 - **Floating Action Button:** Quick publish action (prominent, always accessible)
 
 **Breadcrumb Strategy:**
+
 - Displayed for screens 2+ levels deep
 - Format: Dashboard > Content > Content Library > Video Details
 - Clickable breadcrumbs for navigation
@@ -207,6 +215,7 @@ graph TD
 **Success Criteria:** User successfully publishes content to at least one platform within 10 minutes
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Landing Page] --> B[Sign Up]
@@ -232,12 +241,13 @@ graph TD
     K --> L[Schedule/Publish]
     L --> M[Success Confirmation]
     M --> N[Dashboard]
-    
+
     D -.->|Skip Tour| E
     E -.->|Skip| G
 ```
 
 **Edge Cases & Error Handling:**
+
 - OAuth cancellation: Return to platform selection with clear message
 - OAuth failure: Show error with retry option and support link
 - File upload failure: Show error with file size/format requirements and retry
@@ -256,6 +266,7 @@ graph TD
 **Success Criteria:** Content published to all selected platforms with correct metadata and formatting per platform
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Content Selected] --> B[Publishing Interface]
@@ -294,6 +305,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - Platform connection lost: Show which platforms failed, allow retry for failed only
 - Metadata too long: Character counter with truncation warning, auto-suggest shorter version
 - Format conversion failure: Show error with manual format option
@@ -312,18 +324,19 @@ graph TD
 **Success Criteria:** Content generated successfully and available in library for publishing
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Workflow Source] --> A1{Source Type}
     A1 -->|Marketplace| B[Browse Marketplace]
     A1 -->|Create New| C[Workflow Builder]
     A1 -->|From Idea| D[Content Idea Input]
-    
+
     B --> B1[Search/Filter]
     B1 --> B2[Workflow Details]
     B2 --> B3[Activate Workflow]
     B3 --> E[Workflow Active]
-    
+
     C --> C1[Node Library]
     C1 --> C2[Drag Nodes to Canvas]
     C2 --> C3[Connect Nodes]
@@ -333,12 +346,12 @@ graph TD
     C6 -->|No| C4
     C6 -->|Yes| C7[Save Workflow]
     C7 --> E
-    
+
     D --> D1[Natural Language Input]
     D1 --> D2[AI Parses Idea]
     D2 --> D3[Workflow Generated]
     D3 --> E
-    
+
     E --> F[Select Workflow]
     F --> G[Input Parameters]
     G --> H[Submit Generation]
@@ -361,6 +374,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - Workflow activation limit reached: Show upgrade prompt with tier comparison
 - Invalid workflow: Show validation errors with node-level details
 - Generation timeout: Show progress, allow cancellation, offer to queue for later
@@ -379,17 +393,18 @@ graph TD
 **Success Criteria:** Content scheduled across desired time periods with optimal timing per platform
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Calendar View] --> B{Action}
     B -->|View Schedule| C[Calendar Display]
     B -->|Schedule Content| D[Drag from Library]
     B -->|Edit Schedule| E[Click Scheduled Item]
-    
+
     C --> C1[Month/Week/Day View]
     C1 --> C2[Filter by Platform/Account]
     C2 --> C3[Gap Detection Highlights]
-    
+
     D --> D1[Drag to Date/Time]
     D1 --> D2[Drop on Calendar]
     D2 --> D3[Quick Schedule Dialog]
@@ -398,7 +413,7 @@ graph TD
     D4 -->|No| D6[Manual Time Selection]
     D5 --> F[Schedule Confirmed]
     D6 --> F
-    
+
     E --> E1[Edit Dialog]
     E1 --> E2{Change Type}
     E2 -->|Reschedule| E3[New Date/Time]
@@ -408,7 +423,7 @@ graph TD
     E4 --> F
     E5 --> G[Confirmation]
     G --> F
-    
+
     F --> H[Calendar Updated]
     H --> I[Auto-Fill Gaps Option]
     I --> I1{Use Auto-Fill?}
@@ -422,6 +437,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - Scheduling conflict: Warn if multiple posts for same account at same time, suggest alternatives
 - Past date selection: Prevent scheduling in past, show error with current time suggestion
 - Timezone confusion: Show local time and platform timezone clearly, auto-detect user timezone
@@ -439,6 +455,7 @@ graph TD
 **Success Criteria:** User identifies top performing content, understands performance trends, and takes action to optimize
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Analytics Dashboard] --> B[Overview Metrics]
@@ -450,37 +467,38 @@ graph TD
     C -->|Compare| E[Comparison View]
     C -->|Export| F[Export Report]
     C -->|Optimize| G[Optimization Suggestions]
-    
+
     D --> D1[Per-Video Metrics]
     D1 --> D2[Performance Charts]
     D2 --> D3[Audience Retention]
     D3 --> D4[Traffic Sources]
     D4 --> H[AI Insights]
-    
+
     E --> E1[Select Content Items]
     E1 --> E2[Side-by-Side Comparison]
     E2 --> E3[Performance Differences]
     E3 --> H
-    
+
     G --> G1[AI Recommendations]
     G1 --> G2{Apply Suggestions?}
     G2 -->|Yes| G3[Apply Changes]
     G2 -->|No| G4[View Details]
     G3 --> I[Content Updated]
-    
+
     H --> H1[Performance Insights]
     H1 --> H2{Take Action?}
     H2 -->|Optimize| G
     H2 -->|Create Similar| J[Content Creation]
     H2 -->|A/B Test| K[A/B Test Setup]
     H2 -->|Export| F
-    
+
     F --> F1[Format Selection]
     F1 --> F2[CSV/PDF Export]
     F2 --> L[Download Complete]
 ```
 
 **Edge Cases & Error Handling:**
+
 - Data not available: Show "Data collection in progress" with estimated availability time
 - Platform API errors: Show which platforms have missing data, retry option
 - Export failure: Show error with retry, offer alternative format
@@ -498,12 +516,13 @@ graph TD
 **Success Criteria:** Content reviewed, feedback provided, and approved/rejected with clear communication
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Content Created] --> B{Requires Approval?}
     B -->|Yes| C[Submit for Approval]
     B -->|No| D[Publish Directly]
-    
+
     C --> E[Approval Queue]
     E --> F[Manager/Admin Reviews]
     F --> F1[View Content]
@@ -512,24 +531,24 @@ graph TD
     G -->|Approve| H[Content Approved]
     G -->|Reject| I[Rejection with Reason]
     G -->|Request Changes| J[Change Request]
-    
+
     H --> K[Auto-Publish or Queue]
-    
+
     I --> L[Creator Notified]
     L --> M{Action}
     M -->|Edit & Resubmit| N[Edit Content]
     M -->|Archive| O[Move to Archive]
     N --> C
-    
+
     J --> P[Change Comments]
     P --> L
     L --> N
-    
+
     Q[Team Activity] --> Q1[Activity Feed]
     Q1 --> Q2[See Team Actions]
     Q2 --> Q3[@Mention Team Members]
     Q3 --> R[Notifications Sent]
-    
+
     S[Content Commenting] --> S1[Add Comment]
     S1 --> S2[@Mention User]
     S2 --> S3[Thread Discussion]
@@ -537,6 +556,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - Approval timeout: Auto-approve after X hours with notification to approver
 - Multiple approvers: Show approval status from each, require all or any (configurable)
 - Comment conflicts: Handle simultaneous comments gracefully, show all comments
@@ -554,6 +574,7 @@ graph TD
 **Success Criteria:** Workflow reviewed, tested, and approved/rejected with appropriate categorization
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Admin Dashboard] --> B[Workflow Curation]
@@ -585,6 +606,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - Workflow test failure: Show error details, allow retry, option to reject or request fixes
 - Invalid workflow JSON: Show validation errors, highlight problematic sections
 - Duplicate detection: Show similarity score, allow admin to confirm merge or keep separate
@@ -602,6 +624,7 @@ graph TD
 **Success Criteria:** User issue resolved or administrative action completed successfully
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Admin Dashboard] --> B[User Management]
@@ -636,6 +659,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - User deletion with active subscription: Warn about subscription cancellation, require confirmation
 - Bulk action failure: Show which users failed, allow retry for failed only
 - Impersonation security: Clear audit trail, require re-authentication to return
@@ -653,6 +677,7 @@ graph TD
 **Success Criteria:** Platform issue identified and resolved, or platform configuration updated
 
 **Flow Diagram:**
+
 ```mermaid
 graph TD
     A[Admin Dashboard] --> B[Platform Management]
@@ -687,6 +712,7 @@ graph TD
 ```
 
 **Edge Cases & Error Handling:**
+
 - API key rotation failure: Keep old key active, show error, allow retry
 - Platform API changes: Detect deprecation notices, show migration requirements
 - Quota upgrade unavailable: Show alternative solutions, contact platform support option
@@ -703,6 +729,7 @@ graph TD
 
 **Primary Design Tool:** Figma (recommended) or equivalent  
 **Design File Structure:**
+
 - `01_Design_System` - Component library, tokens, patterns
 - `02_Authentication` - Login, signup, OAuth flows
 - `03_Dashboard` - Main dashboard, overview, quick actions
@@ -728,6 +755,7 @@ graph TD
 **Purpose:** Provide overview of platform activity, quick access to common tasks, and key metrics at a glance.
 
 **Key Elements:**
+
 - **Header:** Logo, primary navigation, user avatar menu, notifications bell, AI assistant icon
 - **Metrics Cards:** Total views (30 days), engagement rate, follower growth, upcoming posts count
 - **Quick Actions Bar:** "Publish Content", "Schedule Post", "Generate Content", "View Analytics"
@@ -738,6 +766,7 @@ graph TD
 - **AI Assistant:** Persistent chat interface (bottom-right, collapsible)
 
 **Interaction Notes:**
+
 - Clicking metric cards navigates to detailed analytics
 - Quick actions open relevant interfaces (publishing, calendar, etc.)
 - Activity feed items are clickable to view details
@@ -751,6 +780,7 @@ graph TD
 **Purpose:** Enable users to publish content to multiple platforms from a single interface with platform-specific optimization.
 
 **Key Elements:**
+
 - **Content Selection:** Drag-and-drop area or file picker, content preview, content library browser
 - **Platform Selection Grid:** 8 platform cards with checkboxes, connection status, account selection per platform
 - **Platform-Specific Previews:** Live preview showing how content appears on each selected platform
@@ -760,6 +790,7 @@ graph TD
 - **Action Bar:** "Publish Now", "Schedule", "Save as Draft" buttons with loading states
 
 **Interaction Notes:**
+
 - Platform cards show connection status and allow account selection
 - Metadata forms auto-save as user types
 - Platform previews update in real-time as metadata changes
@@ -773,6 +804,7 @@ graph TD
 **Purpose:** Visual representation of scheduled content with drag-and-drop scheduling and gap detection.
 
 **Key Elements:**
+
 - **View Selector:** Month/Week/Day/Agenda toggle buttons
 - **Calendar Grid:** Date cells with post indicators, color-coded by status
 - **Timeline (Week/Day View):** Hour-by-hour slots with scheduled posts
@@ -783,6 +815,7 @@ graph TD
 - **Filter Bar:** Filter by platform, account, status, content type
 
 **Interaction Notes:**
+
 - Drag content from library to calendar to schedule instantly
 - Drag scheduled posts to reschedule
 - Click calendar items to view/edit post details
@@ -796,6 +829,7 @@ graph TD
 **Purpose:** Browse, search, and activate pre-built workflows for content generation.
 
 **Key Elements:**
+
 - **Search Bar:** Full-text search with autocomplete
 - **Filter Sidebar:** Categories, base models, platforms, complexity, features
 - **Sort Options:** Latest, Trending, Most Downloaded, Highest Rated, Price
@@ -805,6 +839,7 @@ graph TD
 - **My Workflows Tab:** List of activated workflows with usage stats
 
 **Interaction Notes:**
+
 - Workflow cards show hover state with quick preview
 - Click card opens detail modal with full information
 - Activation checks tier limits and shows upgrade prompt if needed
@@ -818,6 +853,7 @@ graph TD
 **Purpose:** Comprehensive view of content performance across all platforms with actionable insights.
 
 **Key Elements:**
+
 - **Time Range Selector:** Preset ranges (7d, 30d, 90d) and custom range picker
 - **Overview Metrics:** Total views, total engagement, engagement rate, follower growth (large numbers with % change)
 - **Platform Comparison Chart:** Bar/line chart comparing metrics across platforms
@@ -828,6 +864,7 @@ graph TD
 - **Filter Bar:** Filter by platform, account, content type, date range
 
 **Interaction Notes:**
+
 - Charts are interactive (hover for details, click to drill down)
 - Top content items clickable to view detailed analytics
 - Insights panel has "Apply Suggestions" button for quick optimization
@@ -841,6 +878,7 @@ graph TD
 **Purpose:** Visual interface for creating and editing custom workflows using node-based system.
 
 **Key Elements:**
+
 - **Canvas:** Infinite scroll workspace with zoom controls, grid background
 - **Node Library Sidebar:** Categorized nodes (Content, Social Media, AI, Data, Logic) with search
 - **Properties Panel:** Dynamic form based on selected node showing parameters and configuration
@@ -850,6 +888,7 @@ graph TD
 - **AI Suggestions:** Context-aware node suggestions and optimization tips
 
 **Interaction Notes:**
+
 - Drag nodes from library to canvas
 - Connect nodes by dragging from output to input ports
 - Click node to select and show properties panel
@@ -864,10 +903,11 @@ graph TD
 **Purpose:** Comprehensive system administration interface for managing users, workflows, platforms, system health, and configuration.
 
 **Key Elements:**
+
 - **Header:** Admin badge indicator, system status indicator (operational/maintenance), quick actions menu
 - **System Health Overview:** Real-time metrics (active users, API health, system load, error rate, uptime)
 - **Quick Stats Cards:** Total users, active subscriptions, workflows in marketplace, platform API status, system alerts
-- **Navigation Tabs/Sidebar:** 
+- **Navigation Tabs/Sidebar:**
   - Dashboard Overview
   - User Management
   - Workflow Curation
@@ -881,6 +921,7 @@ graph TD
 - **Quick Actions:** Bulk user operations, workflow approval, platform testing, system maintenance mode
 
 **Interaction Notes:**
+
 - System health indicators show green/yellow/red status with drill-down to details
 - Quick stats cards are clickable to navigate to detailed views
 - Alert panel shows priority alerts with acknowledge/dismiss actions
@@ -895,10 +936,11 @@ graph TD
 **Purpose:** Manage all platform users, view user details, perform bulk operations, and handle user support.
 
 **Key Elements:**
+
 - **User Search & Filters:** Search by email/name, filter by tier, status (active/suspended/deleted), registration date, subscription status
 - **User Table:** Columns - Email, Name, Tier, Status, Registration Date, Last Active, Subscription Status, Actions
 - **Bulk Actions Bar:** Select all/none, bulk actions (suspend, delete, change tier, send message, export)
-- **User Detail Panel/Modal:** 
+- **User Detail Panel/Modal:**
   - User profile information
   - Subscription details and billing history
   - Usage statistics (content published, workflows used, API calls)
@@ -910,6 +952,7 @@ graph TD
 - **User Analytics:** Charts showing user growth, tier distribution, retention metrics, engagement trends
 
 **Interaction Notes:**
+
 - User table supports sorting, filtering, and pagination
 - Click user row to open detail panel/modal
 - Bulk actions show confirmation dialog with affected user count
@@ -924,6 +967,7 @@ graph TD
 **Purpose:** Review, approve, reject, and manage workflows from automated scraping and user submissions.
 
 **Key Elements:**
+
 - **Workflow Queue Tabs:** Pending Review, Approved, Rejected, Duplicates, Featured
 - **Workflow List/Grid:** Shows workflow name, source, submission date, status, category, rating
 - **Workflow Review Panel:**
@@ -939,6 +983,7 @@ graph TD
 - **Moderation Tools:** Remove inappropriate workflows, handle user reports, ban submitter
 
 **Interaction Notes:**
+
 - Workflow queue shows status badges (pending, approved, rejected)
 - Click workflow to open review panel with full details
 - Test workflow button runs workflow and shows outputs
@@ -954,6 +999,7 @@ graph TD
 **Purpose:** Monitor and manage platform API integrations, configure API keys, track quotas, and handle platform issues.
 
 **Key Elements:**
+
 - **Platform Status Dashboard:** Grid of 8 platforms showing:
   - Health status (operational, degraded, down)
   - API quota usage (percentage with visual indicator)
@@ -973,6 +1019,7 @@ graph TD
 - **Platform Updates Tracker:** Track platform API changes, deprecations, new features, migration requirements
 
 **Interaction Notes:**
+
 - Platform status cards show color-coded health (green/yellow/red)
 - Click platform card to open detail panel
 - API key rotation requires confirmation and shows new key
@@ -988,6 +1035,7 @@ graph TD
 **Purpose:** Configure system-wide settings, feature flags, security, integrations, and maintenance mode.
 
 **Key Elements:**
+
 - **Settings Navigation:** Tabs or sidebar for:
   - General Settings
   - Email Configuration
@@ -1044,6 +1092,7 @@ graph TD
   - Schedule maintenance window
 
 **Interaction Notes:**
+
 - Settings organized in logical groups with clear labels
 - Each setting shows current value and description
 - Changes require save confirmation
@@ -1060,6 +1109,7 @@ graph TD
 **Purpose:** Manage subscription billing, overage charges, credits, and revenue reporting.
 
 **Key Elements:**
+
 - **Revenue Overview:** Total revenue, MRR (Monthly Recurring Revenue), ARR (Annual Recurring Revenue), churn rate, LTV (Lifetime Value)
 - **Subscription Management:**
   - User subscription list (filter by tier, status, payment method)
@@ -1087,6 +1137,7 @@ graph TD
   - Top revenue users
 
 **Interaction Notes:**
+
 - Revenue metrics update in real-time or on refresh
 - Subscription list supports search, filter, and sort
 - Subscription actions show confirmation with impact
@@ -1107,12 +1158,14 @@ graph TD
 **Rationale:** shadcn/ui provides accessible, customizable components that can be styled to match brand. Tailwind enables rapid development and consistent spacing/colors. Radix UI ensures accessibility out of the box.
 
 **Component Architecture:**
+
 - **Base Components:** Button, Input, Select, Card, Dialog, etc. (shadcn/ui)
 - **Composite Components:** Built from base components (PublishingForm, CalendarView, WorkflowCanvas)
 - **Layout Components:** Page layouts, navigation, sidebars, headers
 - **Feature Components:** Platform-specific components (PlatformCard, AnalyticsChart, WorkflowNode)
 
 **Customization:**
+
 - Components support theming via CSS variables
 - White-label tier can override all design tokens
 - Dark mode support via theme switching
@@ -1125,6 +1178,7 @@ graph TD
 **Purpose:** Primary interactive element for user actions throughout the application.
 
 **Variants:**
+
 - Primary (solid, brand color)
 - Secondary (outline)
 - Ghost (minimal, for icon buttons)
@@ -1132,9 +1186,11 @@ graph TD
 - Link (text button, looks like link)
 
 **States:**
+
 - Default, Hover, Active, Focus, Disabled, Loading
 
 **Usage Guidelines:**
+
 - Primary variant for main actions (Publish, Save, Confirm)
 - Secondary for alternative actions
 - Ghost for toolbar actions and icon buttons
@@ -1147,14 +1203,17 @@ graph TD
 **Purpose:** Display tabular data with sorting, filtering, and pagination.
 
 **Variants:**
+
 - Default (bordered rows)
 - Compact (dense spacing for many rows)
 - Striped (alternating row colors)
 
 **States:**
+
 - Default, Hover (row highlight), Selected (checkbox selection), Loading (skeleton rows)
 
 **Usage Guidelines:**
+
 - Use for content lists, user management, analytics data
 - Always include sortable headers where applicable
 - Pagination for 20+ rows
@@ -1166,15 +1225,18 @@ graph TD
 **Purpose:** Overlay dialogs for focused tasks, confirmations, and detailed views.
 
 **Variants:**
+
 - Default (centered, medium size)
 - Large (for complex forms)
 - Full-screen (mobile, for complex workflows)
 - Alert (for confirmations, smaller)
 
 **States:**
+
 - Open, Closing (animation), Loading (with spinner overlay)
 
 **Usage Guidelines:**
+
 - Use for forms, confirmations, detail views
 - Always include close button (X) and escape key support
 - Focus trap inside modal
@@ -1186,6 +1248,7 @@ graph TD
 **Purpose:** Text input, textarea, select, date picker, file upload with validation.
 
 **Variants:**
+
 - Text (single line)
 - Textarea (multi-line)
 - Select (dropdown)
@@ -1194,9 +1257,11 @@ graph TD
 - File upload (drag-and-drop or picker)
 
 **States:**
+
 - Default, Focus, Error (with message), Disabled, Loading
 
 **Usage Guidelines:**
+
 - Always show label (not placeholder-only)
 - Error messages below input, red text
 - Character counters for limited inputs (titles, captions)
@@ -1208,15 +1273,18 @@ graph TD
 **Purpose:** Container for related content, used throughout for content items, metrics, widgets.
 
 **Variants:**
+
 - Default (with shadow)
 - Elevated (more shadow for emphasis)
 - Outlined (border only, no shadow)
 - Interactive (hover effect, clickable)
 
 **States:**
+
 - Default, Hover, Selected, Loading (skeleton)
 
 **Usage Guidelines:**
+
 - Use for content items, metric displays, feature cards
 - Interactive cards show hover state and cursor pointer
 - Consistent padding and spacing
@@ -1227,15 +1295,18 @@ graph TD
 **Purpose:** Show status, tags, counts, and categorical information.
 
 **Variants:**
+
 - Status (published, scheduled, draft, failed - color-coded)
 - Tag (hashtags, categories - removable)
 - Count (notification count, item count)
 - Tier (subscription tier badge)
 
 **States:**
+
 - Default, Hover (for interactive badges)
 
 **Usage Guidelines:**
+
 - Color coding: Green (success), Blue (info), Yellow (warning), Red (error), Gray (neutral)
 - Status badges show at-a-glance information
 - Tags support removal (X icon)
@@ -1246,15 +1317,18 @@ graph TD
 **Purpose:** Visualize data for analytics and reporting.
 
 **Variants:**
+
 - Line chart (trends over time)
 - Bar chart (comparisons)
 - Pie chart (proportions)
 - Area chart (cumulative trends)
 
 **States:**
+
 - Default, Loading (skeleton), Empty (no data message), Error (retry option)
 
 **Usage Guidelines:**
+
 - Interactive: hover for details, click to drill down
 - Responsive: scales to container
 - Accessible: screen reader descriptions, high contrast colors
@@ -1266,14 +1340,17 @@ graph TD
 **Purpose:** Enable drag-and-drop interactions for scheduling, workflow building, file uploads.
 
 **Variants:**
+
 - File upload (drag files)
 - Calendar drop (drag content to schedule)
 - Workflow canvas (drag nodes)
 
 **States:**
+
 - Default, Dragging (highlight drop zones), Over (drop zone highlight), Invalid (reject drop)
 
 **Usage Guidelines:**
+
 - Clear visual feedback during drag (ghost image, highlight drop zones)
 - Show what can be dropped where
 - Reject invalid drops with clear message
@@ -1284,14 +1361,17 @@ graph TD
 **Purpose:** Persistent AI assistant providing context-aware help and suggestions.
 
 **Variants:**
+
 - Minimized (floating button, bottom-right)
 - Expanded (chat window, bottom-right or side panel)
 - Full-screen (mobile)
 
 **States:**
+
 - Minimized, Expanded, Typing (AI response loading), Error (retry option)
 
 **Usage Guidelines:**
+
 - Always accessible from any page (floating button)
 - Context-aware: knows current page and user's content
 - Rich responses: text, links, buttons for quick actions
@@ -1307,6 +1387,7 @@ graph TD
 **Brand Guidelines:** Modern, professional SaaS platform aesthetic emphasizing clarity, efficiency, and trust. The design should feel powerful yet approachable, technical yet intuitive.
 
 **Brand Personality:**
+
 - **Professional:** Clean, organized, enterprise-ready
 - **Innovative:** Modern interactions, AI-powered features
 - **Efficient:** Streamlined workflows, minimal friction
@@ -1315,27 +1396,28 @@ graph TD
 
 ### Color Palette
 
-| Color Type | Hex Code | Usage |
-|------------|----------|-------|
-| Primary | #3498db | Primary actions, links, brand elements |
-| Primary Dark | #2980b9 | Primary hover states, emphasis |
-| Secondary | #2ecc71 | Success states, positive actions |
-| Accent | #e74c3c | Destructive actions, errors, warnings |
-| Success | #27ae60 | Success messages, confirmations |
-| Warning | #f39c12 | Warnings, cautions, important notices |
-| Error | #e74c3c | Errors, destructive actions, failures |
-| Info | #3498db | Informational messages, tooltips |
-| Neutral Light | #ecf0f1 | Backgrounds, subtle borders |
-| Neutral Medium | #bdc3c7 | Borders, dividers, disabled states |
-| Neutral Dark | #7f8c8d | Secondary text, placeholders |
-| Text Primary | #2c3e50 | Primary text, headings |
-| Text Secondary | #7f8c8d | Secondary text, captions |
-| Background | #ffffff | Main background (light mode) |
-| Background Alt | #f8f9fa | Alternate backgrounds, cards |
-| Surface | #ffffff | Card backgrounds, modals |
-| Surface Elevation | #ffffff with shadow | Elevated cards, dropdowns |
+| Color Type        | Hex Code            | Usage                                  |
+| ----------------- | ------------------- | -------------------------------------- |
+| Primary           | #3498db             | Primary actions, links, brand elements |
+| Primary Dark      | #2980b9             | Primary hover states, emphasis         |
+| Secondary         | #2ecc71             | Success states, positive actions       |
+| Accent            | #e74c3c             | Destructive actions, errors, warnings  |
+| Success           | #27ae60             | Success messages, confirmations        |
+| Warning           | #f39c12             | Warnings, cautions, important notices  |
+| Error             | #e74c3c             | Errors, destructive actions, failures  |
+| Info              | #3498db             | Informational messages, tooltips       |
+| Neutral Light     | #ecf0f1             | Backgrounds, subtle borders            |
+| Neutral Medium    | #bdc3c7             | Borders, dividers, disabled states     |
+| Neutral Dark      | #7f8c8d             | Secondary text, placeholders           |
+| Text Primary      | #2c3e50             | Primary text, headings                 |
+| Text Secondary    | #7f8c8d             | Secondary text, captions               |
+| Background        | #ffffff             | Main background (light mode)           |
+| Background Alt    | #f8f9fa             | Alternate backgrounds, cards           |
+| Surface           | #ffffff             | Card backgrounds, modals               |
+| Surface Elevation | #ffffff with shadow | Elevated cards, dropdowns              |
 
 **Dark Mode Colors:**
+
 - Background: #1a1a1a
 - Surface: #2d2d2d
 - Text Primary: #ffffff
@@ -1345,24 +1427,26 @@ graph TD
 ### Typography
 
 **Font Families:**
+
 - **Primary:** Inter (sans-serif) - Clean, modern, excellent readability
 - **Secondary:** Inter (fallback to system sans-serif)
 - **Monospace:** JetBrains Mono or Fira Code - For code, technical data, workflow nodes
 
 **Type Scale:**
 
-| Element | Size | Weight | Line Height | Usage |
-|---------|------|--------|-------------|-------|
-| H1 | 32px (2rem) | 700 (Bold) | 1.2 | Page titles, major headings |
-| H2 | 24px (1.5rem) | 600 (Semi-bold) | 1.3 | Section headings |
-| H3 | 20px (1.25rem) | 600 (Semi-bold) | 1.4 | Subsection headings |
-| H4 | 18px (1.125rem) | 600 (Semi-bold) | 1.4 | Card titles, widget headings |
-| Body Large | 16px (1rem) | 400 (Regular) | 1.5 | Primary body text |
-| Body | 14px (0.875rem) | 400 (Regular) | 1.5 | Default body text, descriptions |
-| Small | 12px (0.75rem) | 400 (Regular) | 1.4 | Captions, metadata, labels |
-| Tiny | 11px (0.6875rem) | 400 (Regular) | 1.3 | Timestamps, fine print |
+| Element    | Size             | Weight          | Line Height | Usage                           |
+| ---------- | ---------------- | --------------- | ----------- | ------------------------------- |
+| H1         | 32px (2rem)      | 700 (Bold)      | 1.2         | Page titles, major headings     |
+| H2         | 24px (1.5rem)    | 600 (Semi-bold) | 1.3         | Section headings                |
+| H3         | 20px (1.25rem)   | 600 (Semi-bold) | 1.4         | Subsection headings             |
+| H4         | 18px (1.125rem)  | 600 (Semi-bold) | 1.4         | Card titles, widget headings    |
+| Body Large | 16px (1rem)      | 400 (Regular)   | 1.5         | Primary body text               |
+| Body       | 14px (0.875rem)  | 400 (Regular)   | 1.5         | Default body text, descriptions |
+| Small      | 12px (0.75rem)   | 400 (Regular)   | 1.4         | Captions, metadata, labels      |
+| Tiny       | 11px (0.6875rem) | 400 (Regular)   | 1.3         | Timestamps, fine print          |
 
 **Typography Usage:**
+
 - Headings: Use hierarchy consistently (H1 → H2 → H3)
 - Body text: 14px default, 16px for important content
 - Line length: Max 75 characters for optimal readability
@@ -1374,6 +1458,7 @@ graph TD
 **Rationale:** Comprehensive icon set, consistent style, React-friendly, good accessibility support
 
 **Usage Guidelines:**
+
 - **Size:** 16px (small), 20px (default), 24px (large), 32px (extra large)
 - **Style:** Outline style for consistency, filled for active/selected states
 - **Color:** Inherit text color or use semantic colors (success, error, etc.)
@@ -1381,6 +1466,7 @@ graph TD
 - **Consistency:** Use same icon for same action throughout app
 
 **Common Icons:**
+
 - Navigation: Home, Folder, Calendar, Chart, Users, Settings
 - Actions: Plus, Edit, Delete, Check, X, Arrow Right
 - Status: Check Circle, X Circle, Alert Circle, Clock, Play
@@ -1389,11 +1475,13 @@ graph TD
 ### Spacing & Layout
 
 **Grid System:**
+
 - **Container:** Max width 1280px, centered, padding 24px (mobile: 16px)
 - **Columns:** 12-column grid (desktop), 4-column (tablet), 1-column (mobile)
 - **Gutters:** 24px between columns (desktop), 16px (tablet), 12px (mobile)
 
 **Spacing Scale (8px base unit):**
+
 - **4px (0.25rem):** Tight spacing, icon padding
 - **8px (0.5rem):** Small gaps, compact lists
 - **12px (0.75rem):** Default gap between related elements
@@ -1404,6 +1492,7 @@ graph TD
 - **64px (4rem):** Hero sections, major page breaks
 
 **Layout Patterns:**
+
 - **Dashboard:** 3-column layout (sidebar optional, main content, right panel optional)
 - **Content Library:** Grid layout with responsive columns (4 desktop, 2 tablet, 1 mobile)
 - **Forms:** Single column, max width 600px, centered
@@ -1422,51 +1511,55 @@ graph TD
 ### Key Requirements
 
 **Visual:**
-- **Color contrast ratios:** 
+
+- **Color contrast ratios:**
   - Normal text: Minimum 4.5:1 (WCAG AA), target 7:1 (WCAG AAA)
   - Large text (18px+): Minimum 3:1 (WCAG AA)
   - UI components (buttons, inputs): Minimum 3:1
-- **Focus indicators:** 
+- **Focus indicators:**
   - Visible focus outline (2px solid, brand color)
   - High contrast (3:1 against background)
   - Keyboard-only navigation (no mouse required)
-- **Text sizing:** 
+- **Text sizing:**
   - Minimum 14px for body text
   - Scalable up to 200% without horizontal scrolling
   - No text in images (use alt text instead)
 
 **Interaction:**
-- **Keyboard navigation:** 
+
+- **Keyboard navigation:**
   - All interactive elements keyboard accessible
   - Logical tab order (left-to-right, top-to-bottom)
   - Skip links for main content areas
   - Keyboard shortcuts for power users (documented)
-- **Screen reader support:** 
+- **Screen reader support:**
   - Semantic HTML (headings, landmarks, ARIA labels)
   - ARIA labels for icon-only buttons and complex widgets
   - Live regions for dynamic content updates
   - Form labels associated with inputs
-- **Touch targets:** 
+- **Touch targets:**
   - Minimum 44x44px for all interactive elements
   - Adequate spacing between touch targets (8px minimum)
   - No hover-only interactions (provide alternative)
 
 **Content:**
-- **Alternative text:** 
+
+- **Alternative text:**
   - All images have descriptive alt text
   - Decorative images have empty alt=""
   - Complex images (charts, graphs) have detailed descriptions
-- **Heading structure:** 
+- **Heading structure:**
   - Logical hierarchy (H1 → H2 → H3, no skipping levels)
   - One H1 per page
   - Headings describe content sections
-- **Form labels:** 
+- **Form labels:**
   - All inputs have visible labels
   - Labels associated with inputs (for/id or aria-labelledby)
   - Error messages associated with inputs (aria-describedby)
   - Required fields clearly marked
 
 **Additional Requirements:**
+
 - **Motion:** Respect prefers-reduced-motion, disable animations for users who prefer
 - **Language:** Declare page language (lang attribute)
 - **Timeouts:** Warn users before session timeout, allow extension
@@ -1501,14 +1594,15 @@ graph TD
 
 ### Breakpoints
 
-| Breakpoint | Min Width | Max Width | Target Devices |
-|------------|-----------|-----------|----------------|
-| Mobile | 320px | 767px | iPhone, Android phones (portrait) |
-| Tablet | 768px | 1023px | iPad, Android tablets (portrait/landscape) |
-| Desktop | 1024px | 1439px | Laptops, small desktops |
-| Wide | 1440px | - | Large desktops, ultrawide monitors |
+| Breakpoint | Min Width | Max Width | Target Devices                             |
+| ---------- | --------- | --------- | ------------------------------------------ |
+| Mobile     | 320px     | 767px     | iPhone, Android phones (portrait)          |
+| Tablet     | 768px     | 1023px    | iPad, Android tablets (portrait/landscape) |
+| Desktop    | 1024px    | 1439px    | Laptops, small desktops                    |
+| Wide       | 1440px    | -         | Large desktops, ultrawide monitors         |
 
 **Breakpoint Implementation:**
+
 - Mobile-first CSS approach
 - Tailwind breakpoints: `sm:` (640px), `md:` (768px), `lg:` (1024px), `xl:` (1280px), `2xl:` (1536px)
 - Media queries for custom components
@@ -1516,26 +1610,31 @@ graph TD
 ### Adaptation Patterns
 
 **Layout Changes:**
+
 - **Desktop:** Multi-column layouts (3-column dashboard, grid content library)
 - **Tablet:** 2-column layouts, simplified navigation
 - **Mobile:** Single column, stacked layouts, bottom navigation
 
 **Navigation Changes:**
+
 - **Desktop:** Horizontal top navigation, persistent sidebar for secondary nav
 - **Tablet:** Collapsible sidebar, hamburger menu for secondary items
 - **Mobile:** Bottom navigation bar (5 primary items), hamburger menu for all other items
 
 **Content Priority:**
+
 - **Desktop:** Show all information, rich interactions
 - **Tablet:** Essential information, simplified interactions
 - **Mobile:** Critical information only, touch-optimized interactions, progressive disclosure
 
 **Interaction Changes:**
+
 - **Desktop:** Hover states, right-click context menus, keyboard shortcuts
 - **Tablet:** Touch gestures (swipe, pinch), long-press for context
 - **Mobile:** Touch-optimized buttons (larger), swipe gestures, pull-to-refresh
 
 **Specific Adaptations:**
+
 - **Workflow Builder:** Desktop (full canvas), Tablet (simplified), Mobile (read-only or simplified builder)
 - **Content Calendar:** Desktop (month view default), Tablet (week view), Mobile (day/agenda view)
 - **Analytics Dashboard:** Desktop (multiple charts), Tablet (2-column), Mobile (stacked, single chart focus)
@@ -1570,6 +1669,7 @@ graph TD
 - **Tooltip:** Fade in (200ms, ease-out) - Appears on hover/focus
 
 **Animation Performance:**
+
 - Use CSS transforms and opacity (GPU-accelerated)
 - Avoid animating width, height, top, left (causes layout reflow)
 - Use will-change sparingly for known animations
@@ -1597,6 +1697,7 @@ graph TD
 7. **Bundle Size:** Keep initial bundle <200KB gzipped, code split by route/feature
 
 **Performance Impact on UX:**
+
 - Fast loading builds trust and reduces bounce rate
 - Instant feedback (even if operation continues in background) improves perceived performance
 - Skeleton screens reduce perceived load time

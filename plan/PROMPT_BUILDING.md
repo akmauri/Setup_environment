@@ -22,6 +22,7 @@ At the start of each loop iteration, load:
 ### Step 1: Load Context
 
 Start each loop fresh by reading:
+
 - Specs related to current task
 - Implementation plan
 - Relevant code files
@@ -63,6 +64,7 @@ Start each loop fresh by reading:
 **BEFORE committing**, you MUST run verification commands:
 
 **For TypeScript/JavaScript projects**:
+
 ```bash
 npm run typecheck  # Type checking
 npm run lint       # Linting
@@ -71,6 +73,7 @@ npm run build      # Build verification
 ```
 
 **For Python projects**:
+
 ```bash
 pytest            # Tests
 mypy .            # Type checking
@@ -80,6 +83,7 @@ black --check .    # Formatting
 **For other projects**: Run equivalent verification commands
 
 **If any verification fails**:
+
 1. Fix the issues
 2. Re-run verification
 3. Repeat until all pass
@@ -102,13 +106,15 @@ black --check .    # Formatting
 
 1. Stage all changes
 2. Commit with clear message:
+
    ```
    [Task ID] [Brief description]
-   
+
    - What was implemented
    - Key changes
    - Related files
    ```
+
 3. Push if in version control
 
 ### Step 9: Release Lock

@@ -13,6 +13,7 @@ When an error occurs, follow these steps in order:
 **Location**: `logs/agent_errors/[YYYY-MM-DD].md`
 
 **Required Information**:
+
 - Timestamp
 - Agent ID
 - Task ID
@@ -23,6 +24,7 @@ When an error occurs, follow these steps in order:
 - Related files/modules
 
 **Format**:
+
 ```markdown
 ## [Timestamp] - [Agent ID] - [Task ID]
 
@@ -32,7 +34,9 @@ When an error occurs, follow these steps in order:
 
 **Stack Trace**:
 ```
+
 [Stack trace if available]
+
 ```
 
 **Files Involved**: [List of files]
@@ -45,6 +49,7 @@ When an error occurs, follow these steps in order:
 **Action**: Check `logs/common_errors.md` for known solutions
 
 **Process**:
+
 1. Search for similar error messages or patterns
 2. If found, apply the documented solution
 3. If solution works, document the resolution
@@ -57,6 +62,7 @@ When an error occurs, follow these steps in order:
 **Documentation**: Add to error log entry
 
 **Consider**:
+
 - Configuration issues
 - Dependency problems
 - Data format mismatches
@@ -70,6 +76,7 @@ When an error occurs, follow these steps in order:
 **Action**: Test elimination from most to least likely cause
 
 **Process**:
+
 1. Start with most likely cause
 2. Create test to verify hypothesis
 3. If confirmed, fix and test
@@ -83,6 +90,7 @@ When an error occurs, follow these steps in order:
 **Location**: Same error log entry
 
 **Include**:
+
 - Hypotheses tested
 - Tests performed
 - Results of each test
@@ -95,6 +103,7 @@ When an error occurs, follow these steps in order:
 **Action**: If new error/solution found, update `logs/common_errors.md`
 
 **Format**:
+
 ```markdown
 ## [Error Pattern/Message]
 
@@ -114,6 +123,7 @@ When an error occurs, follow these steps in order:
 **Action**: Update task in `todo_progress.json`
 
 **Updates Required**:
+
 - Increment `retry_count`
 - Set `last_error` to error message
 - Update `updated_at` timestamp
@@ -124,6 +134,7 @@ When an error occurs, follow these steps in order:
 **Action**: If `retry_count > 3`, escalate task
 
 **Process**:
+
 1. Mark task as `blocked` in `todo_progress.json`
 2. Create entry in `agent_tasks/blocked_tasks.md`
 3. Document root cause analysis
@@ -135,6 +146,7 @@ When an error occurs, follow these steps in order:
 ### Category 1: Configuration Errors
 
 **Examples**:
+
 - Missing environment variables
 - Incorrect file paths
 - Wrong API endpoints
@@ -145,6 +157,7 @@ When an error occurs, follow these steps in order:
 ### Category 2: Dependency Errors
 
 **Examples**:
+
 - Missing packages
 - Version conflicts
 - Circular dependencies
@@ -155,6 +168,7 @@ When an error occurs, follow these steps in order:
 ### Category 3: Data Errors
 
 **Examples**:
+
 - Invalid data format
 - Missing required fields
 - Type mismatches
@@ -165,6 +179,7 @@ When an error occurs, follow these steps in order:
 ### Category 4: Logic Errors
 
 **Examples**:
+
 - Algorithm bugs
 - Race conditions
 - State management issues
@@ -175,6 +190,7 @@ When an error occurs, follow these steps in order:
 ### Category 5: Integration Errors
 
 **Examples**:
+
 - API failures
 - Service unavailability
 - Protocol mismatches
@@ -216,6 +232,7 @@ For non-transient errors:
 ### Recovery Documentation
 
 Document recovery strategy in:
+
 - Error log entry
 - Task notes in `todo_progress.json`
 - `docs/agent_knowledge/` if lesson learned
@@ -236,6 +253,14 @@ Document recovery strategy in:
 2. **Root Cause Analysis**: Understand why errors occur
 3. **Process Improvement**: Update processes to prevent errors
 4. **Knowledge Sharing**: Share solutions in `logs/common_errors.md`
+
+## Integration with Other Rules
+
+This error handling protocol integrates with:
+
+- **Loop Guard** (`agent_rules/loop_guard.md`): Loops are a type of error that needs recovery
+- **Core Principles** (`agent_rules/core_principles.md`): Error handling is part of quality gates
+- **Autonomy Protocol** (`agent_rules/autonomy_protocol.md`): Errors can occur during autonomous execution
 
 ## Integration with BMAD
 

@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: mpcas2-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-mpcas2}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mpcas2_dev_password}
+      POSTGRES_DB: ${POSTGRES_DB:-mpcas2_dev}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mpcas2}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mpcas2-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: mpcas2-redis
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mpcas2-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  mpcas2-network:
+    driver: bridge

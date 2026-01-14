@@ -23,6 +23,7 @@ docs/
 ## Current Documents vs BMAD Structure
 
 ### Your Current Documents:
+
 - `PROJECT_OVERVIEW.md` (root) → Should become `docs/prd.md`
 - `docs/ARCHITECTURE.md` → Should become `docs/architecture.md`
 - `docs/EPICS_STORIES.md` → Will be integrated into PRD or sharded separately
@@ -33,12 +34,14 @@ docs/
 ### Step 1: Rename Documents to Match BMAD Conventions
 
 BMAD expects lowercase filenames:
+
 - `PROJECT_OVERVIEW.md` → `docs/prd.md`
 - `docs/ARCHITECTURE.md` → `docs/architecture.md`
 
 ### Step 2: Understand Document Sharding
 
 BMAD will automatically "shard" (break down) your documents:
+
 - `docs/prd.md` → Will be sharded into `docs/prd/epic-1.md`, `epic-2.md`, etc.
 - `docs/architecture.md` → Will be sharded into `docs/architecture/` sections
 
@@ -49,6 +52,7 @@ BMAD will automatically "shard" (break down) your documents:
 You mentioned you have "a lot of documents" that need to be integrated. Here's how to handle them:
 
 #### Documents that should go into PRD (`docs/prd.md`):
+
 - Product requirements
 - User stories
 - Epics
@@ -58,6 +62,7 @@ You mentioned you have "a lot of documents" that need to be integrated. Here's h
 - Success metrics
 
 #### Documents that should go into Architecture (`docs/architecture.md`):
+
 - Technical architecture
 - System design
 - Database schemas
@@ -66,6 +71,7 @@ You mentioned you have "a lot of documents" that need to be integrated. Here's h
 - Infrastructure plans
 
 #### Documents that can stay separate:
+
 - `docs/TASKS.md` - Task tracking (can reference BMAD stories)
 - `AGENTS.md` - AI agent instructions (project-specific)
 - `README.md` - Project overview
@@ -98,11 +104,13 @@ You mentioned you have "a lot of documents" that need to be integrated. Here's h
 ## Using Your Documents with BMAD Agents
 
 ### Planning Phase:
+
 - `@analyst` - Can help analyze and structure your requirements
 - `@pm` - Can help create/refine PRD from your documents
 - `@architect` - Can help structure architecture document
 
 ### Development Phase:
+
 - `@po` - Shards documents for development
 - `@sm` - Creates stories from sharded epics
 - `@dev` - Implements features using sharded documents
@@ -111,6 +119,7 @@ You mentioned you have "a lot of documents" that need to be integrated. Here's h
 ## Questions to Consider
 
 Before integrating, think about:
+
 1. Where do your documents fit? (PRD vs Architecture)
 2. Are they complete? (BMAD works best with comprehensive docs)
 3. Do they need restructuring? (BMAD has specific formats)

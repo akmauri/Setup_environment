@@ -45,17 +45,21 @@ When this command is invoked, perform a comprehensive code review of the current
 Provide feedback in this structure:
 
 ### ✅ Strengths
+
 - List what's done well
 
 ### ⚠️ Issues & Suggestions
+
 - **Issue Type**: Description
   - Impact: [High/Medium/Low]
   - Suggestion: How to fix
 
 ### 📝 Recommendations
+
 - Specific improvements to consider
 
 ### ✅ Approval Status
+
 - [APPROVED] / [NEEDS_CHANGES] / [REQUEST_CLARIFICATION]
 
 ## Guidelines

@@ -15,6 +15,7 @@ See `agent_tasks/todo_progress.json` for machine-readable task list.
 ## Roadmap
 
 ### Phase 1: Foundation ✅ COMPLETE
+
 - ✅ Unified Task Management System
 - ✅ Agent Rules Foundation
 - ✅ Basic Logging System
@@ -23,6 +24,7 @@ See `agent_tasks/todo_progress.json` for machine-readable task list.
 - ✅ Documentation System
 
 ### Phase 2: Integration & Enhancement ✅ COMPLETE
+
 - ✅ Claude Skills System
 - ✅ MCP Server Guides
 - ✅ GitHub Workflows
@@ -33,6 +35,7 @@ See `agent_tasks/todo_progress.json` for machine-readable task list.
 - ✅ Risk Assessment
 
 ### Phase 3: Project Development (Next)
+
 - [ ] Initialize Git repository
 - [ ] Set up GitHub repository
 - [ ] Configure development environment
@@ -84,6 +87,7 @@ See `agent_tasks/blocked_tasks.md` for detailed blocker analysis.
 ## Integration
 
 This document integrates with:
+
 - `agent_tasks/todo_progress.json` - Machine-readable tasks
 - `docs/TASKS.md` - Human-readable task list
 - `plan/IMPLEMENTATION_PLAN.md` - Implementation plan

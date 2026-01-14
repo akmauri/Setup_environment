@@ -3,13 +3,14 @@
 ## v1.1.0 - 2026-01-XX
 
 ### Added
+
 - **Iterative Work Pattern** (`agent_rules/iterative_work_pattern.md`): New rule defining a three-file pattern (Context, Todos, Insights) for iterative tasks that require processing multiple items, collecting insights, and maintaining context across memory compaction events.
 
 ### Changed
-- **Agent Context Guide** (`.cursor/rules/agent_context.md`): 
+
+- **Agent Context Guide** (`.cursor/rules/agent_context.md`):
   - Added "Memory Compaction Recovery" section with explicit procedures for recovering context after memory compaction
   - Added `iterative_work_pattern.md` to required Agent Rules list
-  
 - **Core Principles** (`agent_rules/core_principles.md`):
   - Added "Optional: Task-Specific File Creation" section after Mandatory Pre-Work Checklist
   - Documents when and how to use the three-file pattern for iterative tasks
@@ -22,13 +23,16 @@
   - Added `iterative_work_pattern.md` to "Agent Rules" section
 
 ### Rationale
+
 These changes improve agent continuity and progress tracking for iterative tasks by:
+
 - Providing persistent context files that survive memory compaction
 - Enabling visible progress tracking with markdown todos
 - Supporting iterative insights collection
 - Formalizing recovery procedures after memory compaction events
 
 ### Impact
+
 - **Affected Agents**: All agents working on iterative tasks
 - **Affected Processes**: Task initialization, progress tracking, memory compaction recovery
 - **Breaking Changes**: None - this is an additive enhancement
@@ -39,6 +43,7 @@ These changes improve agent continuity and progress tracking for iterative tasks
 ## v1.0.0 - 2026-01-XX
 
 ### Added
+
 - Core Principles (`agent_rules/core_principles.md`)
 - Error Handling Protocol (`agent_rules/error_handling.md`)
 - Parallel Agent Coordination (`agent_rules/parallel_coordination.md`)

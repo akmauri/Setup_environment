@@ -16,12 +16,14 @@ The new system complements and enhances BMAD rather than replacing it:
 **Location**: BMAD agent definitions in `.bmad-core/agents/`
 
 **Integration**:
+
 - BMAD agents reference `agent_rules/core_principles.md`
 - BMAD agents follow error handling protocol
 - BMAD agents use coordination rules
 - BMAD agents respect autonomy protocol
 
 **Update Required**:
+
 - Add references to agent rules in BMAD agent definitions
 - Include autonomy directive in agent activation
 - Reference error handling in agent workflows
@@ -31,12 +33,14 @@ The new system complements and enhances BMAD rather than replacing it:
 **Location**: BMAD workflows in `.bmad-core/workflows/`
 
 **Integration**:
+
 - BMAD orchestrator reads/writes `agent_tasks/todo_progress.json`
 - BMAD workflows sync with task status
 - BMAD tasks map to JSON task format
 - BMAD completion updates JSON tasks
 
 **Update Required**:
+
 - Update BMAD orchestrator to use JSON tasks
 - Sync workflow state with task JSON
 - Maintain `docs/TASKS.md` as human-readable view
@@ -46,12 +50,14 @@ The new system complements and enhances BMAD rather than replacing it:
 **Location**: Ralph-Wiggum process in `plan/` and `specs/`
 
 **Integration**:
+
 - Ralph-Wiggum Phase 1 (Planning) aligns with BMAD planning
 - Ralph-Wiggum Phase 3 (Building) uses BMAD agents
 - BMAD workflows can use Ralph-Wiggum breakdown
 - BMAD tasks follow Ralph-Wiggum principles
 
 **Update Required**:
+
 - Reference Ralph-Wiggum in BMAD planning phase
 - Use BMAD agents for Ralph-Wiggum execution
 - Integrate specs with BMAD requirements
@@ -61,12 +67,14 @@ The new system complements and enhances BMAD rather than replacing it:
 **Location**: Logging system in `logs/`
 
 **Integration**:
+
 - BMAD tasks log to `logs/agent_activity/`
 - BMAD errors use error handling protocol
 - BMAD knowledge feeds into `docs/agent_knowledge/`
 - Common errors integrate with BMAD troubleshooting
 
 **Update Required**:
+
 - Update BMAD tasks to log to new structure
 - Integrate error handling into BMAD workflows
 - Feed BMAD knowledge into agent knowledge base
@@ -76,12 +84,14 @@ The new system complements and enhances BMAD rather than replacing it:
 **Location**: Autonomy protocol in `agent_rules/autonomy_protocol.md`
 
 **Integration**:
+
 - BMAD agents follow autonomy protocol
 - BMAD workflows respect red lines
 - BMAD decisions logged to autonomy logs
 - BMAD flags use human review system
 
 **Update Required**:
+
 - Add autonomy directive to BMAD agent activation
 - Include red line checks in BMAD workflows
 - Log BMAD decisions to autonomy logs
@@ -93,8 +103,10 @@ The new system complements and enhances BMAD rather than replacing it:
 For each BMAD agent (`.bmad-core/agents/*.md`):
 
 1. **Add Agent Rules Reference**:
+
    ```markdown
    ## Agent Rules
+
    - Must follow: agent_rules/core_principles.md
    - Error handling: agent_rules/error_handling.md
    - Coordination: agent_rules/parallel_coordination.md
@@ -102,14 +114,18 @@ For each BMAD agent (`.bmad-core/agents/*.md`):
    ```
 
 2. **Add Autonomy Directive**:
+
    ```markdown
    ## AUTONOMY DIRECTIVE
+
    You operate under Rule #1 - Autonomous Continuity...
    ```
 
 3. **Add Context Loading**:
+
    ```markdown
    ## Context Loading
+
    1. agent_tasks/todo_progress.json
    2. agent_rules/core_principles.md
    3. [BMAD-specific context]
@@ -120,6 +136,7 @@ For each BMAD agent (`.bmad-core/agents/*.md`):
 **Location**: `.bmad-core/agents/bmad-orchestrator.md`
 
 **Updates**:
+
 - Read/write `agent_tasks/todo_progress.json`
 - Use lock system for coordination
 - Log to new logging structure
@@ -132,6 +149,7 @@ For each BMAD agent (`.bmad-core/agents/*.md`):
 **Location**: `.bmad-core/workflows/*.yaml`
 
 **Updates**:
+
 - Reference task JSON format
 - Include error handling steps
 - Add autonomy checks
@@ -149,7 +167,7 @@ stages:
     rules:
       - Follow: agent_rules/core_principles.md
       - Log to: logs/agent_activity/
-  
+
   - name: building
     agent: dev
     coordination:
@@ -168,6 +186,7 @@ stages:
 **Location**: `.bmad-core/tasks/*.md`
 
 **Updates**:
+
 - Reference task JSON schema
 - Include error handling steps
 - Add autonomy checks
@@ -221,6 +240,7 @@ stages:
 ## Documentation Updates
 
 Update BMAD documentation to reference:
+
 - Agent rules
 - Task management
 - Error handling
@@ -230,6 +250,7 @@ Update BMAD documentation to reference:
 ## Support
 
 For integration issues:
+
 1. Check this document
 2. Review agent rules
 3. Check BMAD documentation

@@ -23,21 +23,24 @@ This document contains solutions to frequently encountered errors. Agents should
 
 ### Missing Environment Variables
 
-**Symptoms**: 
+**Symptoms**:
+
 - Error: "Environment variable X is not defined"
 - Application fails to start
 - API calls fail with authentication errors
 
-**Root Cause**: 
+**Root Cause**:
 Required environment variables not set in `.env` file or environment
 
 **Solution**:
+
 1. Check `.env.example` for required variables
 2. Copy missing variables to `.env`
 3. Set appropriate values
 4. Restart application
 
 **Prevention**:
+
 - Always check `.env.example` when setting up
 - Document all required environment variables
 - Use validation on startup to catch missing variables early
@@ -49,6 +52,7 @@ Required environment variables not set in `.env` file or environment
 ### Incorrect File Paths
 
 **Symptoms**:
+
 - Error: "File not found" or "ENOENT"
 - Import errors
 - Module resolution failures
@@ -57,12 +61,14 @@ Required environment variables not set in `.env` file or environment
 Relative/absolute path issues, incorrect directory structure
 
 **Solution**:
+
 1. Verify file exists at expected location
 2. Check path is relative to correct base directory
 3. Use path.join() or path.resolve() for cross-platform compatibility
 4. Verify directory structure matches documentation
 
 **Prevention**:
+
 - Use consistent path resolution utilities
 - Document expected directory structure
 - Use TypeScript path aliases for common paths
@@ -76,6 +82,7 @@ Relative/absolute path issues, incorrect directory structure
 ### Missing npm Packages
 
 **Symptoms**:
+
 - Error: "Cannot find module 'X'"
 - Import errors
 - Build failures
@@ -84,12 +91,14 @@ Relative/absolute path issues, incorrect directory structure
 Package not installed or version mismatch
 
 **Solution**:
+
 1. Run `npm install` to install missing packages
 2. Check `package.json` for correct package names
 3. Verify package versions match requirements
 4. Clear `node_modules` and reinstall if needed: `rm -rf node_modules && npm install`
 
 **Prevention**:
+
 - Keep `package.json` and `package-lock.json` in sync
 - Document all dependencies
 - Use exact versions for critical packages
@@ -101,6 +110,7 @@ Package not installed or version mismatch
 ### Version Conflicts
 
 **Symptoms**:
+
 - Peer dependency warnings
 - Runtime errors with specific functionality
 - Incompatible API usage
@@ -109,12 +119,14 @@ Package not installed or version mismatch
 Package versions incompatible with each other
 
 **Solution**:
+
 1. Check peer dependency requirements
 2. Update packages to compatible versions
 3. Use `npm ls` to identify conflict chain
 4. Consider using `npm install --legacy-peer-deps` if necessary (temporary)
 
 **Prevention**:
+
 - Regularly update dependencies
 - Test after dependency updates
 - Document version requirements
@@ -128,6 +140,7 @@ Package versions incompatible with each other
 ### Invalid JSON Format
 
 **Symptoms**:
+
 - JSON.parse() errors
 - "Unexpected token" errors
 - Data not loading
@@ -136,12 +149,14 @@ Package versions incompatible with each other
 Malformed JSON, trailing commas, unescaped characters
 
 **Solution**:
+
 1. Validate JSON using JSONLint or similar
 2. Check for trailing commas
 3. Verify all strings are properly escaped
 4. Use JSON.stringify() when creating JSON programmatically
 
 **Prevention**:
+
 - Use JSON validators before committing
 - Use proper JSON serialization libraries
 - Add JSON validation in code
@@ -153,6 +168,7 @@ Malformed JSON, trailing commas, unescaped characters
 ### Type Mismatches
 
 **Symptoms**:
+
 - TypeScript compilation errors
 - Runtime type errors
 - Unexpected behavior
@@ -161,12 +177,14 @@ Malformed JSON, trailing commas, unescaped characters
 Data doesn't match expected type
 
 **Solution**:
+
 1. Check TypeScript types match actual data
 2. Add type guards/validation
 3. Fix data source if incorrect
 4. Update type definitions if needed
 
 **Prevention**:
+
 - Use strict TypeScript settings
 - Add runtime validation (Zod, Yup)
 - Document expected data formats
@@ -180,6 +198,7 @@ Data doesn't match expected type
 ### Race Conditions
 
 **Symptoms**:
+
 - Inconsistent behavior
 - Data corruption
 - Timing-dependent bugs
@@ -188,12 +207,14 @@ Data doesn't match expected type
 Multiple async operations accessing shared state without coordination
 
 **Solution**:
+
 1. Use locks or semaphores
 2. Implement proper async/await patterns
 3. Use transactions for database operations
 4. Add proper error handling and rollback
 
 **Prevention**:
+
 - Design for concurrency from start
 - Use proper locking mechanisms
 - Test with concurrent operations
@@ -205,6 +226,7 @@ Multiple async operations accessing shared state without coordination
 ### Infinite Loops
 
 **Symptoms**:
+
 - Application hangs
 - High CPU usage
 - Timeout errors
@@ -213,12 +235,14 @@ Multiple async operations accessing shared state without coordination
 Loop condition never becomes false
 
 **Solution**:
+
 1. Add loop counter with maximum iterations
 2. Check loop condition logic
 3. Add break conditions
 4. Use proper iteration patterns (map, forEach, etc.)
 
 **Prevention**:
+
 - Always have exit conditions
 - Test edge cases
 - Use iteration utilities instead of manual loops when possible
@@ -232,6 +256,7 @@ Loop condition never becomes false
 ### API Authentication Failures
 
 **Symptoms**:
+
 - 401 Unauthorized errors
 - Token expiration errors
 - Authentication timeout
@@ -240,12 +265,14 @@ Loop condition never becomes false
 Invalid credentials, expired tokens, incorrect auth headers
 
 **Solution**:
+
 1. Verify API keys/tokens are correct
 2. Check token expiration and refresh if needed
 3. Verify auth header format
 4. Test credentials independently
 
 **Prevention**:
+
 - Implement token refresh logic
 - Handle auth errors gracefully
 - Log auth failures for debugging
@@ -257,6 +284,7 @@ Invalid credentials, expired tokens, incorrect auth headers
 ### Network Timeouts
 
 **Symptoms**:
+
 - Request timeout errors
 - Connection refused
 - Slow API responses
@@ -265,12 +293,14 @@ Invalid credentials, expired tokens, incorrect auth headers
 Network issues, service unavailability, timeout too short
 
 **Solution**:
+
 1. Increase timeout values if appropriate
 2. Implement retry logic with exponential backoff
 3. Check service status
 4. Verify network connectivity
 
 **Prevention**:
+
 - Set appropriate timeout values
 - Implement retry logic
 - Monitor service health

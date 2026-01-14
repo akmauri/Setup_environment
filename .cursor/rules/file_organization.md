@@ -5,6 +5,7 @@ This document defines naming conventions, directory structure, and file placemen
 ## Directory Structure
 
 ### Core Directories
+
 ```
 /
 ├── agent_tasks/          # Task management (JSON)
@@ -36,20 +37,24 @@ This document defines naming conventions, directory structure, and file placemen
 ### Files
 
 **Markdown Files**:
+
 - Use kebab-case: `file-name.md`
 - Be descriptive: `user-authentication-spec.md` not `auth.md`
 - Use consistent prefixes: `spec-`, `plan-`, `rule-`
 
 **Code Files**:
+
 - TypeScript/JavaScript: camelCase for files, PascalCase for components
 - Python: snake_case
 - Follow language conventions
 
 **Configuration Files**:
+
 - Use standard names: `package.json`, `tsconfig.json`, `.env`
 - Use descriptive names for custom configs: `agent-config.json`
 
 **Log Files**:
+
 - Date-based: `YYYY-MM-DD.log` or `YYYY-MM-DD_agent_task.log`
 - Include agent/task identifier when relevant
 
@@ -62,6 +67,7 @@ This document defines naming conventions, directory structure, and file placemen
 ## File Placement Rules
 
 ### Documentation
+
 - **Project docs**: `docs/`
 - **Architecture**: `docs/architecture/`
 - **API docs**: `docs/api/`
@@ -69,37 +75,44 @@ This document defines naming conventions, directory structure, and file placemen
 - **Agent knowledge**: `docs/agent_knowledge/`
 
 ### Code
+
 - **Source code**: `src/` or `apps/` (monorepo)
 - **Tests**: Co-located or `tests/` or `__tests__/`
 - **Configs**: Root or `config/`
 
 ### Tasks and Planning
+
 - **Task specs**: `specs/`
 - **Implementation plans**: `plan/`
 - **Task JSON**: `agent_tasks/`
 
 ### Logs
+
 - **By date**: `logs/[category]/YYYY-MM-DD/`
 - **By agent**: `logs/agent_activity/[date]/[agent]_[task].log`
 
 ## File Organization Principles
 
 ### 1. Single Source of Truth
+
 - One file per concept
 - No duplicates
 - Update existing files, don't create new ones
 
 ### 2. Logical Grouping
+
 - Group related files together
 - Use subdirectories for organization
 - Keep related files close
 
 ### 3. Discoverability
+
 - Use clear, descriptive names
 - Follow consistent patterns
 - Document structure in README files
 
 ### 4. Scalability
+
 - Structure supports growth
 - Easy to add new files
 - Clear where new files belong
@@ -107,6 +120,7 @@ This document defines naming conventions, directory structure, and file placemen
 ## Specific Rules
 
 ### Task Files
+
 - Task JSON: `agent_tasks/todo_progress.json`
 - Completed tasks: `agent_tasks/completed_tasks.json`
 - Blocked tasks: `agent_tasks/blocked_tasks.md`
@@ -115,6 +129,7 @@ This document defines naming conventions, directory structure, and file placemen
 - Task insights: `agent_tasks/insights/[task_id]_insights.md` (for iterative tasks)
 
 ### Agent Rules
+
 - Core principles: `agent_rules/core_principles.md`
 - Error handling: `agent_rules/error_handling.md`
 - Coordination: `agent_rules/parallel_coordination.md`
@@ -124,11 +139,13 @@ This document defines naming conventions, directory structure, and file placemen
 - Iterative work pattern: `agent_rules/iterative_work_pattern.md`
 
 ### Specs
+
 - One file per topic: `specs/[topic].md`
 - Pass "One Sentence Without 'And'" test
 - Clear, focused topics
 
 ### Scripts
+
 - Utility scripts: `scripts/`
 - Use descriptive names: `migrate_tasks.js`, `validate_docs.js`
 - Include shebang: `#!/usr/bin/env node`
@@ -136,6 +153,7 @@ This document defines naming conventions, directory structure, and file placemen
 ## Gitignore Rules
 
 ### Always Ignore
+
 - `.lock/` - Lock files
 - `node_modules/` - Dependencies
 - `.env` - Environment variables
@@ -144,6 +162,7 @@ This document defines naming conventions, directory structure, and file placemen
 - `dist/`, `build/` - Build outputs
 
 ### Consider Ignoring
+
 - `logs/` - If logs are temporary
 - `.cursor/` - Cursor-specific (project-dependent)
 - Temporary files

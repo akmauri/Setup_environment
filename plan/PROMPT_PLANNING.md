@@ -61,12 +61,14 @@ Create or update `plan/IMPLEMENTATION_PLAN.md` with:
 ### CRITICAL: No Implementation Code
 
 **DO NOT**:
+
 - Write any implementation code
 - Create source files
 - Modify existing code
 - Write tests
 
 **ONLY**:
+
 - Create specs
 - Create/update implementation plan
 - Document requirements
@@ -99,13 +101,16 @@ Prioritize tasks by:
 **Status**: [Planning|In Progress|Complete]
 
 ## Priority 1: Foundation
+
 - [ ] Task 1: [Description] (Complexity: low, Dependencies: none)
 - [ ] Task 2: [Description] (Complexity: medium, Dependencies: Task 1)
 
 ## Priority 2: Core Features
+
 - [ ] Task 3: [Description] (Complexity: high, Dependencies: Task 1, Task 2)
 
 ## Notes
+
 [Any important notes or decisions]
 ```
 
@@ -115,21 +120,26 @@ Prioritize tasks by:
 # [Topic Name]
 
 ## Description
+
 [One sentence description]
 
 ## Requirements
+
 - [Requirement 1]
 - [Requirement 2]
 
 ## Acceptance Criteria
+
 - [ ] Criterion 1
 - [ ] Criterion 2
 
 ## Dependencies
+
 - [Dependency 1]
 - [Dependency 2]
 
 ## Technical Notes
+
 [Any technical considerations]
 ```
 

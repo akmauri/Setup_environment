@@ -9,6 +9,7 @@ This document defines how multiple AI agents coordinate when working in parallel
 **Location**: `.lock/[task_id].lock`
 
 **Content** (JSON):
+
 ```json
 {
   "task_id": "task-123",
@@ -82,6 +83,7 @@ When completing or pausing work:
 **Location**: `agent_comms/[timestamp]_[agent_id].msg`
 
 **Format** (JSON):
+
 ```json
 {
   "from": "dev-agent",
@@ -127,6 +129,7 @@ When completing or pausing work:
 **Scenario**: Task B depends on Task A
 
 **Coordination**:
+
 1. Agent A completes Task A
 2. Agent A sends notification to Agent B
 3. Agent B starts Task B after verifying completion
@@ -136,6 +139,7 @@ When completing or pausing work:
 **Scenario**: Tasks A and B are independent
 
 **Coordination**:
+
 1. Both agents work simultaneously
 2. No communication needed unless conflicts arise
 3. Both update status independently
@@ -145,6 +149,7 @@ When completing or pausing work:
 **Scenario**: Tasks A and B modify same file/module
 
 **Coordination**:
+
 1. Agent A acquires lock
 2. Agent A completes work and releases lock
 3. Agent A notifies Agent B
@@ -155,6 +160,7 @@ When completing or pausing work:
 **Scenario**: Multiple agents working on components that integrate
 
 **Coordination**:
+
 1. Agents communicate interface requirements
 2. Agents work in parallel on separate components
 3. Agents coordinate integration testing
@@ -165,10 +171,12 @@ When completing or pausing work:
 ### File Conflicts
 
 **Detection**:
+
 - Lock file exists for same file
 - Multiple agents try to modify same file
 
 **Resolution**:
+
 1. Check lock expiration
 2. Communicate with locking agent
 3. Coordinate changes
@@ -177,10 +185,12 @@ When completing or pausing work:
 ### Dependency Conflicts
 
 **Detection**:
+
 - Circular dependencies
 - Conflicting requirements
 
 **Resolution**:
+
 1. Document conflict in `agent_comms/`
 2. Escalate to project coordinator
 3. Redesign dependencies if needed
@@ -188,10 +198,12 @@ When completing or pausing work:
 ### Resource Conflicts
 
 **Detection**:
+
 - Too many agents on related modules
 - Resource exhaustion
 
 **Resolution**:
+
 1. Queue tasks appropriately
 2. Prioritize based on dependencies
 3. Limit concurrent work
@@ -235,18 +247,21 @@ This coordination system integrates with BMAD:
 ### Active Locks
 
 Track active locks in:
+
 - `.lock/` directory (file system)
 - `logs/agent_activity/[date]/locks.log`
 
 ### Agent Activity
 
 Track agent activity in:
+
 - `logs/agent_activity/[date]/[agent]_[task].log`
 - `agent_tasks/todo_progress.json` (status updates)
 
 ### Communication
 
 Track communication in:
+
 - `agent_comms/` directory
 - Summary in `logs/agent_activity/[date]/communications.log`
 
@@ -257,6 +272,7 @@ Track communication in:
 **Location**: `scripts/manage_locks.js`
 
 **Functions**:
+
 - List active locks
 - Remove expired locks
 - Force unlock (coordinator only)
@@ -267,6 +283,7 @@ Track communication in:
 **Location**: `scripts/check_dependencies.js`
 
 **Functions**:
+
 - Verify task dependencies
 - Find blocking tasks
 - Suggest task order
@@ -277,6 +294,7 @@ Track communication in:
 **Location**: `scripts/send_message.js`
 
 **Functions**:
+
 - Send formatted messages
 - Check for pending messages
 - Archive old messages

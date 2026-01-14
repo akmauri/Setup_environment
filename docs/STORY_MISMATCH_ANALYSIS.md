@@ -10,11 +10,13 @@ There is a **major mismatch** between the two story sources:
 ### Source 1: PRD (`docs/prd.md`) - **AUTHORITATIVE SOURCE**
 
 According to BMAD config (`.bmad-core/core-config.yaml`):
+
 - `prdFile: docs/prd.md` ✅
 - `prdSharded: true`
 - PRD is the **primary source** for stories
 
 **Epic 1: Foundation & Core Infrastructure**
+
 - Story 1.1: **Project Setup & Repository Structure**
 - Story 1.2: **Multi-Tenant Database Architecture**
 - Story 1.3: **User Authentication System** (includes Google, Microsoft, Okta OAuth)
@@ -22,6 +24,7 @@ According to BMAD config (`.bmad-core/core-config.yaml`):
 - Story 1.5: **Health Check & System Status**
 
 **Epic 2: Platform Integrations & OAuth**
+
 - Story 2.1: YouTube OAuth Integration
 - Story 2.2: Instagram OAuth Integration
 - Story 2.3: TikTok OAuth Integration
@@ -37,10 +40,12 @@ According to BMAD config (`.bmad-core/core-config.yaml`):
 ### Source 2: EPICS_STORIES.md - **SECONDARY/OUTDATED**
 
 **Epic 1: User Authentication & Profile Management**
+
 - Story 1.1: **Google OAuth Integration** ⚠️ CONFLICT
 - Story 1.2: **User Profile Management** ⚠️ CONFLICT
 
 **Epic 2: Social Media Account Integration**
+
 - Story 2.1: Connect Existing Social Media Accounts
 - Story 2.2: Create New Social Media Accounts
 
@@ -50,12 +55,13 @@ According to BMAD config (`.bmad-core/core-config.yaml`):
 
 ### Epic 1 Conflict
 
-| Source | Story 1.1 | Story 1.2 | Story 1.3 |
-|--------|-----------|-----------|-----------|
-| **PRD** | Project Setup & Repository Structure | Multi-Tenant Database Architecture | User Authentication System |
-| **EPICS_STORIES** | Google OAuth Integration | User Profile Management | (doesn't exist) |
+| Source            | Story 1.1                            | Story 1.2                          | Story 1.3                  |
+| ----------------- | ------------------------------------ | ---------------------------------- | -------------------------- |
+| **PRD**           | Project Setup & Repository Structure | Multi-Tenant Database Architecture | User Authentication System |
+| **EPICS_STORIES** | Google OAuth Integration             | User Profile Management            | (doesn't exist)            |
 
-**Issue**: 
+**Issue**:
+
 - PRD Story 1.1 is about **project setup** (infrastructure)
 - EPICS_STORIES Story 1.1 is about **Google OAuth** (feature)
 - These are completely different stories with the same number!
@@ -63,6 +69,7 @@ According to BMAD config (`.bmad-core/core-config.yaml`):
 ### Story I Created
 
 I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
+
 - ✅ Matches EPICS_STORIES.md
 - ❌ **DOES NOT match PRD** (the authoritative source)
 - ❌ Will cause confusion and inconsistency
@@ -70,6 +77,7 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 ## Impact Analysis
 
 ### If We Use PRD (Recommended)
+
 - ✅ Matches BMAD configuration
 - ✅ More comprehensive (100+ stories vs 12)
 - ✅ Better organized (infrastructure first, then features)
@@ -77,6 +85,7 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 - ⚠️ Need to delete/recreate story files
 
 ### If We Use EPICS_STORIES.md
+
 - ❌ Conflicts with BMAD config (PRD is authoritative)
 - ❌ Missing 88+ stories from PRD
 - ❌ Incomplete epic structure
@@ -87,12 +96,14 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 ### Option 1: Use PRD as Source (RECOMMENDED)
 
 **Action Required**:
+
 1. **Delete** `docs/stories/1.1.story.md` (it's based on wrong source)
 2. **Use PRD** as the authoritative source for all stories
 3. **Create stories** starting with PRD Story 1.1: "Project Setup & Repository Structure"
 4. **Archive or update** EPICS_STORIES.md to match PRD structure
 
 **Benefits**:
+
 - Aligns with BMAD configuration
 - Complete story coverage
 - Proper infrastructure-first approach
@@ -101,12 +112,14 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 ### Option 2: Reconcile Both Documents
 
 **Action Required**:
+
 1. Merge EPICS_STORIES.md content into PRD
 2. Update PRD to include any unique stories from EPICS_STORIES
 3. Resolve numbering conflicts
 4. Use reconciled PRD as source
 
 **Challenges**:
+
 - Requires manual reconciliation
 - Risk of losing stories
 - Time-consuming
@@ -114,11 +127,13 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 ### Option 3: Use EPICS_STORIES.md (NOT RECOMMENDED)
 
 **Action Required**:
+
 1. Update BMAD config to point to EPICS_STORIES.md
 2. Accept that 88+ stories from PRD won't be tracked
 3. Continue with current story file
 
 **Risks**:
+
 - Loses comprehensive PRD coverage
 - Conflicts with BMAD best practices
 - Incomplete project scope
@@ -126,11 +141,13 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 ## Current State
 
 ### Files Created
+
 - ✅ `docs/stories/1.1.story.md` - **WRONG** (based on EPICS_STORIES, not PRD)
   - Story: Google OAuth Integration
   - Should be: Project Setup & Repository Structure (per PRD)
 
 ### Files That Should Exist (Per PRD)
+
 - `docs/stories/1.1.story.md` - Project Setup & Repository Structure
 - `docs/stories/1.2.story.md` - Multi-Tenant Database Architecture
 - `docs/stories/1.3.story.md` - User Authentication System
@@ -174,6 +191,7 @@ I created `docs/stories/1.1.story.md` based on **EPICS_STORIES.md**, which:
 ## Recommendation
 
 **Use PRD as the authoritative source** because:
+
 1. BMAD config explicitly points to it
 2. It's more comprehensive (100+ stories)
 3. It follows proper infrastructure-first approach

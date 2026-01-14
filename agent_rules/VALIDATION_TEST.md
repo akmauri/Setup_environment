@@ -19,6 +19,7 @@ This test simulates an iterative task to validate the three-file pattern works c
 **File**: `agent_tasks/context/test-iterative-pattern-001_context.md`
 
 **Expected Content**:
+
 - Goal: Review agent rules for patterns
 - Scope: All files in `agent_rules/`
 - Success Criteria: All files reviewed, patterns identified
@@ -28,6 +29,7 @@ This test simulates an iterative task to validate the three-file pattern works c
 **File**: `agent_tasks/todos/test-iterative-pattern-001_todos.md`
 
 **Expected Content**:
+
 - List of all agent rule files to review
 - Checkboxes for each file
 - Progress tracking
@@ -37,6 +39,7 @@ This test simulates an iterative task to validate the three-file pattern works c
 **File**: `agent_tasks/insights/test-iterative-pattern-001_insights.md`
 
 **Expected Content**:
+
 - Findings from reviewing each file
 - Patterns identified
 - Observations
@@ -75,6 +78,7 @@ _To be filled after running test_
 ## Notes
 
 This is a validation test document. The actual test files would be created in:
+
 - `agent_tasks/context/test-iterative-pattern-001_context.md`
 - `agent_tasks/todos/test-iterative-pattern-001_todos.md`
 - `agent_tasks/insights/test-iterative-pattern-001_insights.md`

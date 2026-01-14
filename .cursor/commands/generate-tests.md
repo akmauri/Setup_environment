@@ -11,7 +11,7 @@ When this command is invoked, generate comprehensive tests for the specified cod
    - Understand the expected behavior
 
 2. **Test Structure**
-   - Create test file in appropriate location (__tests__ directory or co-located)
+   - Create test file in appropriate location (**tests** directory or co-located)
    - Use appropriate testing framework (Jest, React Testing Library, etc.)
    - Organize tests into logical describe blocks
    - Use clear, descriptive test names
@@ -32,6 +32,7 @@ When this command is invoked, generate comprehensive tests for the specified cod
 ## Test File Structure
 
 ### For React Components
+
 ```javascript
 import { render, screen, fireEvent } from '@testing-library/react';
 import ComponentName from './ComponentName';
@@ -40,22 +41,24 @@ describe('ComponentName', () => {
   describe('Rendering', () => {
     it('should render with required props', () => {
       // Arrange
-      const props = { /* ... */ };
-      
+      const props = {
+        /* ... */
+      };
+
       // Act
       render(<ComponentName {...props} />);
-      
+
       // Assert
       expect(screen.getByText('Expected Text')).toBeInTheDocument();
     });
   });
-  
+
   describe('User Interactions', () => {
     it('should handle click events', () => {
       // Test interaction
     });
   });
-  
+
   describe('Edge Cases', () => {
     it('should handle missing props gracefully', () => {
       // Test edge case
@@ -65,22 +68,27 @@ describe('ComponentName', () => {
 ```
 
 ### For Functions/Services
+
 ```javascript
 import { functionName } from './module';
 
 describe('functionName', () => {
   it('should return expected result for valid input', () => {
     // Arrange
-    const input = { /* ... */ };
-    const expected = { /* ... */ };
-    
+    const input = {
+      /* ... */
+    };
+    const expected = {
+      /* ... */
+    };
+
     // Act
     const result = functionName(input);
-    
+
     // Assert
     expect(result).toEqual(expected);
   });
-  
+
   it('should throw error for invalid input', () => {
     // Test error case
   });
@@ -108,6 +116,7 @@ describe('functionName', () => {
 ## Test Output
 
 Generate:
+
 1. Complete test file with all necessary imports
 2. Test cases covering happy paths, edge cases, and errors
 3. Proper mocking setup

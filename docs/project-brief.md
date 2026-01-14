@@ -1,25 +1,27 @@
-# Project Brief: Multi-Platform Content Automation System (MPCAS)
+# Project Brief: Multi-Platform Content Automation System (MPCAS2)
 
 **Version:** 1.0  
 **Date:** January 2026  
 **Status:** Initial Project Brief  
-**Project Type:** Enterprise Multi-Platform Content Automation SaaS
+**Project Type:** Enterprise Multi-Platform Content Automation SaaS (MPCAS2)
 
 ---
 
 ## Executive Summary
 
-MPCAS (Multi-Platform Content Automation System) is an enterprise-grade SaaS platform that enables content creators, agencies, and resellers to automate content creation and distribution across 8 major social media platforms. The system combines AI-powered content generation, intelligent workflow automation, comprehensive analytics, and white-label capabilities to create a complete content automation ecosystem.
+MPCAS2 (Multi-Platform Content Automation System) is an enterprise-grade SaaS platform that enables content creators, agencies, and resellers to automate content creation and distribution across 8 major social media platforms. The system combines AI-powered content generation, intelligent workflow automation, comprehensive analytics, and white-label capabilities to create a complete content automation ecosystem.
 
 ### Core Value Proposition
 
 **For Individual Creators:**
+
 - Automate content creation and publishing across YouTube, Instagram, TikTok, Twitter, LinkedIn, Facebook, Pinterest, and Threads
 - Access marketplace of 1,000+ proven workflows
 - AI-powered optimization and trend detection
 - Scale to 50+ social accounts
 
 **For Agencies:**
+
 - Manage 200+ client accounts from one dashboard
 - White-label client reporting
 - Team collaboration with granular permissions
@@ -27,11 +29,12 @@ MPCAS (Multi-Platform Content Automation System) is an enterprise-grade SaaS pla
 - Client portal system
 
 **For Resellers:**
+
 - Complete white-label rebranding
 - Custom domain (app.youragency.com)
 - Manage 1,000+ sub-accounts
 - Revenue sharing and reseller dashboard
-- Remove all MPCAS branding
+- Remove all MPCAS2 branding
 
 ---
 
@@ -40,6 +43,7 @@ MPCAS (Multi-Platform Content Automation System) is an enterprise-grade SaaS pla
 ### Current State & Pain Points
 
 **Content Creators Face:**
+
 - Manual posting across 8+ platforms is time-consuming (2-3 hours per video)
 - Each platform requires different formats, metadata, and optimization
 - No unified analytics dashboard across all platforms
@@ -47,6 +51,7 @@ MPCAS (Multi-Platform Content Automation System) is an enterprise-grade SaaS pla
 - Difficulty scaling content production
 
 **Agencies Face:**
+
 - Managing multiple client accounts is complex and error-prone
 - No white-label solution for client-facing tools
 - Limited automation capabilities
@@ -54,6 +59,7 @@ MPCAS (Multi-Platform Content Automation System) is an enterprise-grade SaaS pla
 - High operational overhead
 
 **Market Gaps:**
+
 - Existing tools focus on single platforms or basic scheduling
 - No comprehensive workflow marketplace
 - Limited AI-powered content optimization
@@ -74,7 +80,8 @@ MPCAS (Multi-Platform Content Automation System) is an enterprise-grade SaaS pla
 
 ### Core Concept
 
-MPCAS is a unified platform that:
+MPCAS2 is a unified platform that:
+
 1. **Generates Content:** AI-powered video/image generation using ComfyUI, Stable Diffusion, and local LLMs (Ollama)
 2. **Distributes Content:** Automated publishing to 8 platforms with platform-specific optimization
 3. **Optimizes Performance:** AI-powered analytics, A/B testing, and trend detection
@@ -105,18 +112,21 @@ MPCAS is a unified platform that:
 ### Primary User Segment: Content Creators (50M+ worldwide)
 
 **Demographics:**
+
 - Age: 18-45
 - Location: Global (US, UK, CA, AU, EU primary)
 - Income: $30K-$150K/year
 - Tech-savviness: Medium to High
 
 **Current Behaviors:**
+
 - Post 3-7 times per week across platforms
 - Use 2-4 different tools (scheduling, analytics, editing)
 - Spend 10-15 hours/week on content creation and posting
 - Manage 3-12 social accounts
 
 **Needs & Pain Points:**
+
 - Reduce manual posting time by 80%+
 - Maintain consistent posting schedule
 - Optimize content for each platform
@@ -124,6 +134,7 @@ MPCAS is a unified platform that:
 - Generate content ideas when stuck
 
 **Goals:**
+
 - Grow followers/subscribers
 - Increase engagement rates
 - Monetize content (ads, sponsorships)
@@ -132,18 +143,21 @@ MPCAS is a unified platform that:
 ### Secondary User Segment: Content Agencies (500K+ worldwide)
 
 **Demographics:**
+
 - Company size: 5-50 employees
 - Clients: 5-200 client accounts
 - Revenue: $100K-$5M/year
 - Location: US, UK, CA, AU, EU
 
 **Current Behaviors:**
+
 - Use 3-5 different tools per client
 - Manual reporting takes 5-10 hours/month per client
 - High client churn due to inefficiency
 - Limited scalability (can't take on more clients)
 
 **Needs & Pain Points:**
+
 - White-label solution for client-facing tools
 - Unified dashboard for all clients
 - Automated client reporting
@@ -151,6 +165,7 @@ MPCAS is a unified platform that:
 - Multi-account posting without detection
 
 **Goals:**
+
 - Scale to 100+ clients
 - Increase profit margins
 - Reduce operational overhead
@@ -159,13 +174,15 @@ MPCAS is a unified platform that:
 ### Tertiary User Segment: Resellers (100K+ potential)
 
 **Demographics:**
+
 - Entrepreneurs, consultants, agencies
 - Want to white-label platform for their clients
 - Charge $1,000-$2,000/month per client
 - Need complete rebranding
 
 **Needs:**
-- Remove all MPCAS branding
+
+- Remove all MPCAS2 branding
 - Custom domain
 - Manage 100+ sub-accounts
 - Revenue sharing model
@@ -203,11 +220,11 @@ MPCAS is a unified platform that:
 2. **Retention:**
    - <5% monthly churn (standard tiers)
    - <1% monthly churn (White Label tier)
-   - >100% net revenue retention
+   - > 100% net revenue retention
 
 3. **Satisfaction:**
-   - >4.5/5 average rating
-   - >50 NPS (Net Promoter Score)
+   - > 4.5/5 average rating
+   - > 50 NPS (Net Promoter Score)
    - <4 hour support response time (Professional+)
 
 ### Key Performance Indicators (KPIs)
@@ -293,13 +310,13 @@ MPCAS is a unified platform that:
 
 2. **Performance:**
    - <2 second page load times
-   - >98% publishing success rate
+   - > 98% publishing success rate
    - 99.9% uptime
 
 3. **User Adoption:**
    - 100 beta users
    - 40% trial-to-paid conversion
-   - >4.0/5 average rating
+   - > 4.0/5 average rating
 
 ---
 
@@ -383,6 +400,7 @@ MPCAS is a unified platform that:
 ### Technology Preferences
 
 **Frontend:**
+
 - React / Next.js 14+
 - TypeScript
 - Tailwind CSS
@@ -390,6 +408,7 @@ MPCAS is a unified platform that:
 - React Query for data fetching
 
 **Backend:**
+
 - Node.js 20+ / Python 3.11+
 - Express.js / FastAPI
 - PostgreSQL 15+ (multi-tenant, schema-per-tenant)
@@ -397,6 +416,7 @@ MPCAS is a unified platform that:
 - Bull (task queue)
 
 **AI & Content Generation:**
+
 - ComfyUI (self-hosted, GPU workers)
 - Ollama (local LLMs: Llama 3.3, Mistral, DeepSeek)
 - Stable Diffusion XL, Flux (image generation)
@@ -404,10 +424,12 @@ MPCAS is a unified platform that:
 - Cloud LLMs (GPT-4, Claude 3.5) for 20% of workload
 
 **Workflow Automation:**
+
 - n8n (self-hosted, workflow orchestration)
 - Custom workflow builder (ReactFlow)
 
 **Infrastructure:**
+
 - Docker + Docker Compose (development)
 - Kubernetes (production, scale)
 - AWS / Google Cloud / Azure
@@ -415,6 +437,7 @@ MPCAS is a unified platform that:
 - S3-compatible storage (AWS S3, Cloudflare R2)
 
 **External Services:**
+
 - Stripe (payments)
 - SendGrid / AWS SES (email)
 - Twilio (SMS)
@@ -424,6 +447,7 @@ MPCAS is a unified platform that:
 ### Architecture Considerations
 
 **Repository Structure:**
+
 - Monorepo (recommended) or Polyrepo
 - Frontend: `apps/web` or `frontend/`
 - Backend: `apps/api` or `backend/`
@@ -431,18 +455,21 @@ MPCAS is a unified platform that:
 - Workflows: `workflows/` (n8n exports)
 
 **Service Architecture:**
+
 - Microservices approach (modular services)
 - API Gateway pattern
 - Event-driven architecture (for async operations)
 - Multi-tenant (schema-per-tenant)
 
 **Integration Requirements:**
+
 - OAuth 2.0 for all 8 platforms
 - RESTful API (all features accessible via API)
 - Webhook support (for platform callbacks)
 - Real-time updates (WebSockets or polling)
 
 **Security/Compliance:**
+
 - Bank-level encryption (AES-256-GCM)
 - Per-tenant encryption keys
 - GDPR compliance tools
@@ -456,21 +483,25 @@ MPCAS is a unified platform that:
 ### Constraints
 
 **Budget:**
+
 - Development: $150K-250K (5 months, 6-8 person team)
 - Year 1 Operating: $300K-500K (infrastructure, AI APIs, support)
 - Marketing: $100K-200K (Year 1)
 
 **Timeline:**
+
 - MVP: 4-5 months (16-20 weeks)
 - Public Launch: Month 6
 - Break-even: Month 7-10
 
 **Resources:**
+
 - Team: 2-3 backend, 1-2 frontend, 1 DevOps, 1 PM, 1 Designer, 1 QA
 - Infrastructure: Cloud hosting (AWS/GCP/Azure)
 - GPU Resources: Self-hosted + cloud (hybrid approach)
 
 **Technical:**
+
 - Platform API rate limits (YouTube: 6 videos/day, TikTok: 20/day)
 - OAuth token management (refresh every hour)
 - Multi-tenant data isolation (critical for security)
@@ -613,9 +644,10 @@ MPCAS is a unified platform that:
 
 ### PM Handoff
 
-This Project Brief provides the full context for MPCAS. The next step is to create a comprehensive PRD (Product Requirements Document) that breaks down all features into epics and user stories, defines acceptance criteria, and establishes the development roadmap.
+This Project Brief provides the full context for MPCAS2. The next step is to create a comprehensive PRD (Product Requirements Document) that breaks down all features into epics and user stories, defines acceptance criteria, and establishes the development roadmap.
 
 **Key Areas for PRD:**
+
 - Detailed feature specifications for all 8 platforms
 - Workflow marketplace requirements
 - White-label system specifications
@@ -626,6 +658,7 @@ This Project Brief provides the full context for MPCAS. The next step is to crea
 - API specifications
 
 **Recommended Approach:**
+
 - Start with MVP features (core platform publishing)
 - Add advanced features in Phase 2
 - Prioritize based on user value and technical complexity

@@ -11,6 +11,7 @@ For tasks that involve iterative processing (analysis, extraction, review, data 
 ## When to Use This Pattern
 
 Use this pattern for tasks that:
+
 - Process multiple items iteratively (files, documents, records, etc.)
 - Require collecting insights or findings over time
 - May span multiple sessions or memory compaction events
@@ -18,6 +19,7 @@ Use this pattern for tasks that:
 - Need persistent context that survives memory resets
 
 **Examples**:
+
 - Analyzing multiple transcripts or documents
 - Extracting data from multiple sources
 - Reviewing code across multiple files
@@ -31,11 +33,13 @@ Use this pattern for tasks that:
 When beginning an iterative task, create three files:
 
 #### 1. Context File
+
 **Location**: `agent_tasks/context/[task_id]_context.md`
 
 **Purpose**: Store the goal, scope, constraints, and success criteria for the task.
 
 **Format**:
+
 ```markdown
 # Task Context: [Task Name]
 
@@ -45,30 +49,38 @@ When beginning an iterative task, create three files:
 **Status**: [in_progress/completed]
 
 ## Goal
+
 [Clear statement of what this task aims to achieve]
 
 ## Scope
+
 [What is included and excluded from this task]
 
 ## Constraints
+
 [Any limitations or constraints]
 
 ## Success Criteria
+
 [How we'll know the task is complete]
 
 ## Data Sources
+
 [List of files, sources, or inputs to process]
 
 ## Output Requirements
+
 [What needs to be produced]
 ```
 
 #### 2. Todos File
+
 **Location**: `agent_tasks/todos/[task_id]_todos.md`
 
 **Purpose**: Track which items have been processed and what remains.
 
 **Format**:
+
 ```markdown
 # Task Todos: [Task Name]
 
@@ -77,27 +89,32 @@ When beginning an iterative task, create three files:
 **Last Updated**: [timestamp]
 
 ## Progress
+
 - Total items: [count]
 - Completed: [count]
 - In Progress: [count]
 - Remaining: [count]
 
 ## Items to Process
+
 - [ ] Item 1: [description]
 - [ ] Item 2: [description]
 - [x] Item 3: [description] (completed)
 - [ ] Item 4: [description]
 
 ## Notes
+
 [Any relevant notes about the items or process]
 ```
 
 #### 3. Insights File
+
 **Location**: `agent_tasks/insights/[task_id]_insights.md`
 
 **Purpose**: Collect findings, patterns, extracted data, and observations iteratively.
 
 **Format**:
+
 ```markdown
 # Task Insights: [Task Name]
 
@@ -106,21 +123,27 @@ When beginning an iterative task, create three files:
 **Last Updated**: [timestamp]
 
 ## Summary
+
 [High-level summary of findings]
 
 ## Key Findings
+
 [Major insights discovered]
 
 ## Patterns Identified
+
 [Recurring patterns or themes]
 
 ## Extracted Data
+
 [Specific data points collected]
 
 ## Observations
+
 [Notable observations]
 
 ## Next Steps
+
 [What should be done with these insights]
 ```
 
@@ -153,7 +176,7 @@ When beginning an iterative task, create three files:
 
 **After any memory compaction event**, you MUST:
 
-1. **Read Context File First**: 
+1. **Read Context File First**:
    - Load `agent_tasks/context/[task_id]_context.md`
    - Understand the goal and scope
    - Review success criteria
@@ -209,6 +232,7 @@ When the task is complete:
 ## Integration with Other Rules
 
 This pattern integrates with:
+
 - **Core Principles** (`agent_rules/core_principles.md`): Part of task management
 - **Context Guide** (`.cursor/rules/agent_context.md`): Context files are part of context loading
 - **Loop Guard** (`agent_rules/loop_guard.md`): Prevents loops by maintaining clear progress tracking
@@ -228,6 +252,7 @@ This pattern integrates with:
 ### Example: Transcript Analysis Task
 
 **Context File** (`agent_tasks/context/transcript-analysis_context.md`):
+
 ```markdown
 # Task Context: Customer Pain Point Extraction
 
@@ -238,15 +263,18 @@ This pattern integrates with:
 ```
 
 **Todos File** (`agent_tasks/todos/transcript-analysis_todos.md`):
+
 ```markdown
 # Task Todos: Customer Pain Point Extraction
 
 ## Progress
+
 - Total items: 50
 - Completed: 23
 - Remaining: 27
 
 ## Items to Process
+
 - [x] transcript_001.md
 - [x] transcript_002.md
 - [ ] transcript_024.md
@@ -254,14 +282,17 @@ This pattern integrates with:
 ```
 
 **Insights File** (`agent_tasks/insights/transcript-analysis_insights.md`):
+
 ```markdown
 # Task Insights: Customer Pain Point Extraction
 
 ## Key Findings
+
 - Most common pain point: "Can't find documentation" (mentioned 15 times)
 - Second most common: "Setup is confusing" (mentioned 12 times)
 
 ## Exact Phrases
+
 - "I spent 2 hours looking for how to configure this"
 - "The setup process is really confusing"
 ```
@@ -269,6 +300,7 @@ This pattern integrates with:
 ## Metrics
 
 Track iterative work metrics:
+
 - **Items Processed**: Count of items completed
 - **Insights Collected**: Count of insights documented
 - **Time per Item**: Average time to process each item

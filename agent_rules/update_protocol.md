@@ -21,6 +21,7 @@ Agent rules should be updated when:
 **Location**: `agent_rules/rule_update_proposal.md`
 
 **Required Content**:
+
 - **Current Rule**: What rule needs updating
 - **Problem Statement**: Why update is needed
 - **Proposed Change**: What the new rule should be
@@ -30,6 +31,7 @@ Agent rules should be updated when:
 - **Testing Plan**: How to validate the change
 
 **Format**:
+
 ```markdown
 # Rule Update Proposal: [Rule Name]
 
@@ -38,30 +40,38 @@ Agent rules should be updated when:
 **Status**: [Draft|Review|Approved|Rejected]
 
 ## Current Rule
+
 [Description of current rule]
 
 ## Problem Statement
+
 [Why this needs to change]
 
 ## Proposed Change
+
 [New rule description]
 
 ## Rationale
+
 [Why this is better]
 
 ## Impact Analysis
+
 - **Affected Agents**: [List]
 - **Affected Processes**: [List]
 - **Breaking Changes**: [Yes/No, details]
 - **Migration Required**: [Yes/No, details]
 
 ## Migration Path
+
 [How to transition from old to new]
 
 ## Testing Plan
+
 [How to validate the change works]
 
 ## Approval
+
 - [ ] Reviewed by Architect
 - [ ] Reviewed by PM
 - [ ] Tested in staging
@@ -71,12 +81,14 @@ Agent rules should be updated when:
 ### Step 2: Review Process
 
 **Reviewers**:
+
 1. **Architect Agent** - Technical feasibility
 2. **PM Agent** - Process impact
 3. **Dev Agent** - Implementation details
 4. **QA Agent** - Testing requirements
 
 **Review Criteria**:
+
 - Does it solve the problem?
 - Is it clear and actionable?
 - Will it cause breaking changes?
@@ -84,6 +96,7 @@ Agent rules should be updated when:
 - Are tests adequate?
 
 **Review Timeline**:
+
 - Initial review: 24 hours
 - Revisions: 48 hours
 - Final approval: 72 hours
@@ -91,6 +104,7 @@ Agent rules should be updated when:
 ### Step 3: Staging Environment Testing
 
 **Test in Staging**:
+
 1. **Deploy to staging** - Update rules in staging environment
 2. **Run test scenarios** - Execute typical workflows
 3. **Monitor behavior** - Check agent behavior matches expectations
@@ -98,6 +112,7 @@ Agent rules should be updated when:
 5. **Document results** - Record test outcomes
 
 **Success Criteria**:
+
 - ✅ No breaking changes observed
 - ✅ Agents follow new rules correctly
 - ✅ Performance maintained or improved
@@ -109,6 +124,7 @@ Agent rules should be updated when:
 ### Step 4: Single Agent Validation
 
 **Deploy to One Agent**:
+
 1. **Select test agent** - Choose one agent for validation
 2. **Update agent rules** - Deploy new rules to test agent
 3. **Monitor for 24 hours** - Watch agent behavior
@@ -116,6 +132,7 @@ Agent rules should be updated when:
 5. **Validate success** - Confirm rules work as expected
 
 **Success Criteria**:
+
 - ✅ Agent follows new rules
 - ✅ No errors or issues
 - ✅ Performance acceptable
@@ -124,6 +141,7 @@ Agent rules should be updated when:
 ### Step 5: Full Deployment
 
 **After 24h Success**:
+
 1. **Deploy to all agents** - Update all agent rules
 2. **Notify agents** - Inform agents of rule changes
 3. **Monitor rollout** - Watch for issues
@@ -131,6 +149,7 @@ Agent rules should be updated when:
 5. **Document deployment** - Record deployment details
 
 **Rollback Plan**:
+
 - Keep old rules as backup
 - Can rollback within 48 hours if issues
 - Document rollback procedure
@@ -142,6 +161,7 @@ Agent rules should be updated when:
 **Format**: `v{major}.{minor}.{patch}`
 
 **Examples**:
+
 - `v1.0.0` - Initial version
 - `v1.1.0` - Minor update (new feature)
 - `v1.1.1` - Patch (bug fix)
@@ -152,6 +172,7 @@ Agent rules should be updated when:
 **Location**: Each rule file has version in header
 
 **Format**:
+
 ```markdown
 # [Rule Name]
 
@@ -165,21 +186,26 @@ Agent rules should be updated when:
 **Location**: `agent_rules/CHANGELOG.md`
 
 **Format**:
+
 ```markdown
 # Agent Rules Changelog
 
 ## [Version] - [Date]
 
 ### Changed
+
 - [Rule Name]: [Description of change]
 
 ### Added
+
 - [New Rule]: [Description]
 
 ### Removed
+
 - [Removed Rule]: [Reason]
 
 ### Fixed
+
 - [Rule Name]: [Bug fix description]
 ```
 
@@ -246,6 +272,7 @@ This update protocol integrates with BMAD:
 **Location**: `logs/performance/rule_updates.log`
 
 **Format**:
+
 ```json
 {
   "date": "2026-01-XX",

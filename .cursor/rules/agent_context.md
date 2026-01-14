@@ -7,11 +7,13 @@ This document is the **single source of truth** for context loading procedures. 
 When an agent starts work, it should load context in this order:
 
 ### 1. Task Context (Required)
+
 - `agent_tasks/todo_progress.json` - Current task status and assignment
 - `plan/IMPLEMENTATION_PLAN.md` - Current implementation plan
 - Related spec files in `specs/` - Task-specific requirements
 
 ### 2. Agent Rules (Required)
+
 - `agent_rules/core_principles.md` - Fundamental principles
 - `agent_rules/error_handling.md` - Error handling protocol
 - `agent_rules/parallel_coordination.md` - Coordination rules
@@ -21,12 +23,14 @@ When an agent starts work, it should load context in this order:
 - `agent_rules/iterative_work_pattern.md` - Pattern for iterative tasks (if applicable)
 
 ### 3. Project Context (Required)
+
 - `docs/ARCHITECTURE.md` - System architecture
 - `docs/prd.md` - Product requirements
 - `.cursor/rules/project-overview.mdc` - Project overview
 - `.cursor/rules/development-workflow.mdc` - Development workflow
 
 ### 4. Domain-Specific Context (As Needed)
+
 - `docs/agent_knowledge/` - Lessons learned
 - `logs/common_errors.md` - Common error solutions
 - Related code files - Implementation details
@@ -35,48 +39,60 @@ When an agent starts work, it should load context in this order:
 ## Agent-Specific Context
 
 ### Developer Agent
+
 **Must Load**:
+
 - Coding standards (`.cursor/rules/code-standards.mdc`)
 - Architecture document
 - Related code files
 - Test files
 
 **Should Load**:
+
 - Agent knowledge for similar tasks
 - Common errors related to implementation
 - BMAD dev agent definition (if using BMAD)
 
 ### QA Agent
+
 **Must Load**:
+
 - Test requirements
 - Test frameworks documentation
 - Related test files
 - Acceptance criteria from specs
 
 **Should Load**:
+
 - Testing patterns from agent knowledge
 - Common test errors
 - BMAD QA agent definition (if using BMAD)
 
 ### Architect Agent
+
 **Must Load**:
+
 - Architecture document
 - System design patterns
 - Technology stack documentation
 - Integration requirements
 
 **Should Load**:
+
 - Architecture decisions from `docs/decisions/`
 - BMAD architect agent definition (if using BMAD)
 
 ### PM Agent
+
 **Must Load**:
+
 - PRD and project brief
 - Epics and stories
 - Task status
 - Implementation plan
 
 **Should Load**:
+
 - BMAD PM agent definition (if using BMAD)
 - Workflow definitions
 
@@ -92,12 +108,14 @@ When using BMAD agents:
 ## Context Management
 
 ### Avoid Context Overload
+
 - Only load what's needed for current task
 - Use subagents for research to keep main context clean
 - Reference documents rather than loading entire content
 - Use summaries for large documents
 
 ### Context Updates
+
 - Update context when requirements change
 - Refresh context if working on task for extended time
 - Reload context after errors or blockers
@@ -131,6 +149,7 @@ When using BMAD agents:
 ## Context Sources
 
 ### Primary Sources
+
 - `docs/` - Project documentation
 - `agent_rules/` - Agent coordination rules
 - `agent_tasks/` - Task management
@@ -138,6 +157,7 @@ When using BMAD agents:
 - `.bmad-core/` - BMAD framework (if using)
 
 ### Secondary Sources
+
 - `logs/` - Error logs and activity logs
 - `docs/agent_knowledge/` - Lessons learned
 - `claude_skills/` - Reusable skills

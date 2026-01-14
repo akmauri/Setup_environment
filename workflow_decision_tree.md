@@ -117,6 +117,7 @@ START: Need to implement functionality
 **Decision**: Use Code
 
 **Reasoning**:
+
 - Complex business logic (password hashing, JWT generation)
 - Security critical (needs type safety, testing)
 - Performance critical (every request)
@@ -131,12 +132,14 @@ START: Need to implement functionality
 **Decision**: Use n8n
 
 **Reasoning**:
+
 - Scheduled task (daily)
 - API orchestration (fetch from multiple APIs)
 - Simple data aggregation
 - Not performance critical
 
 **Implementation**: n8n workflow with:
+
 - Schedule trigger (daily at 9 AM)
 - HTTP Request nodes (fetch analytics)
 - Function node (aggregate data)
@@ -149,12 +152,14 @@ START: Need to implement functionality
 **Decision**: Hybrid (n8n + Code)
 
 **Reasoning**:
+
 - Orchestration: n8n (trigger, coordinate)
 - Business logic: Code (AI generation, processing)
 - Scheduled: n8n (when to run)
 - Complex processing: Code (content generation service)
 
 **Implementation**:
+
 - n8n workflow triggers content generation
 - Calls code service (Python FastAPI) for AI processing
 - n8n handles scheduling and notifications
@@ -167,6 +172,7 @@ START: Need to implement functionality
 **Decision**: Use Code
 
 **Reasoning**:
+
 - Complex business logic (platform-specific formatting)
 - Type safety needed (API contracts)
 - Performance critical (user-facing)
@@ -181,12 +187,14 @@ START: Need to implement functionality
 **Decision**: Use n8n
 
 **Reasoning**:
+
 - Scheduled task (daily backup)
 - Simple data movement (copy files)
 - API orchestration (S3, database)
 - Not performance critical
 
 **Implementation**: n8n workflow with:
+
 - Schedule trigger
 - Database query node
 - S3 upload node
@@ -199,6 +207,7 @@ START: Need to implement functionality
 **Decision**: Use Code
 
 **Reasoning**:
+
 - User interface required
 - Real-time interactions (WebSockets)
 - Complex state management
@@ -213,12 +222,14 @@ START: Need to implement functionality
 **Decision**: Use n8n
 
 **Reasoning**:
+
 - Simple data movement (trigger → email)
 - API orchestration (SendGrid)
 - Easy to modify templates
 - Not performance critical
 
 **Implementation**: n8n workflow with:
+
 - Webhook trigger
 - Template node
 - SendGrid node
@@ -230,6 +241,7 @@ START: Need to implement functionality
 **Decision**: Use Code
 
 **Reasoning**:
+
 - Complex business logic (payment validation)
 - Security critical (PCI compliance)
 - Type safety required
@@ -268,12 +280,14 @@ Before deciding, ask:
 ### From n8n to Code
 
 When to migrate:
+
 - Performance becomes an issue
 - Logic becomes too complex
 - Need better testing
 - Need type safety
 
 Migration steps:
+
 1. Document n8n workflow
 2. Implement in code
 3. Test thoroughly
@@ -283,12 +297,14 @@ Migration steps:
 ### From Code to n8n
 
 When to migrate:
+
 - Logic is simple
 - Mostly API orchestration
 - Need rapid changes
 - Not performance critical
 
 Migration steps:
+
 1. Extract orchestration logic
 2. Create n8n workflow
 3. Test workflow

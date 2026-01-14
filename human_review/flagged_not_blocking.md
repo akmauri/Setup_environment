@@ -5,6 +5,7 @@ This document tracks items flagged for human awareness but not blocking work.
 ## Format
 
 Each flag entry should include:
+
 - **Date**: When flagged
 - **Agent**: Which agent flagged it
 - **Decision**: What decision was made

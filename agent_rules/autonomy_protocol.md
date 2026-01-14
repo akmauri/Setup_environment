@@ -11,6 +11,7 @@ Execute continuously without human review unless you encounter a decision that c
 ### 1. BREAKAGE LINE: "Does this change break existing functionality?"
 
 **Autonomous if:**
+
 - All tests pass
 - Type checking succeeds
 - Core user flows remain intact
@@ -18,6 +19,7 @@ Execute continuously without human review unless you encounter a decision that c
 - Application builds and starts successfully
 
 **Flag if:**
+
 - More than 5% test regression
 - New type errors in core modules
 - Breaking API changes (with migration path)
@@ -25,6 +27,7 @@ Execute continuously without human review unless you encounter a decision that c
 - Non-critical functionality affected
 
 **Stop if:**
+
 - Application fails to build
 - Application fails to start
 - Causes data corruption
@@ -34,12 +37,14 @@ Execute continuously without human review unless you encounter a decision that c
 ### 2. PLAN DEVIATION LINE: "Does this significantly deviate from the agreed implementation plan?"
 
 **Autonomous if:**
+
 - Implementation method varies but achieves same outcome specified in `plan/IMPLEMENTATION_PLAN.md`
 - Alternative approach is equivalent or better
 - Changes are implementation details, not feature changes
 - Same user experience and business goals
 
 **Flag if:**
+
 - Adding/removing features not in the spec
 - Changing UX patterns significantly
 - Using new major technologies not in architecture
@@ -47,6 +52,7 @@ Execute continuously without human review unless you encounter a decision that c
 - Modifying core workflows
 
 **Stop if:**
+
 - Completely changes product direction
 - Core architecture changes without plan update
 - Fundamental technology stack changes
@@ -56,6 +62,7 @@ Execute continuously without human review unless you encounter a decision that c
 ### 3. INTENTION SHIFT LINE: "Does this alter the core user experience or business goals?"
 
 **Autonomous if:**
+
 - Improves performance
 - Fixes bugs
 - Enhances UX within original constraints
@@ -63,6 +70,7 @@ Execute continuously without human review unless you encounter a decision that c
 - Optimizes existing functionality
 
 **Flag if:**
+
 - Changes primary user workflows
 - Alters data models significantly
 - Adds major new capabilities
@@ -70,6 +78,7 @@ Execute continuously without human review unless you encounter a decision that c
 - Modifies business logic substantially
 
 **Stop if:**
+
 - Fundamentally changes what the product is
 - Changes core value proposition
 - Alters primary use cases
@@ -83,20 +92,18 @@ autonomous_continuity:
   decision_flow:
     1. "Before any significant change, run: RED_LINE_CHECKLIST.md"
     2. "If zero red lines crossed: IMPLEMENT → LOG → CONTINUE"
-    3. "If potentially crossing but workaround exists: 
-         FLAG → IMPLEMENT_WORKAROUND → LOG → CONTINUE"
-    4. "If must cross red line: 
-         STOP → CREATE_REVIEW_TICKET → AWAIT_HUMAN"
-  
+    3. "If potentially crossing but workaround exists: FLAG → IMPLEMENT_WORKAROUND → LOG → CONTINUE"
+    4. "If must cross red line: STOP → CREATE_REVIEW_TICKET → AWAIT_HUMAN"
+
   logging_requirement:
-    - "All autonomous decisions logged to logs/autonomy/[timestamp].md"
-    - "Weekly autonomy report generated every Friday"
-    - "Flagged items added to human_review/flagged_not_blocking.md"
-  
+    - 'All autonomous decisions logged to logs/autonomy/[timestamp].md'
+    - 'Weekly autonomy report generated every Friday'
+    - 'Flagged items added to human_review/flagged_not_blocking.md'
+
   escalation_triggers:
-    - "Three similar flags in 24 hours triggers auto-pause"
-    - "Build failure after autonomous change triggers rollback + pause"
-    - "User-facing error report triggers immediate reassessment"
+    - 'Three similar flags in 24 hours triggers auto-pause'
+    - 'Build failure after autonomous change triggers rollback + pause'
+    - 'User-facing error report triggers immediate reassessment'
 ```
 
 ## Implementation Protocol
@@ -130,6 +137,7 @@ When potentially crossing a red line but workaround exists:
 4. **Continue Work**: Don't stop, just flag for awareness
 
 **Example Flags:**
+
 - "Changing from REST to GraphQL for one endpoint (Plan deviation, but tests pass)"
 - "Adding optional new field to user model (Minor intention shift, backward compatible)"
 - "Switching UI library for one component (Plan deviation, but same functionality)"
@@ -144,6 +152,7 @@ When must cross a red line:
 4. **Await Human Decision**: Do not proceed without approval
 
 **Example Stops:**
+
 - "Proposal to switch from SQL to NoSQL database"
 - "Decision to make premium features free"
 - "Complete redesign of core user workflow"
@@ -182,6 +191,7 @@ When must cross a red line:
 **Location**: `logs/autonomy/[YYYY-MM-DD_HH-MM-SS].md`
 
 **Format**:
+
 ```markdown
 # Autonomous Decision Log
 
@@ -191,17 +201,21 @@ When must cross a red line:
 **Decision**: [What was decided]
 
 ## Red Line Check
+
 - [ ] Breakage Line: [Status]
 - [ ] Plan Deviation Line: [Status]
 - [ ] Intention Shift Line: [Status]
 
 ## Action Taken
+
 [What was done]
 
 ## Rationale
+
 [Why this decision was made]
 
 ## Impact
+
 [Expected impact]
 ```
 
@@ -212,6 +226,7 @@ When must cross a red line:
 **Generated**: Every Friday
 
 **Content**:
+
 - Summary of autonomous decisions
 - Flags raised during week
 - Stops and escalations
@@ -249,6 +264,7 @@ This protocol integrates with:
 
 - **Core Principles**: `agent_rules/core_principles.md`
 - **Error Handling**: `agent_rules/error_handling.md`
+- **Loop Guard**: `agent_rules/loop_guard.md` - Loops can occur during autonomous execution
 - **Task Management**: `agent_tasks/todo_progress.json`
 - **BMAD System**: BMAD agents follow this protocol
 
@@ -258,7 +274,9 @@ All agents should include this in their activation:
 
 ```markdown
 ## AUTONOMY DIRECTIVE
+
 You operate under Rule #1 - Autonomous Continuity. You have permission to:
+
 1. Make decisions without asking if you don't cross red lines
 2. Implement improvements that don't break, deviate, or shift intentions
 3. Flag concerns for awareness while continuing work

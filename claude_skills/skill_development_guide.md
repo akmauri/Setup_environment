@@ -14,6 +14,7 @@ Create a Claude Skill when **ALL** of the following criteria are met:
 ### Examples
 
 ✅ **Good Candidates**:
+
 - Code review with specific checklist
 - API endpoint creation following project patterns
 - Test generation for specific component types
@@ -21,6 +22,7 @@ Create a Claude Skill when **ALL** of the following criteria are met:
 - Database migration creation
 
 ❌ **Not Good Candidates**:
+
 - One-off tasks
 - Tasks requiring human judgment
 - Tasks that vary significantly each time
@@ -33,6 +35,7 @@ Create a Claude Skill when **ALL** of the following criteria are met:
 **Location**: `claude_skills/[skill_name].md`
 
 **Format**:
+
 ```markdown
 # [Skill Name]
 
@@ -42,34 +45,42 @@ Create a Claude Skill when **ALL** of the following criteria are met:
 **Usage Count**: 0
 
 ## Description
+
 [What this skill does]
 
 ## When to Use
+
 [When this skill should be invoked]
 
 ## Inputs
+
 - [Input 1]: [Description]
 - [Input 2]: [Description]
 
 ## Process
+
 1. [Step 1]
 2. [Step 2]
 3. [Step 3]
 
 ## Outputs
+
 - [Output 1]: [Description]
 - [Output 2]: [Description]
 
 ## Examples
 
 ### Example 1
+
 **Input**: [Example input]
 **Output**: [Example output]
 
 ## Testing
+
 [How to test this skill]
 
 ## Related Skills
+
 - [Related skill 1]
 - [Related skill 2]
 ```
@@ -134,51 +145,64 @@ Use this template when creating a new skill:
 **Last Used**: Never
 
 ## Description
+
 [One paragraph describing what this skill does]
 
 ## When to Use
+
 - [Condition 1]
 - [Condition 2]
 - [Condition 3]
 
 ## Prerequisites
+
 - [Prerequisite 1]
 - [Prerequisite 2]
 
 ## Inputs
-| Input | Type | Required | Description |
-|-------|------|----------|-------------|
-| input1 | string | Yes | [Description] |
-| input2 | number | No | [Description] |
+
+| Input  | Type   | Required | Description   |
+| ------ | ------ | -------- | ------------- |
+| input1 | string | Yes      | [Description] |
+| input2 | number | No       | [Description] |
 
 ## Process
 
 ### Step 1: [Step Name]
+
 [Detailed instructions]
 
 ### Step 2: [Step Name]
+
 [Detailed instructions]
 
 ### Step 3: [Step Name]
+
 [Detailed instructions]
 
 ## Outputs
-| Output | Type | Description |
-|--------|------|-------------|
+
+| Output  | Type   | Description   |
+| ------- | ------ | ------------- |
 | output1 | [type] | [Description] |
 | output2 | [type] | [Description] |
 
 ## Examples
 
 ### Example 1: [Scenario]
+
 **Input**:
 ```
+
 [Example input]
+
 ```
 
 **Output**:
 ```
+
 [Example output]
+
 ```
 
 **Notes**: [Any relevant notes]

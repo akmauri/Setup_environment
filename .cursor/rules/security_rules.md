@@ -26,12 +26,14 @@ This document defines security rules that all agents must follow.
 ### Examples
 
 ❌ **BAD**:
+
 ```typescript
 const API_KEY = 'sk-1234567890abcdef';
 const dbPassword = 'mypassword123';
 ```
 
 ✅ **GOOD**:
+
 ```typescript
 const API_KEY = process.env.API_KEY;
 const dbPassword = process.env.DB_PASSWORD;
@@ -56,6 +58,7 @@ const dbPassword = process.env.DB_PASSWORD;
 ### Environment Files
 
 **`.env.example`** (committed):
+
 ```bash
 # API Keys
 API_KEY=your-api-key-here
@@ -65,6 +68,7 @@ DB_PASSWORD=your-password-here
 ```
 
 **`.env`** (gitignored):
+
 ```bash
 # Actual values (not committed)
 API_KEY=sk-actual-key-123
@@ -74,17 +78,20 @@ DB_PASSWORD=actual-password-456
 ## API Key Management
 
 ### Storage
+
 - **Development**: `.env` file (gitignored)
 - **Staging/Production**: Secure secret store
 - **CI/CD**: Encrypted secrets in CI system
 
 ### Usage
+
 - **Never log API keys**
 - **Never expose in URLs**
 - **Use headers for authentication**
 - **Rotate keys regularly**
 
 ### Validation
+
 - **Check for hardcoded keys** in code reviews
 - **Scan codebase** for potential secrets
 - **Use tools** like `git-secrets` or `truffleHog`
@@ -92,6 +99,7 @@ DB_PASSWORD=actual-password-456
 ## Input Validation
 
 ### Always Validate
+
 - User inputs
 - API responses
 - File uploads
@@ -99,6 +107,7 @@ DB_PASSWORD=actual-password-456
 - Environment variables
 
 ### Validation Rules
+
 1. **Type checking**: Verify data types
 2. **Range checking**: Verify value ranges
 3. **Format validation**: Verify formats (email, URL, etc.)
@@ -123,12 +132,14 @@ function sanitizeInput(input: string): string {
 ## Authentication & Authorization
 
 ### Authentication
+
 - **Use secure methods**: OAuth 2.0, JWT
 - **Never store passwords in plain text**: Use bcrypt, argon2
 - **Implement rate limiting**: Prevent brute force
 - **Use HTTPS**: Always encrypt in transit
 
 ### Authorization
+
 - **Check permissions**: Verify user has access
 - **Principle of least privilege**: Minimum required access
 - **Validate on server**: Never trust client
@@ -139,6 +150,7 @@ function sanitizeInput(input: string): string {
 ### Never Expose Sensitive Information
 
 ❌ **BAD**:
+
 ```typescript
 catch (error) {
   return { error: error.message }; // May expose internal details
@@ -146,6 +158,7 @@ catch (error) {
 ```
 
 ✅ **GOOD**:
+
 ```typescript
 catch (error) {
   log.error('Internal error', error); // Log internally
@@ -154,6 +167,7 @@ catch (error) {
 ```
 
 ### Error Messages
+
 - **Generic for users**: Don't reveal system details
 - **Detailed in logs**: Log full details server-side
 - **No stack traces**: Don't expose to clients in production
@@ -161,12 +175,14 @@ catch (error) {
 ## Data Protection
 
 ### Sensitive Data
+
 - **Encrypt at rest**: Database encryption
 - **Encrypt in transit**: HTTPS/TLS
 - **Minimize collection**: Only collect what's needed
 - **Retention policies**: Delete when no longer needed
 
 ### Personal Data (GDPR)
+
 - **Consent**: Get user consent
 - **Right to deletion**: Implement deletion
 - **Data portability**: Allow data export
@@ -175,12 +191,14 @@ catch (error) {
 ## Dependency Security
 
 ### Package Management
+
 - **Keep dependencies updated**: Regular updates
 - **Check for vulnerabilities**: `npm audit`, `snyk`
 - **Use lock files**: `package-lock.json`
 - **Review dependencies**: Know what you're using
 
 ### Security Scanning
+
 ```bash
 # npm audit
 npm audit
@@ -195,6 +213,7 @@ snyk test
 ## Code Security
 
 ### Best Practices
+
 1. **Use parameterized queries**: Prevent SQL injection
 2. **Escape output**: Prevent XSS
 3. **Validate CSRF tokens**: Prevent CSRF attacks
@@ -202,6 +221,7 @@ snyk test
 5. **Keep frameworks updated**: Security patches
 
 ### Security Headers
+
 ```typescript
 // Example security headers
 app.use((req, res, next) => {
@@ -216,17 +236,20 @@ app.use((req, res, next) => {
 ## Monitoring & Logging
 
 ### What to Log
+
 - **Security events**: Login attempts, permission changes
 - **Errors**: Application errors (without sensitive data)
 - **Access logs**: Who accessed what
 - **Performance**: System performance metrics
 
 ### What NOT to Log
+
 - **Secrets**: Never log passwords, keys, tokens
 - **Personal data**: Minimize PII in logs
 - **Full request bodies**: May contain sensitive data
 
 ### Log Security
+
 - **Encrypt logs**: If containing sensitive data
 - **Access control**: Limit who can view logs
 - **Retention**: Delete logs after retention period
@@ -242,6 +265,7 @@ app.use((req, res, next) => {
 5. **Document incident** and lessons learned
 
 ### Git History Cleanup
+
 ```bash
 # Remove file from history (use with caution)
 git filter-branch --force --index-filter \
@@ -255,12 +279,14 @@ git push origin --force --all
 ## Compliance
 
 ### Follow Standards
+
 - **OWASP Top 10**: Common vulnerabilities
 - **CWE**: Common Weakness Enumeration
 - **GDPR**: If handling EU data
 - **PCI DSS**: If handling payment data
 
 ### Security Reviews
+
 - **Code reviews**: Security-focused reviews
 - **Penetration testing**: Regular security testing
 - **Dependency audits**: Regular dependency scanning

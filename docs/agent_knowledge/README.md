@@ -34,18 +34,23 @@ When you learn something valuable:
 **Related Tasks**: [Task IDs]
 
 ## Problem
+
 [What problem were you solving]
 
 ## Solution
+
 [How you solved it]
 
 ## Code Example
+
 [If applicable, code example]
 
 ## Lessons Learned
+
 [Key insights]
 
 ## Related Patterns
+
 [Links to related knowledge]
 ```
 

@@ -5,6 +5,7 @@ This document tracks issues that require human decision before work can continue
 ## Format
 
 Each blocking issue should include:
+
 - **Date**: When issue was raised
 - **Agent**: Which agent raised it
 - **Issue**: Description of the issue
@@ -25,6 +26,7 @@ _No resolved issues yet._
 ## Escalation
 
 If an issue remains unresolved for > 48 hours:
+
 1. Escalate to project coordinator
 2. Document escalation in issue entry
 3. Update status to "Escalated"

@@ -1,9 +1,9 @@
-# MPCAS Product Requirements Document (PRD)
+# MPCAS2 Product Requirements Document (PRD)
 
 **Version:** 1.0  
 **Date:** January 2026  
 **Status:** Draft  
-**Project:** Multi-Platform Content Automation System (MPCAS)
+**Project:** Multi-Platform Content Automation System (MPCAS2)
 
 ---
 
@@ -24,17 +24,17 @@
 
 ### Background Context
 
-MPCAS addresses critical pain points in the social media management market. Content creators currently spend 10-15 hours per week manually posting across multiple platforms, each requiring different formats, metadata, and optimization strategies. Agencies struggle with managing multiple client accounts using 3-5 different tools, resulting in high operational overhead and client churn.
+MPCAS2 addresses critical pain points in the social media management market. Content creators currently spend 10-15 hours per week manually posting across multiple platforms, each requiring different formats, metadata, and optimization strategies. Agencies struggle with managing multiple client accounts using 3-5 different tools, resulting in high operational overhead and client churn.
 
-The market has a $12B addressable market (TAM) with existing tools serving 10M+ users, but none provide comprehensive multi-platform automation with white-label capabilities. MPCAS differentiates by combining 8 platform support, AI-powered content generation (80% self-hosted for cost efficiency), workflow marketplace, and complete white-label system in a single unified platform.
+The market has a $12B addressable market (TAM) with existing tools serving 10M+ users, but none provide comprehensive multi-platform automation with white-label capabilities. MPCAS2 differentiates by combining 8 platform support, AI-powered content generation (80% self-hosted for cost efficiency), workflow marketplace, and complete white-label system in a single unified platform.
 
 The solution leverages open-source technologies (n8n, ComfyUI, Ollama) to keep costs 70-90% lower than cloud-only AI solutions, enabling competitive pricing while maintaining high margins (60-75% at scale).
 
 ### Change Log
 
-| Date | Version | Description | Author |
-|------|---------|-------------|---------|
-| 2026-01-XX | 1.0 | Initial PRD creation from project brief | PM Agent |
+| Date       | Version | Description                             | Author   |
+| ---------- | ------- | --------------------------------------- | -------- |
+| 2026-01-XX | 1.0     | Initial PRD creation from project brief | PM Agent |
 
 ---
 
@@ -140,7 +140,7 @@ The solution leverages open-source technologies (n8n, ComfyUI, Ollama) to keep c
 
 **FR49:** The system shall support Google Workspace integration with Gmail/Google OAuth, YouTube direct publishing, and Google Drive archival.
 
-**FR50:** The system shall automatically backup generated videos to Google Drive with organized folder structure (MPCAS Archives/Year/Month/Videos/).
+**FR50:** The system shall automatically backup generated videos to Google Drive with organized folder structure (MPCAS2 Archives/Year/Month/Videos/).
 
 **FR51:** The system shall provide download protection system with 7-day, 3-day, and 1-day warnings before file deletion with one-click archive to Drive option.
 
@@ -154,7 +154,7 @@ The solution leverages open-source technologies (n8n, ComfyUI, Ollama) to keep c
 
 **FR56:** The system shall enable agencies to create client portals with unique URLs, view-only access to content library and analytics, and request submission system.
 
-**FR57:** The system shall support white-label branding allowing custom domain, logo, color scheme, login page, and email templates with complete MPCAS branding removal.
+**FR57:** The system shall support white-label branding allowing custom domain, logo, color scheme, login page, and email templates with complete MPCAS2 branding removal.
 
 **FR58:** The system shall provide reseller dashboard showing client list, MRR, active clients, churn rate, and revenue metrics.
 
@@ -226,7 +226,7 @@ The solution leverages open-source technologies (n8n, ComfyUI, Ollama) to keep c
 
 ### Overall UX Vision
 
-MPCAS provides a unified, intuitive interface that enables users to manage complex multi-platform content automation workflows without technical expertise. The interface emphasizes visual workflows, drag-and-drop interactions, and AI-powered assistance to reduce cognitive load and increase productivity. The design balances power-user features (workflow builder, advanced analytics) with simplicity for non-technical users (one-click publishing, template workflows).
+MPCAS2 provides a unified, intuitive interface that enables users to manage complex multi-platform content automation workflows without technical expertise. The interface emphasizes visual workflows, drag-and-drop interactions, and AI-powered assistance to reduce cognitive load and increase productivity. The design balances power-user features (workflow builder, advanced analytics) with simplicity for non-technical users (one-click publishing, template workflows).
 
 The platform uses a modern, clean aesthetic with clear information hierarchy, contextual help, and progressive disclosure of advanced features. Real-time feedback, status indicators, and comprehensive error messages ensure users always understand system state and can recover from issues quickly.
 
@@ -258,6 +258,7 @@ The platform uses a modern, clean aesthetic with clear information hierarchy, co
 ### Accessibility: WCAG AA
 
 The system shall comply with WCAG 2.1 Level AA standards including:
+
 - Keyboard navigation for all interactive elements
 - Screen reader support with proper ARIA labels
 - Color contrast ratios of at least 4.5:1 for normal text and 3:1 for large text
@@ -276,6 +277,7 @@ The system shall comply with WCAG 2.1 Level AA standards including:
 ### Target Device and Platforms: Web Responsive
 
 The primary interface is a responsive web application supporting:
+
 - **Desktop:** Chrome, Firefox, Safari, Edge (latest 2 versions) on Windows, macOS, Linux
 - **Tablet:** iPad (Safari), Android tablets (Chrome) with touch-optimized interactions
 - **Mobile:** iPhone (Safari iOS 14+), Android (Chrome) with mobile-optimized layouts and gestures
@@ -289,6 +291,7 @@ All core features must be accessible and functional on mobile devices, with prog
 ### Repository Structure: Monorepo
 
 The project uses a monorepo structure (recommended) with the following organization:
+
 - `apps/web/` - Frontend React/Next.js application
 - `apps/api/` - Backend Node.js/Express API server
 - `apps/admin/` - Admin dashboard (optional separate app)
@@ -303,6 +306,7 @@ The project uses a monorepo structure (recommended) with the following organizat
 ### Service Architecture: Microservices (Modular Services)
 
 The system uses a microservices approach with modular services within the monorepo:
+
 - **API Gateway Service:** Authentication, rate limiting, routing, request validation
 - **User Service:** User management, authentication, profiles, teams, roles
 - **Tenant Service:** Multi-tenant management, schema creation, tenant settings
@@ -319,6 +323,7 @@ The system uses a microservices approach with modular services within the monore
 ### Testing Requirements: Full Testing Pyramid
 
 The system implements comprehensive testing across all levels:
+
 - **Unit Tests:** 80%+ coverage for business logic, utilities, and services (Jest for Node.js, Vitest for frontend)
 - **Integration Tests:** API endpoints, database operations, external service integrations (n8n, ComfyUI, platform APIs)
 - **E2E Tests:** Critical user journeys (Playwright or Cypress) - login, publish content, view analytics, workflow creation
@@ -387,7 +392,7 @@ Create comprehensive admin dashboard for user management, workflow curation, pla
 
 ## Epic 1: Foundation & Core Infrastructure
 
-**Goal:** Establish the foundational infrastructure for MPCAS including project setup, multi-tenant database architecture, authentication system, and basic user management. This epic delivers the core infrastructure that all subsequent features depend upon, ensuring secure, scalable, and maintainable foundation. The epic includes initial health-check functionality to validate the system is operational.
+**Goal:** Establish the foundational infrastructure for MPCAS2 including project setup, multi-tenant database architecture, authentication system, and basic user management. This epic delivers the core infrastructure that all subsequent features depend upon, ensuring secure, scalable, and maintainable foundation. The epic includes initial health-check functionality to validate the system is operational.
 
 ### Story 1.1: Project Setup & Repository Structure
 
@@ -396,6 +401,7 @@ I want a properly structured monorepo with frontend, backend, shared packages, a
 so that the codebase is organized, maintainable, and supports efficient development workflows.
 
 **Acceptance Criteria:**
+
 1. Monorepo structure created with `apps/web/`, `apps/api/`, `packages/shared/`, `packages/ui/`, `workflows/`, `docker/`, and `docs/` directories
 2. Package.json/workspace configuration enables cross-package dependencies and shared code
 3. TypeScript configured with strict mode enabled across all packages
@@ -412,6 +418,7 @@ I want a schema-per-tenant database architecture,
 so that tenant data is completely isolated and the system can scale to thousands of tenants.
 
 **Acceptance Criteria:**
+
 1. PostgreSQL 15+ database configured with connection pooling (PgBouncer)
 2. Database migration system implemented (TypeORM, Prisma, or similar) with version control
 3. Public schema created for system-wide tables (tenants, migrations, shared_data like countries, timezones)
@@ -430,6 +437,7 @@ I want to authenticate using email/password or OAuth providers,
 so that I can securely access the platform with my preferred authentication method.
 
 **Acceptance Criteria:**
+
 1. User registration endpoint accepts email, password, and optional tenant creation
 2. Password hashing implemented using bcrypt with salt rounds (minimum 10)
 3. Email verification flow implemented with verification tokens and expiration (24 hours)
@@ -452,6 +460,7 @@ I want to view and edit my profile information,
 so that I can keep my account details up to date.
 
 **Acceptance Criteria:**
+
 1. User profile endpoint returns current user's profile (name, email, avatar, timezone, preferences)
 2. Update profile endpoint allows modification of name, avatar, timezone, and preferences
 3. Email change requires verification of new email address
@@ -470,6 +479,7 @@ I want health check endpoints,
 so that I can monitor system status and diagnose issues.
 
 **Acceptance Criteria:**
+
 1. `/health` endpoint returns 200 OK with basic status when system is operational
 2. `/health/detailed` endpoint returns database connection status, Redis connection status, external service status (S3, email)
 3. Health check includes version information (API version, build number, git commit hash)
@@ -493,6 +503,7 @@ I want to connect my YouTube account via OAuth,
 so that I can publish videos directly to my YouTube channel.
 
 **Acceptance Criteria:**
+
 1. "Connect YouTube" button initiates OAuth 2.0 flow with Google OAuth
 2. OAuth scopes requested: `youtube.upload`, `youtube.force-ssl`, `youtube.readonly`
 3. OAuth callback handler processes authorization code and exchanges for access/refresh tokens
@@ -513,6 +524,7 @@ I want to connect my Instagram account via OAuth,
 so that I can publish content to Instagram Feed, Reels, and Stories.
 
 **Acceptance Criteria:**
+
 1. "Connect Instagram" button initiates OAuth flow via Facebook Login (Instagram requires Facebook Business Manager)
 2. User must have Instagram Professional account (Business or Creator) connected to Facebook Page
 3. OAuth scopes requested: `instagram_basic`, `instagram_content_publish`, `pages_read_engagement`
@@ -533,6 +545,7 @@ I want to connect my TikTok account via OAuth,
 so that I can publish videos to TikTok.
 
 **Acceptance Criteria:**
+
 1. "Connect TikTok" button initiates TikTok OAuth flow
 2. User must have TikTok Creator or Business account (age 18+ required for API access)
 3. OAuth scopes requested: `video.upload`, `user.info.basic`
@@ -553,6 +566,7 @@ I want to connect my Twitter/X account via OAuth,
 so that I can publish tweets, videos, and threads.
 
 **Acceptance Criteria:**
+
 1. "Connect Twitter/X" button initiates OAuth 2.0 flow (Twitter API v2)
 2. OAuth scopes requested: `tweet.write`, `users.read`, `offline.access`
 3. Authorization code exchanged for access token and refresh token
@@ -573,6 +587,7 @@ I want to connect my LinkedIn account via OAuth,
 so that I can publish posts to my personal profile and company pages.
 
 **Acceptance Criteria:**
+
 1. "Connect LinkedIn" button initiates LinkedIn OAuth 2.0 flow
 2. OAuth scopes requested: `w_member_social`, `r_liteprofile`, `rw_organization_admin` (for company pages)
 3. User can connect personal LinkedIn profile
@@ -593,6 +608,7 @@ I want to connect my Facebook account via OAuth,
 so that I can publish posts to Facebook Pages and Reels.
 
 **Acceptance Criteria:**
+
 1. "Connect Facebook" button initiates Facebook Login OAuth flow
 2. OAuth scopes requested: `pages_manage_posts`, `pages_read_engagement`, `pages_show_list`
 3. User selects which Facebook Pages to connect (must have Admin or Editor role)
@@ -613,6 +629,7 @@ I want to connect my Pinterest account via OAuth,
 so that I can publish pins and video pins to Pinterest boards.
 
 **Acceptance Criteria:**
+
 1. "Connect Pinterest" button initiates Pinterest OAuth 2.0 flow
 2. User must have Pinterest Business account (recommended) or personal account
 3. OAuth scopes requested: `pins:read`, `pins:write`, `boards:read`, `boards:write`
@@ -633,6 +650,7 @@ I want to connect my Threads account via OAuth,
 so that I can publish posts to Threads.
 
 **Acceptance Criteria:**
+
 1. "Connect Threads" button initiates OAuth flow via Instagram (Threads uses Instagram OAuth)
 2. User must have Instagram Professional account with Threads enabled
 3. OAuth scopes requested: Same as Instagram (`instagram_basic`, `instagram_content_publish`)
@@ -653,6 +671,7 @@ I want to view and manage all my connected platform accounts in one place,
 so that I can easily see connection status and manage my accounts.
 
 **Acceptance Criteria:**
+
 1. Platform connections page displays all 8 platforms with connection status (connected, not connected, error)
 2. Connected accounts shown with platform icon, account name/username, profile picture, follower/subscriber count
 3. Account health indicator shows green (healthy), yellow (token expiring soon), red (error/invalid)
@@ -681,6 +700,7 @@ I want ComfyUI workers integrated with the platform,
 so that users can generate AI-powered content using self-hosted GPU resources.
 
 **Acceptance Criteria:**
+
 1. ComfyUI worker service implemented with REST API for workflow execution
 2. Worker registration system tracks available GPU workers with capacity (GPU type, VRAM, queue length)
 3. Worker health monitoring checks worker status every 30 seconds
@@ -701,6 +721,7 @@ I want to execute a workflow to generate content,
 so that I can create videos or images using AI.
 
 **Acceptance Criteria:**
+
 1. Workflow execution endpoint accepts workflow JSON and input parameters
 2. Input validation ensures required parameters are provided and types are correct
 3. Workflow submitted to ComfyUI worker queue with job ID returned
@@ -721,6 +742,7 @@ I want to browse and search workflows in a marketplace,
 so that I can find pre-built workflows for my content needs.
 
 **Acceptance Criteria:**
+
 1. Marketplace page displays workflow cards in grid layout with pagination
 2. Workflow card shows preview image, name, creator, rating, downloads count, price
 3. Search functionality filters workflows by name, description, tags, or creator
@@ -742,6 +764,7 @@ I want to activate and manage my workflows,
 so that I can use them for content generation.
 
 **Acceptance Criteria:**
+
 1. "My Workflows" page displays all activated workflows with status (active, inactive)
 2. Active workflow count displayed with tier limit (e.g., "8 of 10 active workflows")
 3. Workflow activation adds workflow to user's active list and increments count
@@ -762,6 +785,7 @@ I want n8n integrated for workflow orchestration,
 so that complex multi-step workflows can be executed reliably.
 
 **Acceptance Criteria:**
+
 1. n8n instance configured and accessible via API
 2. n8n workflow execution endpoint accepts workflow ID and input data
 3. Workflow execution triggers n8n workflow with proper authentication
@@ -782,6 +806,7 @@ I want to generate images using AI workflows,
 so that I can create visuals for my social media posts.
 
 **Acceptance Criteria:**
+
 1. Image generation interface allows selection of workflow and input prompt
 2. Prompt input supports text description with parameter customization
 3. Image generation parameters configurable (resolution, steps, guidance scale, seed)
@@ -802,6 +827,7 @@ I want to generate videos using AI workflows,
 so that I can create video content for platforms like YouTube, TikTok, and Instagram Reels.
 
 **Acceptance Criteria:**
+
 1. Video generation interface allows selection of workflow and input parameters
 2. Video generation supports text-to-video and image-to-video workflows
 3. Video parameters configurable (duration, resolution, fps, style)
@@ -819,7 +845,7 @@ so that I can create video content for platforms like YouTube, TikTok, and Insta
 
 ## Epic 4: Multi-Platform Publishing
 
-**Goal:** Implement unified publishing interface enabling users to publish content to all 8 platforms with platform-specific optimization, scheduling capabilities, and content calendar management. This epic delivers the core value proposition of MPCAS by enabling one-click publishing across multiple platforms with automatic format conversion and metadata optimization.
+**Goal:** Implement unified publishing interface enabling users to publish content to all 8 platforms with platform-specific optimization, scheduling capabilities, and content calendar management. This epic delivers the core value proposition of MPCAS2 by enabling one-click publishing across multiple platforms with automatic format conversion and metadata optimization.
 
 ### Story 4.1: Unified Publishing Interface
 
@@ -828,6 +854,7 @@ I want a single interface to publish content to multiple platforms,
 so that I can distribute my content efficiently without using separate tools for each platform.
 
 **Acceptance Criteria:**
+
 1. Publishing interface allows selection of content from library (videos, images, or both)
 2. Platform selection interface shows all 8 platforms with checkboxes for multi-select
 3. Platform-specific preview shows how content will appear on each selected platform
@@ -850,6 +877,7 @@ I want to publish videos directly to YouTube,
 so that I can upload content without using YouTube's interface.
 
 **Acceptance Criteria:**
+
 1. YouTube publishing supports regular videos (up to 12 hours) and YouTube Shorts (<60 sec, vertical)
 2. Video upload uses YouTube Data API v3 with direct upload (not browser-based)
 3. Metadata setting includes title, description, tags (15+), category, visibility (public/unlisted/private)
@@ -870,6 +898,7 @@ I want to publish content to Instagram (Feed, Reels, Stories),
 so that I can maintain my Instagram presence across all content types.
 
 **Acceptance Criteria:**
+
 1. Instagram Feed post publishing supports single image, carousel (up to 10 images), and video posts
 2. Instagram Reels publishing supports vertical videos (15-90 seconds) with audio selection
 3. Instagram Stories publishing supports images/videos (24-hour ephemeral content)
@@ -892,6 +921,7 @@ I want to publish videos to TikTok,
 so that I can reach TikTok's audience with my content.
 
 **Acceptance Criteria:**
+
 1. TikTok publishing supports short videos (15 sec - 10 min) and photo mode slideshows
 2. Video upload uses TikTok Upload API with proper authentication
 3. Metadata includes caption (2200 char limit), hashtags (3-5 recommended), and privacy settings
@@ -912,6 +942,7 @@ I want to publish tweets, videos, and threads to Twitter/X,
 so that I can engage with Twitter's audience.
 
 **Acceptance Criteria:**
+
 1. Twitter/X publishing supports text tweets, image tweets (up to 4 images), video tweets, and polls
 2. Video upload supports 2:20 duration (free) or 10 minutes (Premium accounts)
 3. Thread creation allows multiple tweets in sequence with reply threading
@@ -934,6 +965,7 @@ I want to publish posts and videos to LinkedIn,
 so that I can maintain professional presence on LinkedIn.
 
 **Acceptance Criteria:**
+
 1. LinkedIn publishing supports personal profile posts and company page posts
 2. Post types: text posts, image posts, video posts (up to 10 min), and long-form articles
 3. Professional tone optimization suggests business-appropriate language
@@ -954,6 +986,7 @@ I want to publish posts and Reels to Facebook Pages,
 so that I can maintain Facebook presence.
 
 **Acceptance Criteria:**
+
 1. Facebook publishing supports page posts, Reels (90 sec), and Stories
 2. Page selection interface for accounts with multiple Facebook Pages
 3. Post types: text, image, video, link posts with preview
@@ -973,6 +1006,7 @@ I want to publish pins and video pins to Pinterest,
 so that I can drive traffic through Pinterest.
 
 **Acceptance Criteria:**
+
 1. Pinterest publishing supports image pins, video pins (up to 15 min), and Idea Pins (multi-page)
 2. Board selection interface shows user's boards with board organization
 3. Pin description optimization with keyword-rich descriptions
@@ -992,6 +1026,7 @@ I want to publish posts to Threads,
 so that I can engage with Threads' audience.
 
 **Acceptance Criteria:**
+
 1. Threads publishing supports text posts (500 chars), image posts (10 images), video posts (5 min), and polls
 2. Publishing uses Instagram Graph API (Threads uses Instagram infrastructure)
 3. Character limit handling with truncation warnings
@@ -1010,6 +1045,7 @@ I want to automatically optimize content format per platform,
 so that content displays correctly on each platform without manual conversion.
 
 **Acceptance Criteria:**
+
 1. Aspect ratio conversion: 16:9 (YouTube), 9:16 (Reels/TikTok), Square (Twitter), 2:3 (Pinterest)
 2. Video length trimming: 90 sec (Reels), 60 sec (Shorts), 2:20 (Twitter free), 10 min (Twitter Premium)
 3. Resolution optimization: Platform-specific optimal resolutions (1080p, 720p, etc.)
@@ -1030,6 +1066,7 @@ I want to schedule content for future publishing,
 so that I can plan my content calendar in advance.
 
 **Acceptance Criteria:**
+
 1. Scheduling interface allows date and time selection with timezone handling
 2. Per-platform scheduling allows different publish times for each platform
 3. Staggered scheduling automatically distributes posts with delays (5-15 min) between platforms
@@ -1050,6 +1087,7 @@ I want a visual calendar to view and manage my scheduled content,
 so that I can see my content plan at a glance.
 
 **Acceptance Criteria:**
+
 1. Calendar view supports month, week, day, and agenda (list) views
 2. Month view shows post counts per day with color coding by status
 3. Week view shows hour-by-hour timeline with drag-and-drop scheduling
@@ -1078,6 +1116,7 @@ I want to collect performance metrics from all connected platforms,
 so that users can view comprehensive analytics in one dashboard.
 
 **Acceptance Criteria:**
+
 1. Analytics collection service polls platform APIs for performance metrics on scheduled intervals
 2. YouTube Analytics API integration collects views, watch time, impressions, CTR, traffic sources, audience retention
 3. Instagram Graph API integration collects reach, impressions, engagement, saves, shares, profile visits
@@ -1099,6 +1138,7 @@ I want to view aggregated analytics across all platforms,
 so that I can understand my overall content performance.
 
 **Acceptance Criteria:**
+
 1. Dashboard displays overview metrics: total views, total engagement, engagement rate, follower growth
 2. Time range selector supports last 7 days, 30 days, 90 days, custom range
 3. Platform comparison chart shows performance metrics side-by-side for all connected platforms
@@ -1120,6 +1160,7 @@ I want to view detailed analytics for individual videos/posts,
 so that I can understand what content performs best.
 
 **Acceptance Criteria:**
+
 1. Content detail page displays comprehensive metrics for single video/post
 2. Platform-specific metrics shown: views, watch time, engagement, impressions, CTR (YouTube)
 3. Platform-specific metrics shown: reach, saves, shares, profile visits (Instagram)
@@ -1141,6 +1182,7 @@ I want to test different thumbnails, titles, and metadata,
 so that I can optimize my content performance.
 
 **Acceptance Criteria:**
+
 1. A/B test creation interface allows uploading 2-3 thumbnail variants
 2. A/B test creation allows creating multiple title/description variations
 3. Test configuration: select metric to optimize (CTR, watch time, engagement), test duration, traffic split
@@ -1162,6 +1204,7 @@ I want to generate automated reports for my clients,
 so that I can demonstrate value and maintain client relationships.
 
 **Acceptance Criteria:**
+
 1. Report generation interface allows selecting client, date range, and report type
 2. Monthly report template includes: executive summary, platform performance, top 10 content, growth metrics
 3. Report generation uses AI to create executive summary from data
@@ -1174,7 +1217,7 @@ so that I can demonstrate value and maintain client relationships.
 10. Historical reports archive stores all past reports for client access
 11. Report sharing: generate shareable link with expiration date
 12. Report analytics: track which clients view reports and when
-13. White-label reports remove all MPCAS branding for White Label tier
+13. White-label reports remove all MPCAS2 branding for White Label tier
 
 ---
 
@@ -1189,6 +1232,7 @@ I want AI to generate multiple title variations,
 so that I can choose the best title for maximum engagement.
 
 **Acceptance Criteria:**
+
 1. Title generator interface accepts video description or topic as input
 2. AI generates 10 title variations using GPT-4 or Claude 3.5
 3. Titles ranked by predicted performance score (0-10 scale)
@@ -1209,6 +1253,7 @@ I want AI to generate platform-specific captions,
 so that I can create engaging captions optimized for each platform.
 
 **Acceptance Criteria:**
+
 1. Caption generator interface accepts content description and platform selection
 2. Instagram caption generation: hook (first line), body (1-3 paragraphs), CTA, 20-30 hashtags
 3. TikTok caption generation: short punchy (1-2 sentences), 3-5 trending hashtags
@@ -1229,6 +1274,7 @@ I want AI to suggest content ideas,
 so that I never run out of content inspiration.
 
 **Acceptance Criteria:**
+
 1. Content ideation interface accepts niche, target audience, and recent videos as input
 2. AI generates 50 content ideas categorized: Trending, Evergreen, Controversial, How-to, Listicles, Storytelling
 3. Each idea includes: title suggestion, description, estimated duration, platform recommendations
@@ -1249,6 +1295,7 @@ I want to be alerted about trending topics in my niche,
 so that I can capitalize on trends quickly.
 
 **Acceptance Criteria:**
+
 1. Trend monitoring service continuously monitors YouTube trending, TikTok For You, Instagram Explore, Twitter trending
 2. Trend analysis identifies topics relevant to user's niche and content history
 3. Trend alerts displayed in dashboard with growth rate, competition level, opportunity score
@@ -1269,6 +1316,7 @@ I want AI to predict content performance before publishing,
 so that I can optimize content before it goes live.
 
 **Acceptance Criteria:**
+
 1. Performance prediction interface accepts video metadata, thumbnail, and publishing time
 2. AI model analyzes: title, description, thumbnail, historical performance, publishing time, platform
 3. Prediction output: expected views range (e.g., 5,000-15,000), confidence level (%), engagement rate range
@@ -1289,6 +1337,7 @@ I want to monitor my competitors' content and performance,
 so that I can learn from their strategies.
 
 **Acceptance Criteria:**
+
 1. Competitor management interface allows adding up to 10 competitors by platform handle/URL
 2. Competitor tracking: monitors new posts, performance metrics, topics, posting frequency
 3. Competitor dashboard displays all competitors with recent activity and top performing content
@@ -1315,6 +1364,7 @@ I want to assign roles to team members,
 so that I can control what each person can access and modify.
 
 **Acceptance Criteria:**
+
 1. Role management interface displays 6 roles: Owner, Admin, Manager, Editor, Viewer, Programmer
 2. Role assignment: owner/admin can assign roles to team members
 3. Permission matrix enforced: each role has specific permissions per feature
@@ -1336,6 +1386,7 @@ I want to invite and manage team members,
 so that I can build my team and control access.
 
 **Acceptance Criteria:**
+
 1. Team management page displays all team members with roles, status, last activity
 2. Invite team member: email invitation with role assignment and expiration (7 days)
 3. Invitation acceptance: user creates account or links existing account
@@ -1356,6 +1407,7 @@ I want to see what my teammates are doing,
 so that we can collaborate effectively.
 
 **Acceptance Criteria:**
+
 1. Online status indicator shows who's currently active (green dot next to avatar)
 2. Activity feed displays: "John created workflow X", "Sarah published 5 videos", "Mike approved content"
 3. Activity filtering: filter by user, by action type, by date range
@@ -1376,6 +1428,7 @@ I want to comment on content before publishing,
 so that I can provide feedback and collaborate.
 
 **Acceptance Criteria:**
+
 1. Commenting interface allows adding comments to content items
 2. Comment display: shows comment author, timestamp, and content
 3. @mention support: mention team members in comments with notification
@@ -1396,6 +1449,7 @@ I want to review and approve content before publishing,
 so that I can ensure quality and brand compliance.
 
 **Acceptance Criteria:**
+
 1. Approval queue displays all content pending approval with status indicators
 2. Approval settings: configurable per role (require approval for Editor, auto-approve for Manager)
 3. Approval request: content creator submits for approval with optional notes
@@ -1422,6 +1476,7 @@ I want to customize all branding elements,
 so that the platform appears as my own product.
 
 **Acceptance Criteria:**
+
 1. Branding settings page allows customization of: company name, logo (light/dark versions), colors (primary, secondary, accent), tagline
 2. Logo upload supports SVG, PNG formats with validation (max 2MB, recommended dimensions)
 3. Color picker with HEX code input for primary, secondary, and accent colors
@@ -1432,7 +1487,7 @@ so that the platform appears as my own product.
 8. Login page customization: custom background, logo, welcome message
 9. Email template customization: all system emails use custom branding
 10. Invoice customization: branded invoices with company logo and colors
-11. Complete MPCAS branding removal: all references to MPCAS removed for White Label tier
+11. Complete MPCAS2 branding removal: all references to MPCAS2 removed for White Label tier
 12. Branding changes apply immediately across all interfaces
 13. Branding export: download branding assets for use outside platform
 
@@ -1443,6 +1498,7 @@ I want to create client portals,
 so that my clients can view their content and analytics without accessing my agency account.
 
 **Acceptance Criteria:**
+
 1. Client creation interface: add new client with name, email, and permissions
 2. Client portal generation: unique URL created (app.agency.com/client/{client-id} or custom domain)
 3. Client login: separate login system for clients with email/password or SSO (Google, Microsoft, Okta)
@@ -1464,6 +1520,7 @@ I want to manage all my sub-accounts and revenue,
 so that I can run my white-label business efficiently.
 
 **Acceptance Criteria:**
+
 1. Reseller dashboard displays: total clients, active clients, trial clients, total MRR, churn rate
 2. Client list shows: client name, status, plan, MRR, accounts managed, videos published, last activity
 3. Client metrics: per-client analytics, revenue, usage statistics
@@ -1490,6 +1547,7 @@ I want to use IP rotation for multi-account posting,
 so that my accounts don't get flagged for posting from the same IP.
 
 **Acceptance Criteria:**
+
 1. IP rotation service configuration: enable/disable per account, target location, session persistence
 2. Proxy provider integration: BrightData, Smartproxy, Oxylabs with API integration
 3. IP pool management: 10,000+ residential IPs with geographic distribution
@@ -1510,6 +1568,7 @@ I want to use idle user accounts to warm admin accounts,
 so that new accounts build engagement organically.
 
 **Acceptance Criteria:**
+
 1. User opt-in interface: users can opt-in to account warming participation
 2. Opt-in requirements: minimum Creator tier, accounts in good standing, no recent warnings
 3. Incentive system: users earn 10 credits per account per day used
@@ -1530,6 +1589,7 @@ I want to purchase engagement for my accounts,
 so that I can boost my content performance.
 
 **Acceptance Criteria:**
+
 1. Traffic service interface: select accounts to boost, set goals (followers, engagement, views)
 2. Service packages: Starter ($50), Growth ($200), Pro ($500), Custom budget
 3. Action types: likes (1 credit), comments (5 credits), follows (10 credits), views (2 credits), shares (20 credits)
@@ -1550,6 +1610,7 @@ I want to share my residential IP and earn credits,
 so that I can offset my platform costs.
 
 **Acceptance Criteria:**
+
 1. P2P opt-in interface: users can opt-in to share residential IP
 2. Opt-in requirements: residential internet (not VPN/datacenter), stable connection (10 Mbps+), Creator tier+
 3. Desktop agent: lightweight app runs in system tray showing status, bandwidth shared, earnings
@@ -1557,7 +1618,7 @@ so that I can offset my platform costs.
 5. Bandwidth tracking: tracks GB shared today, week, month, all-time
 6. Credit earning: 10 credits per GB shared with real-time updates
 7. User controls: pause, set daily/monthly limits, set hours of operation, exit
-8. Privacy protection: only MPCAS platform traffic routed, no personal browsing affected
+8. Privacy protection: only MPCAS2 platform traffic routed, no personal browsing affected
 9. Earnings dashboard: shows bandwidth shared, credits earned, estimated monthly earnings
 10. Payout system: credits added to user account, can cash out or use for services
 11. Network status: shows total opted-in users, active users, geographic distribution
@@ -1576,6 +1637,7 @@ I want to subscribe to a pricing tier,
 so that I can access features appropriate for my needs.
 
 **Acceptance Criteria:**
+
 1. Pricing page displays all 6 tiers (Free, Creator, Professional, Agency, White Label, Enterprise) with feature comparison
 2. Tier selection: user can select tier and see feature differences
 3. Subscription creation: monthly or annual billing with 16.7% annual discount
@@ -1597,6 +1659,7 @@ I want to track user usage against tier limits,
 so that I can enforce limits and bill overages accurately.
 
 **Acceptance Criteria:**
+
 1. Usage tracking: videos generated, storage used, GPU minutes, API calls, social accounts
 2. Real-time usage display: dashboard shows current usage vs tier limits with progress bars
 3. Limit enforcement: prevents actions that would exceed tier limits
@@ -1617,6 +1680,7 @@ I want to bill users for usage beyond tier limits,
 so that I can monetize heavy usage appropriately.
 
 **Acceptance Criteria:**
+
 1. Overage calculation: tracks usage beyond tier limits per resource type
 2. Overage pricing: videos ($0.10), storage ($0.03/GB), GPU minutes ($0.20/min), API calls ($0.10/1K)
 3. Overage tracking: real-time tracking with running total
@@ -1637,6 +1701,7 @@ I want to earn and use credits,
 so that I can access premium features and offset costs.
 
 **Acceptance Criteria:**
+
 1. Credit balance display: shows current credit balance with value ($0.01 per credit)
 2. Credit earning: workflow submissions (10 credits/download), paid workflow sales (70% in credits), account warming (10 credits/day), traffic service (20 credits/day), P2P IP sharing (10 credits/GB), affiliate bonuses
 3. Credit usage: activate premium workflows, purchase GPU minutes, purchase storage, IP rotation, traffic service, tier upgrades (discount)
@@ -1663,6 +1728,7 @@ I want to organize my media files in folders,
 so that I can efficiently manage my content assets.
 
 **Acceptance Criteria:**
+
 1. Media library interface: grid/list view with folder navigation
 2. Folder structure: My Assets, Team Assets, Client Assets, Stock Content, Brand Assets
 3. Folder creation: create nested folders with custom names
@@ -1684,6 +1750,7 @@ I want AI to automatically tag my uploaded assets,
 so that I can find them easily later.
 
 **Acceptance Criteria:**
+
 1. Auto-tagging service: analyzes uploaded images/videos using AI
 2. Image analysis: objects (person, laptop, coffee), scene (office, outdoor, studio), colors, mood, text (OCR)
 3. Video analysis: content type (talking head, b-roll), scenes, audio type, face detection, actions
@@ -1704,6 +1771,7 @@ I want version control for my assets,
 so that I can track changes and revert if needed.
 
 **Acceptance Criteria:**
+
 1. Automatic versioning: each upload of same filename creates new version
 2. Version history: displays all versions with version number, upload date, uploaded by
 3. Version comparison: side-by-side view for images with diff highlighting
@@ -1724,6 +1792,7 @@ I want to store my brand assets in a brand kit,
 so that I can maintain brand consistency across content.
 
 **Acceptance Criteria:**
+
 1. Brand kit interface: organized sections for logos, colors, typography, templates, guidelines
 2. Logo management: upload primary (full color), secondary (black/white), icon, variations (horizontal, vertical, square)
 3. Logo formats: SVG, PNG, JPG with format recommendations
@@ -1744,6 +1813,7 @@ I want to search and download stock content,
 so that I can access professional media without creating it myself.
 
 **Acceptance Criteria:**
+
 1. Stock content interface: unified search across all providers
 2. Provider integration: Pexels, Pixabay, Unsplash, Videvo (free), Envato Elements, Storyblocks, Adobe Stock (paid)
 3. Search functionality: search all providers simultaneously with filters (type, license, price)
@@ -1770,6 +1840,7 @@ I want a dashboard showing system health and key metrics,
 so that I can monitor platform status at a glance.
 
 **Acceptance Criteria:**
+
 1. Dashboard displays: uptime percentage, error rate, average response time, active users (30 days), concurrent users
 2. User metrics: total users, users by tier, new signups (month), churn rate, trial-to-paid conversion
 3. Revenue metrics: MRR, ARR, overage revenue, IP rotation revenue, marketplace revenue, growth rate
@@ -1790,6 +1861,7 @@ I want to manage all users,
 so that I can provide support and maintain platform quality.
 
 **Acceptance Criteria:**
+
 1. User list: displays all users with search, filter, sort functionality
 2. User details: view user profile, subscription, usage, activity, billing history
 3. User actions: suspend/reactivate, change tier/limits, login as user (with permission), delete user
@@ -1810,6 +1882,7 @@ I want to curate workflows from automated scraping,
 so that the marketplace has high-quality, relevant workflows.
 
 **Acceptance Criteria:**
+
 1. Scraped workflows queue: displays all workflows from automated scraping awaiting review
 2. Workflow status: pending, reviewing, approved, rejected, duplicate
 3. Workflow review interface: view workflow JSON, metadata, example outputs, source
@@ -1830,6 +1903,7 @@ I want to manage platform integrations,
 so that I can ensure all platform APIs are functioning correctly.
 
 **Acceptance Criteria:**
+
 1. Platform status dashboard: shows health status for all 8 platforms
 2. API key management: configure API keys for all platforms with rotation capability
 3. Quota monitoring: track API quota usage per platform with alerts at 80%
@@ -1850,6 +1924,7 @@ I want to configure system-wide settings,
 so that I can customize platform behavior and features.
 
 **Acceptance Criteria:**
+
 1. General settings: enable/disable platform features, configure tier limits and pricing
 2. Email settings: configure email templates, SMTP settings, email delivery
 3. Notification settings: configure notification preferences and delivery methods
@@ -1867,7 +1942,7 @@ so that I can customize platform behavior and features.
 
 ## Checklist Results Report
 
-*[PM Checklist will be executed and results populated here after PRD completion]*
+_[PM Checklist will be executed and results populated here after PRD completion]_
 
 ---
 
@@ -1875,11 +1950,11 @@ so that I can customize platform behavior and features.
 
 ### UX Expert Prompt
 
-The PRD for MPCAS is complete. Please create a comprehensive front-end specification document using the front-end-spec-tmpl.yaml template. Focus on the unified publishing interface, workflow builder, content calendar, analytics dashboard, and white-label customization capabilities. Ensure the spec addresses responsive design, accessibility (WCAG AA), and the multi-platform nature of the application.
+The PRD for MPCAS2 is complete. Please create a comprehensive front-end specification document using the front-end-spec-tmpl.yaml template. Focus on the unified publishing interface, workflow builder, content calendar, analytics dashboard, and white-label customization capabilities. Ensure the spec addresses responsive design, accessibility (WCAG AA), and the multi-platform nature of the application.
 
 ### Architect Prompt
 
-The PRD for MPCAS is complete with 12 epics and detailed user stories. Please create a comprehensive fullstack architecture document using the fullstack-architecture-tmpl.yaml template. Key architectural considerations: multi-tenant schema-per-tenant database, microservices architecture, ComfyUI/n8n integration, 8 platform API integrations, self-hosted AI (80% workload), and horizontal scaling requirements. Ensure the architecture supports 10,000+ concurrent users and 99.9% uptime SLA.
+The PRD for MPCAS2 is complete with 12 epics and detailed user stories. Please create a comprehensive fullstack architecture document using the fullstack-architecture-tmpl.yaml template. Key architectural considerations: multi-tenant schema-per-tenant database, microservices architecture, ComfyUI/n8n integration, 8 platform API integrations, self-hosted AI (80% workload), and horizontal scaling requirements. Ensure the architecture supports 10,000+ concurrent users and 99.9% uptime SLA.
 
 ---
 

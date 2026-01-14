@@ -14,6 +14,7 @@ Implement an MCP server when **ANY** of the following criteria are met:
 ### Examples
 
 ✅ **Good Candidates**:
+
 - Custom database query tools
 - Proprietary API integrations
 - Internal service integrations
@@ -21,6 +22,7 @@ Implement an MCP server when **ANY** of the following criteria are met:
 - Secure credential management
 
 ❌ **Not Good Candidates**:
+
 - Standard operations (use existing MCP servers)
 - Simple file operations (use file system MCP)
 - Standard API calls (use HTTP MCP)
@@ -48,10 +50,7 @@ mcp_servers/
 // src/index.ts
 import { Server } from '@modelcontextprotocol/sdk/server/index.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
-import { 
-  CallToolRequestSchema,
-  ListToolsRequestSchema 
-} from '@modelcontextprotocol/sdk/types.js';
+import { CallToolRequestSchema, ListToolsRequestSchema } from '@modelcontextprotocol/sdk/types.js';
 
 const server = new Server(
   {
@@ -100,7 +99,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           },
         ],
       };
-    
+
     default:
       throw new Error(`Unknown tool: ${name}`);
   }
@@ -176,9 +175,7 @@ describe('Your Tool', () => {
   });
 
   it('should handle errors', async () => {
-    await expect(
-      yourToolFunction({ param1: 'invalid' })
-    ).rejects.toThrow();
+    await expect(yourToolFunction({ param1: 'invalid' })).rejects.toThrow();
   });
 });
 ```
@@ -243,7 +240,7 @@ Agents can use your MCP server tools like any other MCP tool:
 ```typescript
 // In agent code
 const result = await mcpClient.callTool('your-server', 'your-tool-name', {
-  param1: 'value'
+  param1: 'value',
 });
 ```
 

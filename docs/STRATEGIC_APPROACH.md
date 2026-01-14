@@ -8,6 +8,7 @@
 **Recommended Approach**: **Hybrid MVP + Foundation Strategy**
 
 Use PRD as authoritative source, but take a pragmatic approach that:
+
 1. Acknowledges what's already done
 2. Prioritizes user value delivery
 3. Builds foundation incrementally
@@ -20,6 +21,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 ### ✅ Already Completed (From NEXT_STEPS.md)
 
 **Infrastructure Setup:**
+
 - ✅ Monorepo structure (`apps/web/`, `apps/api/`, `packages/`)
 - ✅ TypeScript configured
 - ✅ ESLint and Prettier configured
@@ -33,6 +35,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 ### ⚠️ Partially Complete
 
 **PRD Story 1.1: Project Setup & Repository Structure**
+
 - ✅ Monorepo structure (DONE)
 - ✅ TypeScript configured (DONE)
 - ✅ ESLint/Prettier (DONE)
@@ -50,12 +53,14 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Approach**: Follow PRD exactly, complete Story 1.1-1.5 before any features
 
 **Pros**:
+
 - ✅ Solid foundation
 - ✅ No technical debt
 - ✅ Proper dependency order
 - ✅ Scalable from day one
 
 **Cons**:
+
 - ❌ No user value until Story 1.5 complete
 - ❌ Slower time to market
 - ❌ Risk of over-engineering
@@ -72,12 +77,14 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Approach**: Jump to user-facing features, build foundation as needed
 
 **Pros**:
+
 - ✅ Fast user value delivery
 - ✅ Early feedback
 - ✅ Faster time to market
 - ✅ Validates product-market fit
 
 **Cons**:
+
 - ❌ Technical debt accumulation
 - ❌ May need to refactor later
 - ❌ Scaling challenges
@@ -94,12 +101,14 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Approach**: Complete critical foundation, then deliver user value, iterate
 
 **Strategy**:
+
 1. **Quick Win**: Mark Story 1.1 as "Mostly Complete" (verify remaining items)
 2. **Critical Foundation**: Complete Story 1.2 (Database) - REQUIRED for everything
 3. **User Value**: Implement Story 1.3 (Auth) - delivers immediate value
 4. **Iterate**: Build remaining foundation alongside features
 
 **Pros**:
+
 - ✅ Balances foundation and value
 - ✅ Delivers user value quickly
 - ✅ Builds on solid base
@@ -107,6 +116,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 - ✅ Minimizes rework
 
 **Cons**:
+
 - ⚠️ Requires careful dependency management
 - ⚠️ Need to track what's done vs pending
 
@@ -121,6 +131,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 ### Phase 1: Foundation Verification (1-2 days)
 
 **Story 1.1: Project Setup & Repository Structure**
+
 - [ ] Verify all acceptance criteria
 - [ ] Complete missing items (CI/CD, Husky)
 - [ ] Mark as "Complete" or "Mostly Complete"
@@ -135,6 +146,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Story 1.2: Multi-Tenant Database Architecture**
 
 **Why This First**:
+
 - Required for ALL subsequent features
 - No user features can work without it
 - High complexity, needs time to get right
@@ -149,6 +161,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Story 1.3: User Authentication System**
 
 **Why This Next**:
+
 - Delivers immediate user value
 - Enables all other features
 - Can be built incrementally:
@@ -168,6 +181,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Story 1.4: Basic User Management**
 
 **Why This Next**:
+
 - Completes authentication flow
 - Users can manage their accounts
 - Low complexity, high value
@@ -182,6 +196,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 **Story 1.5: Health Check & System Status**
 
 **Why This Last**:
+
 - Important for operations
 - Not blocking for users
 - Can be added incrementally
@@ -196,6 +211,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 ### Use PRD as Source (Authoritative)
 
 **Rationale**:
+
 1. BMAD config points to PRD
 2. Comprehensive (100+ stories)
 3. Well-structured
@@ -204,12 +220,14 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 ### But: Be Pragmatic
 
 **For Story 1.1**:
+
 - Create story file from PRD
 - Mark completed items as done
 - Focus on remaining work
 - Don't redo what's already done
 
 **For Subsequent Stories**:
+
 - Create from PRD in order
 - Respect dependencies
 - Build incrementally
@@ -287,16 +305,19 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 ## Success Metrics
 
 **Week 1**:
+
 - ✅ Story 1.1 verified/complete
 - ✅ Story 1.2 in progress
 - ✅ Database architecture designed
 
 **Week 2**:
+
 - ✅ Story 1.2 complete
 - ✅ Story 1.3 in progress
 - ✅ First OAuth working
 
 **Week 3**:
+
 - ✅ Story 1.3 complete (basic auth)
 - ✅ Story 1.4 in progress
 - ✅ Users can sign in and manage profile
@@ -315,6 +336,7 @@ Use PRD as authoritative source, but take a pragmatic approach that:
 6. ✅ Build remaining foundation alongside features
 
 This approach:
+
 - Respects PRD structure
 - Acknowledges current state
 - Delivers value quickly
