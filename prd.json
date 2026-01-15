@@ -217,7 +217,7 @@
       "title": "LinkedIn OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 25,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect LinkedIn\" button initiates LinkedIn OAuth 2.0 flow",
         "OAuth scopes requested: `w_member_social`, `r_liteprofile`, `rw_organization_admin` (for company pages)",

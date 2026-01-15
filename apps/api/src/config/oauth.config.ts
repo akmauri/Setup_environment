@@ -140,10 +140,32 @@ export const twitterOAuthConfig: OAuthConfig = {
 };
 
 /**
+ * LinkedIn OAuth 2.0 Configuration
+ */
+export const linkedinOAuthConfig: OAuthConfig = {
+  clientId: process.env.LINKEDIN_CLIENT_ID || '',
+  clientSecret: process.env.LINKEDIN_CLIENT_SECRET || '',
+  redirectUri:
+    process.env.LINKEDIN_REDIRECT_URI || 'http://localhost:3000/api/v1/social/linkedin/callback',
+  scopes: ['openid', 'profile', 'email', 'w_member_social', 'rw_organization_admin'],
+  authorizationUrl: 'https://www.linkedin.com/oauth/v2/authorization',
+  tokenUrl: 'https://www.linkedin.com/oauth/v2/accessToken',
+  userInfoUrl: 'https://api.linkedin.com/v2/userinfo',
+};
+
+/**
  * Get OAuth authorization URL for a provider
  */
 export function getOAuthAuthUrl(
-  provider: 'google' | 'microsoft' | 'okta' | 'youtube' | 'facebook' | 'tiktok' | 'twitter',
+  provider:
+    | 'google'
+    | 'microsoft'
+    | 'okta'
+    | 'youtube'
+    | 'facebook'
+    | 'tiktok'
+    | 'twitter'
+    | 'linkedin',
   state?: string
 ): string {
   let config: OAuthConfig;
@@ -190,6 +212,12 @@ export function getOAuthAuthUrl(
       additionalParams = {
         response_type: 'code',
         code_challenge_method: 'plain', // Twitter requires PKCE, but we'll use plain for MVP
+      };
+      break;
+    case 'linkedin':
+      config = linkedinOAuthConfig;
+      additionalParams = {
+        response_type: 'code',
       };
       break;
     default:

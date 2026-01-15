@@ -279,6 +279,55 @@ This is a living document that tracks the prioritized TODO list for implementati
 - [x] Task 2.4.22: Implement error handling for rate limits [Complexity: low] [Dependencies: Task 2.4.7]
 - [x] Task 2.4.23: Implement error handling for permission issues [Complexity: low] [Dependencies: Task 2.4.6]
 
+### Story 2.5: LinkedIn OAuth Integration
+
+**Story ID**: 2.5  
+**Epic**: Platform Integrations & OAuth  
+**Status**: Completed
+
+#### LinkedIn OAuth Configuration
+
+- [x] Task 2.5.1: Create LinkedIn OAuth config with LinkedIn scopes [Complexity: low] [Dependencies: none]
+- [x] Task 2.5.2: Add LinkedIn OAuth scopes (openid, profile, email, w_member_social, rw_organization_admin) [Complexity: low] [Dependencies: Task 2.5.1]
+
+#### LinkedIn Service
+
+- [x] Task 2.5.3: Create LinkedIn service for OAuth and API operations [Complexity: medium] [Dependencies: Task 2.5.2]
+- [x] Task 2.5.4: Implement function to exchange authorization code for LinkedIn tokens [Complexity: medium] [Dependencies: Task 2.5.3]
+- [x] Task 2.5.5: Implement function to exchange short-lived token for long-lived token (60 days) [Complexity: medium] [Dependencies: Task 2.5.3]
+- [x] Task 2.5.6: Implement function to refresh LinkedIn long-lived token [Complexity: medium] [Dependencies: Task 2.5.3]
+- [x] Task 2.5.7: Implement function to get LinkedIn personal profile information [Complexity: medium] [Dependencies: Task 2.5.3]
+- [x] Task 2.5.8: Implement function to get LinkedIn company pages for user [Complexity: medium] [Dependencies: Task 2.5.3]
+- [x] Task 2.5.9: Implement function to get LinkedIn company page information [Complexity: medium] [Dependencies: Task 2.5.8]
+
+#### LinkedIn OAuth Flow
+
+- [x] Task 2.5.10: Create LinkedIn OAuth initiation endpoint [Complexity: low] [Dependencies: Task 2.5.2]
+- [x] Task 2.5.11: Create LinkedIn OAuth callback handler [Complexity: medium] [Dependencies: Task 2.5.10]
+- [x] Task 2.5.12: Support connecting personal LinkedIn profile [Complexity: medium] [Dependencies: Task 2.5.7]
+- [x] Task 2.5.13: Support connecting LinkedIn Company Pages [Complexity: medium] [Dependencies: Task 2.5.9]
+- [x] Task 2.5.14: Store LinkedIn account with encrypted tokens and account info [Complexity: medium] [Dependencies: Task 2.5.12, Task 2.5.13]
+
+#### Token Refresh
+
+- [x] Task 2.5.15: Update token refresh service to support LinkedIn tokens [Complexity: low] [Dependencies: Task 2.5.6]
+
+#### Account Management
+
+- [x] Task 2.5.16: Create GET endpoint to list connected LinkedIn accounts [Complexity: low] [Dependencies: none]
+- [x] Task 2.5.17: Create DELETE endpoint to disconnect LinkedIn account [Complexity: medium] [Dependencies: Task 2.5.16]
+- [x] Task 2.5.18: Implement token revocation on LinkedIn account disconnection [Complexity: medium] [Dependencies: Task 2.5.17]
+- [x] Task 2.5.19: Create PUT endpoint to update LinkedIn account label [Complexity: low] [Dependencies: none]
+- [x] Task 2.5.20: Enforce tier limits when connecting new LinkedIn account [Complexity: low] [Dependencies: none]
+
+#### Token Health & Account Type
+
+- [x] Task 2.5.21: Create function to validate LinkedIn token using LinkedIn API [Complexity: medium] [Dependencies: none]
+- [x] Task 2.5.22: Create endpoint to check token health for LinkedIn accounts [Complexity: low] [Dependencies: Task 2.5.21]
+- [x] Task 2.5.23: Display account type (Personal Profile vs Company Page) in account information [Complexity: low] [Dependencies: Task 2.5.14]
+- [x] Task 2.5.24: Implement error handling for permission issues [Complexity: low] [Dependencies: Task 2.5.7]
+- [x] Task 2.5.25: Implement error handling for account access problems [Complexity: low] [Dependencies: Task 2.5.8]
+
 ## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration

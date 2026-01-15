@@ -9,6 +9,7 @@ import { refreshYouTubeToken } from './youtube.service.js';
 import { refreshInstagramToken } from './instagram.service.js';
 import { refreshTikTokToken } from './tiktok.service.js';
 import { refreshTwitterToken } from './twitter.service.js';
+import { refreshLinkedInToken } from './linkedin.service.js';
 
 /**
  * Refresh token for a social account
@@ -61,6 +62,15 @@ export async function refreshAccountToken(
           access_token: twitterResponse.access_token,
           refresh_token: twitterResponse.refresh_token || twitterResponse.access_token,
           expires_in: twitterResponse.expires_in,
+        };
+        break;
+      }
+      case 'linkedin': {
+        const linkedinResponse = await refreshLinkedInToken(account.decryptedRefreshToken);
+        tokenResponse = {
+          access_token: linkedinResponse.access_token,
+          refresh_token: linkedinResponse.refresh_token || linkedinResponse.access_token,
+          expires_in: linkedinResponse.expires_in,
         };
         break;
       }

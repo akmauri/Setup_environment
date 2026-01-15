@@ -429,3 +429,56 @@ Useful Context:
 - Twitter OAuth config: apps/api/src/config/oauth.config.ts (twitterOAuthConfig)
 
 ---
+
+[2026-01-15 21:00:00] Story 2.5: LinkedIn OAuth Integration
+
+Learnings:
+- LinkedIn OAuth uses standard OAuth 2.0 flow
+- Requires LinkedIn Developer account and app creation
+- Long-lived tokens (60 days) vs short-lived (1 hour) - need token exchange
+- Support for both personal profiles and company pages
+- Company page connection requires admin access verification
+- Token refresh uses LinkedIn refresh token endpoint
+- Account info retrieved from LinkedIn Profile API (OpenID Connect) and Organization API
+- Error handling needed for: permission issues, account access problems
+- Account type stored in metadata to distinguish personal vs company
+- LinkedIn uses OpenID Connect scopes (profile, email, openid) - r_liteprofile is deprecated
+
+Patterns:
+- LinkedIn OAuth config added with LinkedIn-specific scopes (openid, profile, email, w_member_social, rw_organization_admin)
+- LinkedIn service handles LinkedIn API operations
+- Support for both personal profiles (via userinfo endpoint) and company pages (via Organization API)
+- Company page connection requires admin access verification via organizationalEntityAcls
+- Account type stored in metadata (personal vs company)
+- Token refresh service updated to handle LinkedIn token pattern
+- LinkedIn routes follow same RESTful pattern as other platforms
+- Account operations require authentication and ownership verification
+- Company pages endpoint allows user to select which company page to connect
+
+Gotchas:
+- LinkedIn deprecated r_liteprofile and r_emailaddress in favor of OpenID Connect (profile, email, openid)
+- Long-lived tokens obtained via token exchange (not direct from OAuth)
+- Company page connection requires rw_organization_admin scope and admin access
+- Organization API requires X-Restli-Protocol-Version: 2.0.0 header
+- Company page details require separate API call after getting list
+- Account type must be stored in metadata to distinguish personal vs company
+- Token exchange for long-lived tokens may not be directly available (uses refresh token instead)
+
+Useful Context:
+- LinkedIn OAuth connect: GET /api/v1/social/linkedin/connect
+- LinkedIn OAuth callback: GET /api/v1/social/linkedin/callback?account_type=personal|company&company_id=...
+- Get company pages: GET /api/v1/social/linkedin/companies?access_token=...
+- List LinkedIn accounts: GET /api/v1/social/linkedin/accounts
+- Disconnect account: DELETE /api/v1/social/linkedin/accounts/:accountId
+- Update label: PUT /api/v1/social/linkedin/accounts/:accountId/label
+- Token health: GET /api/v1/social/linkedin/accounts/:accountId/health
+- LinkedIn Client ID: LINKEDIN_CLIENT_ID environment variable
+- LinkedIn Client Secret: LINKEDIN_CLIENT_SECRET environment variable
+- LinkedIn redirect URI: LINKEDIN_REDIRECT_URI environment variable
+- LinkedIn scopes: openid, profile, email, w_member_social, rw_organization_admin
+- Token expiry: Long-lived tokens expire in 60 days (5184000 seconds)
+- LinkedIn service: apps/api/src/services/linkedin.service.ts
+- LinkedIn routes: apps/api/src/routes/linkedin.routes.ts
+- LinkedIn OAuth config: apps/api/src/config/oauth.config.ts (linkedinOAuthConfig)
+
+---
