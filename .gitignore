@@ -7,11 +7,13 @@ package-lock.json
 yarn.lock
 
 # Environment variables
+# Note: .env.example is tracked (not ignored) - it's the template for environment variables
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+!.env.example
 
 # Build outputs
 dist/

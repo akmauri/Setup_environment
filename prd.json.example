@@ -1,0 +1,76 @@
+{
+  "projectName": "MPCAS2",
+  "version": "1.0.0",
+  "branchName": "feature/epic-1-foundation",
+  "createdAt": "2026-01-15T00:00:00.000Z",
+  "userStories": [
+    {
+      "id": "1.1",
+      "title": "Project Setup & Repository Structure",
+      "epic": "Epic 1: Foundation & Core Infrastructure",
+      "priority": 1,
+      "passes": false,
+      "acceptanceCriteria": [
+        "Monorepo structure created with apps/web/, apps/api/, packages/shared/, packages/ui/, workflows/, docker/, and docs/ directories",
+        "Package.json/workspace configuration enables cross-package dependencies and shared code",
+        "TypeScript configured with strict mode enabled across all packages",
+        "ESLint and Prettier configured with shared rules and pre-commit hooks (Husky)",
+        "Git repository initialized with .gitignore excluding node_modules, build artifacts, and environment files",
+        "README.md includes setup instructions, architecture overview, and development guidelines",
+        "Docker Compose file created for local development environment (PostgreSQL, Redis, n8n, ComfyUI)",
+        "CI/CD pipeline configured (GitHub Actions or GitLab CI) with automated testing and Docker builds"
+      ],
+      "dependencies": [],
+      "estimatedComplexity": "medium",
+      "notes": ""
+    },
+    {
+      "id": "1.2",
+      "title": "Multi-Tenant Database Architecture",
+      "epic": "Epic 1: Foundation & Core Infrastructure",
+      "priority": 2,
+      "passes": false,
+      "acceptanceCriteria": [
+        "PostgreSQL 15+ database configured with connection pooling (PgBouncer)",
+        "Database migration system implemented (TypeORM, Prisma, or similar) with version control",
+        "Public schema created for system-wide tables (tenants, migrations, shared_data like countries, timezones)",
+        "Tenant schema creation function implemented that creates isolated schema per tenant on signup",
+        "All tenant-specific tables created in tenant schemas (users, content, workflows, social_accounts, analytics, etc.)",
+        "Database connection middleware automatically routes queries to correct tenant schema based on JWT token",
+        "Tenant schema deletion function implemented for complete data removal (GDPR compliance)",
+        "Database backup strategy configured with daily snapshots and point-in-time recovery capability",
+        "Read replica support configured for horizontal scaling of read operations",
+        "Migration rollback capability tested and documented"
+      ],
+      "dependencies": ["1.1"],
+      "estimatedComplexity": "high",
+      "notes": ""
+    },
+    {
+      "id": "1.3",
+      "title": "User Authentication System",
+      "epic": "Epic 1: Foundation & Core Infrastructure",
+      "priority": 3,
+      "passes": false,
+      "acceptanceCriteria": [
+        "User registration endpoint accepts email, password, and optional tenant creation",
+        "Password hashing implemented using bcrypt with salt rounds (minimum 10)",
+        "Email verification flow implemented with verification tokens and expiration (24 hours)",
+        "Login endpoint validates credentials and returns JWT access token (15 min expiry) and refresh token (30 day expiry)",
+        "OAuth 2.0 integration implemented for Google, Microsoft, and Okta with proper scopes",
+        "OAuth callback handlers process authorization codes and create/update user accounts",
+        "JWT token generation includes user_id, tenant_id, role, and permissions",
+        "Refresh token endpoint validates refresh token and issues new access/refresh token pair",
+        "Token rotation implemented (refresh tokens are single-use, new pair issued on each refresh)",
+        "Logout endpoint invalidates refresh tokens and clears session",
+        "Password reset flow implemented with secure tokens, email delivery, and expiration (1 hour)",
+        "Rate limiting implemented for authentication endpoints (5 attempts per 15 minutes)",
+        "2FA (TOTP) support implemented as optional security enhancement",
+        "Session management tracks active sessions with device information and last activity"
+      ],
+      "dependencies": ["1.2"],
+      "estimatedComplexity": "high",
+      "notes": ""
+    }
+  ]
+}

@@ -16,7 +16,18 @@
     "clean": "turbo run clean",
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "orchestrate": "node --max-old-space-size=4096 scripts/orchestrate_agents.js",
+    "orchestrate:low-memory": "node scripts/orchestrate_agents.js",
+    "test:orchestrator": "node scripts/test_orchestrator.js",
+    "install:cursor-cli": "powershell -ExecutionPolicy Bypass -File scripts/install_cursor_cli_powershell.ps1",
+    "locks:list": "node scripts/manage_locks.js list",
+    "locks:check": "node scripts/manage_locks.js check",
+    "locks:cleanup": "node scripts/manage_locks.js cleanup",
+    "ralph:convert": "node scripts/ralph/convert-prd-to-json.js",
+    "ralph:status": "node scripts/ralph/check-status.js",
+    "ralph:validate": "node scripts/ralph/validate-prd.js",
+    "ralph:start": "echo Load scripts/ralph/ralph-prompt.md in Cursor chat and say: Start Ralph process"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",

@@ -2,6 +2,18 @@
 
 This document defines the fundamental principles that all AI agents must follow when working on this project.
 
+## Rule Enforcement
+
+**IMPORTANT**: All agents MUST follow the **Rule Enforcement Protocol** (`agent_rules/rule_enforcement.md`) which ensures automatic compliance with all rules, including:
+
+- No manual orchestration - execute actions directly, never delegate to users
+- Ralph-Wiggum process application when appropriate
+- Multi-agent coordination when beneficial (or single-session orchestration)
+- All pre-action verification checklists
+- Quality gates and error handling
+
+**Rule compliance is MANDATORY and AUTOMATIC** - agents must verify rule compliance before every action without requiring reminders.
+
 ## Mandatory Pre-Work Checklist
 
 Before starting any work, every agent MUST:
@@ -83,6 +95,43 @@ All significant decisions MUST be documented:
 - Include: sender, receiver, message, related task IDs, urgency
 - Check for messages before starting work
 
+## No Manual Orchestration
+
+**CRITICAL**: Agents must execute actions directly, not describe them or delegate to users.
+
+- **Never ask users to**: Open chats, copy/paste, run routine commands, manually coordinate
+- **Always execute**: Run commands, create files, update trackers, acquire locks directly
+- **Single-session orchestration**: Use locks, checkpoints, and task interleaving in one session
+- **Provide evidence**: Show file paths, command output, test results for completion claims
+
+See `agent_rules/no_manual_orchestration.md` for complete protocol.
+
+## Ralph Process Integration
+
+The **Ralph Process** is an autonomous AI agent loop that implements PRD items one at a time until all are complete. It works directly in Cursor's chat interface with Claude.
+
+**When to use Ralph Process:**
+
+- Implementing PRD stories systematically
+- Working through a backlog of user stories
+- Ensuring all acceptance criteria are met
+- Maintaining quality through automated checks
+
+**Ralph Process Files:**
+
+- `prd.json` - PRD in JSON format with story status (`passes: true/false`)
+- `progress.txt` - Append-only learnings file
+- `scripts/ralph/ralph-prompt.md` - Ralph prompt for Cursor chat
+- `scripts/ralph/convert-prd-to-json.js` - PRD converter script
+
+**How to use:**
+
+1. Convert PRD to JSON: `node scripts/ralph/convert-prd-to-json.js docs/prd.md prd.json`
+2. Load `scripts/ralph/ralph-prompt.md` in Cursor chat
+3. Start Ralph: "Start Ralph process - implement next story from prd.json"
+
+**See**: `docs/RALPH_IMPLEMENTATION.md` for complete documentation.
+
 ## Integration with BMAD System
 
 This system integrates with the existing BMAD framework:
@@ -106,6 +155,7 @@ For detailed context loading procedures and priority order, see `.cursor/rules/a
 
 - **Never commit secrets** - See `.cursor/rules/security_rules.md`
 - **Use environment variables** - All sensitive data in `.env` files
+- **Env var handling** - See `agent_rules/env_var_handling.md` for proper env var handling (prevents loops)
 - **Validate inputs** - Always validate user inputs and API responses
 
 ## Quality Gates

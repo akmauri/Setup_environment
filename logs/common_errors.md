@@ -28,24 +28,36 @@ This document contains solutions to frequently encountered errors. Agents should
 - Error: "Environment variable X is not defined"
 - Application fails to start
 - API calls fail with authentication errors
+- Agent loops on "missing env var" errors
 
 **Root Cause**:
-Required environment variables not set in `.env` file or environment
+Required environment variables not set in `.env` file or environment. **Agents cannot read `.env` files** (they are intentionally ignored for security).
 
 **Solution**:
 
-1. Check `.env.example` for required variables
-2. Copy missing variables to `.env`
-3. Set appropriate values
-4. Restart application
+1. **For Agents**:
+   - Check `.env.example` for required variables (agents can read this)
+   - If variable is missing from `.env.example`, add it with placeholder value
+   - Inform user they need to populate `.env` manually (maximum once)
+   - **STOP** - Do not loop on this issue
+   - See `agent_rules/env_var_handling.md` for complete protocol
+
+2. **For Users**:
+   - Check `.env.example` for required variables
+   - Copy missing variables to `.env`
+   - Set appropriate values (get real secrets from service providers)
+   - Restart application
 
 **Prevention**:
 
 - Always check `.env.example` when setting up
-- Document all required environment variables
+- Document all required environment variables in `.env.example`
 - Use validation on startup to catch missing variables early
+- Agents must follow `agent_rules/env_var_handling.md` to prevent loops
 
 **Related Tasks**: Setup and configuration tasks
+
+**Agent Rule Reference**: `agent_rules/env_var_handling.md`
 
 ---
 

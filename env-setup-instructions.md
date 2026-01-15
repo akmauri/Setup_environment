@@ -2,7 +2,17 @@
 
 ## Step 1: Create .env File
 
-Since `.env` files are gitignored, you need to create it manually. Copy the content below into a new file named `.env` in the root directory:
+Since `.env` files are gitignored, you need to create it manually.
+
+**Recommended**: Copy from `.env.example`:
+
+```bash
+cp .env.example .env
+```
+
+Then edit `.env` and fill in your actual values.
+
+**Alternative**: Copy the content below into a new file named `.env` in the root directory:
 
 ```env
 # Database

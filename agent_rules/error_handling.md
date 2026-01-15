@@ -152,7 +152,11 @@ When an error occurs, follow these steps in order:
 - Wrong API endpoints
 - Invalid credentials
 
-**Resolution**: Check configuration files, environment setup
+**Resolution**:
+
+- Check configuration files, environment setup
+- For missing env vars: Follow `agent_rules/env_var_handling.md` protocol
+- **Never loop** on missing env var errors - inform user once and move on
 
 ### Category 2: Dependency Errors
 
@@ -259,6 +263,7 @@ Document recovery strategy in:
 This error handling protocol integrates with:
 
 - **Loop Guard** (`agent_rules/loop_guard.md`): Loops are a type of error that needs recovery
+- **Env Var Handling** (`agent_rules/env_var_handling.md`): Missing env vars are Category 1 errors with special handling
 - **Core Principles** (`agent_rules/core_principles.md`): Error handling is part of quality gates
 - **Autonomy Protocol** (`agent_rules/autonomy_protocol.md`): Errors can occur during autonomous execution
 

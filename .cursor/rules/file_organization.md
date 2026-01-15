@@ -130,6 +130,7 @@ This document defines naming conventions, directory structure, and file placemen
 
 ### Agent Rules
 
+- File discovery: `.cursor/rules/file_discovery.md` - **MANDATORY**: Comprehensive file discovery before file creation
 - Core principles: `agent_rules/core_principles.md`
 - Error handling: `agent_rules/error_handling.md`
 - Coordination: `agent_rules/parallel_coordination.md`

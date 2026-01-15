@@ -112,3 +112,21 @@ ALWAYS cite source documents: `[Source: architecture/{filename}.md#{section}]`
   - Any deviations or conflicts noted between epic and architecture
   - Checklist Results
   - Next steps: For Complex stories, suggest the user carefully review the story draft and also optionally have the PO run the task `.bmad-core/tasks/validate-next-story`
+
+### 7. Automatic Task Breakdown (Ralph-Wiggum Integration)
+
+**Purpose**: Automatically enhance story tasks with atomic breakdown using Ralph-Wiggum methodology for better parallelization.
+
+**Execution**: This step runs automatically and non-blocking after Step 6 completes successfully.
+
+- Execute `.bmad-core/tasks/breakdown-story-tasks.md` with the story file created in Step 5
+- The breakdown task will:
+  - Analyze all tasks/subtasks in the story
+  - Apply Ralph-Wiggum Phase 1: Task Analysis
+  - Break down compound tasks into atomic units (passing "One Sentence Without 'And'" test)
+  - Update the story file's `Tasks / Subtasks` section with atomic breakdowns
+  - Update `plan/IMPLEMENTATION_PLAN.md` with new atomic tasks
+  - Update `agent_tasks/todo_progress.json` with atomic task entries
+  - Create specs in `specs/` directory if needed for new topics
+- **Note**: This enhancement does not modify story status, acceptance criteria, or other core story elements - only enhances task granularity
+- **Integration**: This step integrates Ralph-Wiggum's task breakdown methodology into BMAD's story creation workflow automatically, without disrupting existing processes

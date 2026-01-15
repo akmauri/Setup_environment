@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Orchestrator configuration for multi-agent execution",
+  "version": "1.0.0",
+  "epic": "epic-1",
+  "groups": ["A", "B", "C"],
+  "maxConcurrent": 3,
+  "monitorInterval": 5000,
+  "agentOverrides": {
+    "task-123": "dev-frontend",
+    "task-456": "qa"
+  },
+  "notes": "Copy this file to orchestrator.config.json and customize for your epic"
+}

@@ -14,13 +14,19 @@ When an agent starts work, it should load context in this order:
 
 ### 2. Agent Rules (Required)
 
+- `agent_rules/rule_enforcement.md` - **MANDATORY**: Rule compliance protocol (must be checked first)
+- `.cursor/rules/file_discovery.md` - **MANDATORY**: File discovery and hidden file verification before file creation
+- `agent_rules/no_manual_orchestration.md` - **MANDATORY**: Execute actions directly, never delegate to users
+- `agent_rules/testing_validation.md` - **MANDATORY**: Run tests/validation before marking tasks complete
 - `agent_rules/core_principles.md` - Fundamental principles
 - `agent_rules/error_handling.md` - Error handling protocol
 - `agent_rules/parallel_coordination.md` - Coordination rules
 - `agent_rules/update_protocol.md` - Rule update process
 - `agent_rules/autonomy_protocol.md` - Autonomous execution with red line checks
 - `agent_rules/loop_guard.md` - Loop detection and recovery procedures
+- `agent_rules/env_var_handling.md` - **MANDATORY**: Environment variable handling (prevents .env loops)
 - `agent_rules/iterative_work_pattern.md` - Pattern for iterative tasks (if applicable)
+- `ralph_wiggum_process.md` - Ralph-Wiggum parallel agent coordination process
 
 ### 3. Project Context (Required)
 

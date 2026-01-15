@@ -2,13 +2,38 @@
   "name": "@mpcas2/db",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "main": "./src/index.ts",
   "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
   "scripts": {
     "type-check": "tsc --noEmit",
-    "lint": "eslint src --ext .ts"
+    "lint": "eslint src --ext .ts",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "db:migrate:status": "prisma migrate status",
+    "db:studio": "prisma studio",
+    "db:seed": "tsx src/seed.ts"
   },
   "devDependencies": {
+    "@prisma/config": "^7.2.0",
+    "@types/supertest": "^6.0.3",
+    "dotenv": "^17.2.3",
+    "prisma": "^7.2.0",
+    "supertest": "^7.2.2",
+    "tsx": "^4.21.0",
     "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.2.0",
+    "@types/pg": "^8.16.0",
+    "pg": "^8.17.1"
   }
 }

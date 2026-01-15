@@ -33,9 +33,55 @@ services:
     networks:
       - mpcas2-network
 
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: mpcas2-n8n
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${N8N_DB_NAME:-n8n}
+      - DB_POSTGRESDB_USER=${POSTGRES_USER:-mpcas2}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD:-mpcas2_dev_password}
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin}
+      - N8N_HOST=${N8N_HOST:-localhost}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - mpcas2-network
+
+  comfyui:
+    image: comfyui/comfyui:latest
+    container_name: mpcas2-comfyui
+    ports:
+      - "${COMFYUI_PORT:-8188}:8188"
+    environment:
+      - COMFYUI_PORT=8188
+    volumes:
+      - comfyui_data:/app/models
+      - comfyui_output:/app/output
+    # Note: ComfyUI requires GPU support for optimal performance
+    # For CPU-only: use comfyui/comfyui:cpu tag
+    # For GPU: add deploy.resources.reservations.devices
+    networks:
+      - mpcas2-network
+
 volumes:
   postgres_data:
   redis_data:
+  n8n_data:
+  comfyui_data:
+  comfyui_output:
 
 networks:
   mpcas2-network:

@@ -1,0 +1,44 @@
+# Ralph Process - Progress and Learnings
+
+This file stores learnings, patterns, and context discovered during Ralph iterations.
+It is append-only - never overwrite, only add new entries.
+
+Each entry should include:
+- Timestamp
+- Story ID and title
+- Key learnings
+- Patterns discovered
+- Gotchas to avoid
+- Useful context for future iterations
+
+---
+
+[2026-01-15 12:00:00] Story 1.1: Project Setup & Repository Structure
+
+Learnings:
+- Monorepo structure already exists with apps/web, apps/api, packages/shared, packages/ui, packages/config, packages/db
+- TypeScript strict mode is enabled in root and all packages
+- ESLint and Prettier are configured with shared rules
+- Husky pre-commit hooks are configured and working
+- CI/CD pipeline exists in .github/workflows/ci.yml
+- Docker Compose was missing n8n and ComfyUI services - added them
+- README needed architecture overview and development guidelines - enhanced it
+
+Patterns:
+- TypeScript path aliases require baseUrl to be set in tsconfig.json for proper resolution
+- Next.js apps need @/* path alias configured in tsconfig.json with baseUrl
+- Docker Compose services should include all required services (PostgreSQL, Redis, n8n, ComfyUI)
+
+Gotchas:
+- Pre-existing code in apps/api has linting errors (empty catch blocks, console statements, test files not in tsconfig)
+- These are pre-existing issues and should be addressed in a separate code quality story
+- ESLint configuration for API package needs to exclude test files or include them in tsconfig
+
+Useful Context:
+- Project uses Turborepo for monorepo management
+- All packages extend root tsconfig.json for consistent TypeScript configuration
+- Pre-commit hooks run: lint, format:check, type-check
+- CI/CD pipeline runs: lint, format:check, type-check, test, build
+- Docker Compose services: postgres (5432), redis (6379), n8n (5678), comfyui (8188)
+
+---

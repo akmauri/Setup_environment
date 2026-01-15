@@ -41,6 +41,8 @@ const dbPassword = process.env.DB_PASSWORD;
 
 ## Environment Variable Handling
 
+**IMPORTANT**: See `agent_rules/env_var_handling.md` for comprehensive agent rules on environment variable handling. This section covers security aspects only.
+
 ### Local Development
 
 1. **Create `.env` file** (gitignored)
@@ -74,6 +76,15 @@ DB_PASSWORD=your-password-here
 API_KEY=sk-actual-key-123
 DB_PASSWORD=actual-password-456
 ```
+
+### Agent Rules
+
+**Agents MUST follow `agent_rules/env_var_handling.md`**:
+
+- Never read or expect access to `.env` files
+- Always reference `.env.example` for environment variable requirements
+- Never loop on missing environment variable errors
+- Never generate secrets automatically
 
 ## API Key Management
 

@@ -231,6 +231,20 @@ This document assesses risks in the current development environment and the new 
 - Regular optimization
   **Status**: Managed
 
+### 4. Orchestrator Memory Limits
+
+**Risk**: Multi-agent orchestrator hits Node.js heap limits when spawning agents
+**Impact**: Medium (component-specific, workaround available)
+**Probability**: Medium (observed in testing)
+**Mitigation**:
+
+- Single-session orchestration works perfectly (current default)
+- Memory limit flag: `--max-old-space-size=4096`
+- Reduce concurrency: `--max-concurrent 1`
+- Planned optimizations: streaming output, worker threads, graceful degradation
+- See: `docs/TECHNICAL_DEBT.md` (TD-001) for full details
+  **Status**: Mitigated (workaround available), Optimization planned
+
 ## Security Risks
 
 ### 1. Secret Exposure
