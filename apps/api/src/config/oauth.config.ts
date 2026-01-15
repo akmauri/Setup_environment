@@ -169,6 +169,20 @@ export const linkedinOAuthConfig: OAuthConfig = {
 };
 
 /**
+ * Pinterest OAuth 2.0 Configuration
+ */
+export const pinterestOAuthConfig: OAuthConfig = {
+  clientId: process.env.PINTEREST_APP_ID || '',
+  clientSecret: process.env.PINTEREST_APP_SECRET || '',
+  redirectUri:
+    process.env.PINTEREST_REDIRECT_URI || 'http://localhost:3000/api/v1/social/pinterest/callback',
+  scopes: ['pins:read', 'pins:write', 'boards:read', 'boards:write'],
+  authorizationUrl: 'https://www.pinterest.com/oauth',
+  tokenUrl: 'https://api.pinterest.com/v5/oauth/token',
+  userInfoUrl: 'https://api.pinterest.com/v5/user_account',
+};
+
+/**
  * Get OAuth authorization URL for a provider
  */
 export function getOAuthAuthUrl(
@@ -181,7 +195,8 @@ export function getOAuthAuthUrl(
     | 'tiktok'
     | 'twitter'
     | 'linkedin'
-    | 'facebook-pages',
+    | 'facebook-pages'
+    | 'pinterest',
   state?: string
 ): string {
   let config: OAuthConfig;
@@ -238,6 +253,12 @@ export function getOAuthAuthUrl(
       break;
     case 'facebook-pages':
       config = facebookPagesOAuthConfig;
+      additionalParams = {
+        response_type: 'code',
+      };
+      break;
+    case 'pinterest':
+      config = pinterestOAuthConfig;
       additionalParams = {
         response_type: 'code',
       };

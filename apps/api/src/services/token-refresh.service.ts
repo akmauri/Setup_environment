@@ -10,6 +10,7 @@ import { refreshInstagramToken } from './instagram.service.js';
 import { refreshTikTokToken } from './tiktok.service.js';
 import { refreshTwitterToken } from './twitter.service.js';
 import { refreshLinkedInToken } from './linkedin.service.js';
+import { refreshPinterestToken } from './pinterest.service.js';
 
 /**
  * Refresh token for a social account
@@ -71,6 +72,15 @@ export async function refreshAccountToken(
           access_token: linkedinResponse.access_token,
           refresh_token: linkedinResponse.refresh_token || linkedinResponse.access_token,
           expires_in: linkedinResponse.expires_in,
+        };
+        break;
+      }
+      case 'pinterest': {
+        const pinterestResponse = await refreshPinterestToken(account.decryptedRefreshToken);
+        tokenResponse = {
+          access_token: pinterestResponse.access_token,
+          refresh_token: pinterestResponse.refresh_token || pinterestResponse.access_token,
+          expires_in: pinterestResponse.expires_in,
         };
         break;
       }

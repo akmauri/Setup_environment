@@ -265,7 +265,7 @@
       "title": "Pinterest OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 27,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect Pinterest\" button initiates Pinterest OAuth 2.0 flow",
         "User must have Pinterest Business account (recommended) or personal account",
