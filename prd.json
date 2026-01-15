@@ -193,7 +193,7 @@
       "title": "Twitter/X OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 24,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect Twitter/X\" button initiates OAuth 2.0 flow (Twitter API v2)",
         "OAuth scopes requested: `tweet.write`, `users.read`, `offline.access`",

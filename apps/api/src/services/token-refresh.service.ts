@@ -8,6 +8,7 @@ import { getSocialAccountById, saveSocialAccount } from './social-account.servic
 import { refreshYouTubeToken } from './youtube.service.js';
 import { refreshInstagramToken } from './instagram.service.js';
 import { refreshTikTokToken } from './tiktok.service.js';
+import { refreshTwitterToken } from './twitter.service.js';
 
 /**
  * Refresh token for a social account
@@ -50,6 +51,16 @@ export async function refreshAccountToken(
           access_token: tiktokResponse.access_token,
           refresh_token: tiktokResponse.refresh_token || tiktokResponse.access_token,
           expires_in: tiktokResponse.expires_in,
+        };
+        break;
+      }
+      case 'twitter': {
+        // Twitter implements refresh token rotation (new refresh token on each refresh)
+        const twitterResponse = await refreshTwitterToken(account.decryptedRefreshToken);
+        tokenResponse = {
+          access_token: twitterResponse.access_token,
+          refresh_token: twitterResponse.refresh_token || twitterResponse.access_token,
+          expires_in: twitterResponse.expires_in,
         };
         break;
       }

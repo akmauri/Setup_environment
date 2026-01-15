@@ -126,10 +126,24 @@ export const tiktokOAuthConfig: OAuthConfig = {
 };
 
 /**
+ * Twitter/X OAuth 2.0 Configuration (Twitter API v2)
+ */
+export const twitterOAuthConfig: OAuthConfig = {
+  clientId: process.env.TWITTER_CLIENT_ID || '',
+  clientSecret: process.env.TWITTER_CLIENT_SECRET || '',
+  redirectUri:
+    process.env.TWITTER_REDIRECT_URI || 'http://localhost:3000/api/v1/social/twitter/callback',
+  scopes: ['tweet.write', 'users.read', 'offline.access'],
+  authorizationUrl: 'https://twitter.com/i/oauth2/authorize',
+  tokenUrl: 'https://api.twitter.com/2/oauth2/token',
+  userInfoUrl: 'https://api.twitter.com/2/users/me',
+};
+
+/**
  * Get OAuth authorization URL for a provider
  */
 export function getOAuthAuthUrl(
-  provider: 'google' | 'microsoft' | 'okta' | 'youtube' | 'facebook' | 'tiktok',
+  provider: 'google' | 'microsoft' | 'okta' | 'youtube' | 'facebook' | 'tiktok' | 'twitter',
   state?: string
 ): string {
   let config: OAuthConfig;
@@ -169,6 +183,13 @@ export function getOAuthAuthUrl(
       config = tiktokOAuthConfig;
       additionalParams = {
         response_type: 'code',
+      };
+      break;
+    case 'twitter':
+      config = twitterOAuthConfig;
+      additionalParams = {
+        response_type: 'code',
+        code_challenge_method: 'plain', // Twitter requires PKCE, but we'll use plain for MVP
       };
       break;
     default:

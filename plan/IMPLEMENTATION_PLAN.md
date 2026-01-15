@@ -232,6 +232,53 @@ This is a living document that tracks the prioritized TODO list for implementati
 - [x] Task 2.3.19: Track daily upload limit (20 videos per account per day) [Complexity: low] [Dependencies: Task 2.3.10]
 - [x] Task 2.3.20: Display daily upload limit in account information [Complexity: low] [Dependencies: Task 2.3.19]
 
+### Story 2.4: Twitter/X OAuth Integration
+
+**Story ID**: 2.4  
+**Epic**: Platform Integrations & OAuth  
+**Status**: Completed
+
+#### Twitter OAuth Configuration
+
+- [x] Task 2.4.1: Create Twitter OAuth config with Twitter API v2 scopes [Complexity: low] [Dependencies: none]
+- [x] Task 2.4.2: Add Twitter OAuth scopes (tweet.write, users.read, offline.access) [Complexity: low] [Dependencies: Task 2.4.1]
+
+#### Twitter Service
+
+- [x] Task 2.4.3: Create Twitter service for OAuth and API operations [Complexity: medium] [Dependencies: Task 2.4.2]
+- [x] Task 2.4.4: Implement function to exchange authorization code for Twitter tokens [Complexity: medium] [Dependencies: Task 2.4.3]
+- [x] Task 2.4.5: Implement function to refresh Twitter access token with rotation [Complexity: medium] [Dependencies: Task 2.4.3]
+- [x] Task 2.4.6: Implement function to get Twitter user information [Complexity: medium] [Dependencies: Task 2.4.3]
+- [x] Task 2.4.7: Get Twitter rate limit information from API headers [Complexity: low] [Dependencies: Task 2.4.6]
+
+#### Twitter OAuth Flow
+
+- [x] Task 2.4.8: Create Twitter OAuth initiation endpoint [Complexity: low] [Dependencies: Task 2.4.2]
+- [x] Task 2.4.9: Create Twitter OAuth callback handler [Complexity: medium] [Dependencies: Task 2.4.8]
+- [x] Task 2.4.10: Store Twitter account with encrypted tokens and account info [Complexity: medium] [Dependencies: Task 2.4.7]
+
+#### Token Refresh
+
+- [x] Task 2.4.11: Update token refresh service to support Twitter tokens with rotation [Complexity: low] [Dependencies: Task 2.4.5]
+
+#### Account Management
+
+- [x] Task 2.4.12: Create GET endpoint to list connected Twitter accounts [Complexity: low] [Dependencies: none]
+- [x] Task 2.4.13: Create DELETE endpoint to disconnect Twitter account [Complexity: medium] [Dependencies: Task 2.4.12]
+- [x] Task 2.4.14: Implement token revocation on Twitter account disconnection [Complexity: medium] [Dependencies: Task 2.4.13]
+- [x] Task 2.4.15: Create PUT endpoint to update Twitter account label [Complexity: low] [Dependencies: none]
+- [x] Task 2.4.16: Enforce tier limits when connecting new Twitter account [Complexity: low] [Dependencies: none]
+
+#### Token Health & Error Handling
+
+- [x] Task 2.4.17: Create function to validate Twitter token using Twitter API [Complexity: medium] [Dependencies: none]
+- [x] Task 2.4.18: Create endpoint to check token health for Twitter accounts [Complexity: low] [Dependencies: Task 2.4.17]
+- [x] Task 2.4.19: Track rate limits in account metadata [Complexity: low] [Dependencies: Task 2.4.7]
+- [x] Task 2.4.20: Display rate limit information in account information [Complexity: low] [Dependencies: Task 2.4.19]
+- [x] Task 2.4.21: Implement error handling for suspended accounts [Complexity: low] [Dependencies: Task 2.4.6]
+- [x] Task 2.4.22: Implement error handling for rate limits [Complexity: low] [Dependencies: Task 2.4.7]
+- [x] Task 2.4.23: Implement error handling for permission issues [Complexity: low] [Dependencies: Task 2.4.6]
+
 ## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration

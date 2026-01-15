@@ -372,3 +372,60 @@ Useful Context:
 - TikTok OAuth config: apps/api/src/config/oauth.config.ts (tiktokOAuthConfig)
 
 ---
+
+[2026-01-15 20:00:00] Story 2.4: Twitter/X OAuth Integration
+
+Learnings:
+- Twitter/X uses Twitter API v2 OAuth 2.0
+- Requires Twitter Developer account and app creation
+- Refresh token rotation: new refresh token issued on each refresh (old one invalidated)
+- Rate limits: Tweet limits per 15-minute window (varies by tier)
+- Account verification status via Twitter API v2
+- Token refresh uses Twitter OAuth refresh endpoint
+- Account info retrieved from Twitter API v2 User Lookup
+- Error handling needed for: suspended accounts, rate limits, permission issues
+- Rate limit headers included in API responses (x-rate-limit-*)
+- Twitter uses Basic Auth for token exchange (client_id:client_secret base64)
+- Twitter API v2 endpoints: api.twitter.com/2/*
+
+Patterns:
+- Twitter OAuth config added with Twitter API v2 scopes (tweet.write, users.read, offline.access)
+- Twitter service handles Twitter API v2 operations
+- Token exchange uses Basic Auth (not form-encoded client credentials)
+- Refresh token rotation implemented (new refresh token on each refresh)
+- Rate limit information parsed from response headers
+- Account status checking for suspended accounts
+- Token refresh service updated to handle Twitter token rotation pattern
+- Twitter routes follow same RESTful pattern as other platforms
+- Account operations require authentication and ownership verification
+- Error handling with specific error codes for different failure scenarios
+
+Gotchas:
+- Twitter uses Basic Auth for token exchange (not form-encoded client_id/client_secret)
+- Refresh token rotation: old refresh token becomes invalid after refresh
+- Rate limits tracked via response headers (x-rate-limit-limit, x-rate-limit-remaining, x-rate-limit-reset)
+- Account suspension returns 403 status with error details
+- Twitter API v2 uses different endpoint structure than v1.1
+- User info requires specific fields parameter
+- Token validation requires making API call (no simple endpoint)
+- Rate limit reset is Unix timestamp (not ISO date)
+
+Useful Context:
+- Twitter OAuth connect: GET /api/v1/social/twitter/connect
+- Twitter OAuth callback: GET /api/v1/social/twitter/callback
+- List Twitter accounts: GET /api/v1/social/twitter/accounts
+- Disconnect account: DELETE /api/v1/social/twitter/accounts/:accountId
+- Update label: PUT /api/v1/social/twitter/accounts/:accountId/label
+- Token health: GET /api/v1/social/twitter/accounts/:accountId/health
+- Twitter Client ID: TWITTER_CLIENT_ID environment variable
+- Twitter Client Secret: TWITTER_CLIENT_SECRET environment variable
+- Twitter redirect URI: TWITTER_REDIRECT_URI environment variable
+- Twitter scopes: tweet.write, users.read, offline.access
+- Token expiry: Access tokens expire in 2 hours (7200 seconds)
+- Refresh token rotation: New refresh token issued on each refresh
+- Rate limits: Tracked via x-rate-limit-* headers in API responses
+- Twitter service: apps/api/src/services/twitter.service.ts
+- Twitter routes: apps/api/src/routes/twitter.routes.ts
+- Twitter OAuth config: apps/api/src/config/oauth.config.ts (twitterOAuthConfig)
+
+---
