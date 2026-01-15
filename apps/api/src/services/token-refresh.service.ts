@@ -1,0 +1,92 @@
+/**
+ * Token Refresh Service
+ *
+ * Handles automatic token refresh for social media accounts
+ */
+
+import { getSocialAccountById, saveSocialAccount } from './social-account.service.js';
+import { refreshYouTubeToken } from './youtube.service.js';
+
+/**
+ * Refresh token for a social account
+ */
+export async function refreshAccountToken(
+  tenantId: string,
+  accountId: string,
+  platform: string
+): Promise<{ success: boolean; newExpiresAt?: Date; error?: string }> {
+  try {
+    const account = await getSocialAccountById(tenantId, accountId);
+
+    if (!account || account.platform !== platform) {
+      return { success: false, error: 'Account not found' };
+    }
+
+    if (!account.decryptedRefreshToken) {
+      return { success: false, error: 'No refresh token available' };
+    }
+
+    // Refresh token based on platform
+    let tokenResponse;
+    switch (platform) {
+      case 'youtube':
+        tokenResponse = await refreshYouTubeToken(account.decryptedRefreshToken);
+        break;
+      default:
+        return { success: false, error: `Unsupported platform: ${platform}` };
+    }
+
+    // Calculate new expiry
+    const newExpiresAt = new Date();
+    newExpiresAt.setSeconds(newExpiresAt.getSeconds() + (tokenResponse.expires_in || 3600));
+
+    // Update account with new tokens (token rotation - old refresh token is invalidated)
+    await saveSocialAccount(tenantId, {
+      userId: account.user_id,
+      platform: account.platform,
+      platformUserId: account.platform_user_id,
+      username: account.username || undefined,
+      displayName: account.display_name || undefined,
+      accessToken: tokenResponse.access_token,
+      refreshToken: tokenResponse.refresh_token, // New refresh token (rotation)
+      tokenExpiresAt: newExpiresAt,
+      scopes: account.scopes || undefined,
+      metadata: (account.metadata as Record<string, unknown>) || undefined,
+      label: account.label || undefined,
+    });
+
+    return { success: true, newExpiresAt };
+  } catch (error) {
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : 'Token refresh failed',
+    };
+  }
+}
+
+/**
+ * Check if token needs refresh (5 minutes before expiry)
+ */
+export function shouldRefreshToken(expiresAt: Date | null): boolean {
+  if (!expiresAt) {
+    return false;
+  }
+
+  const now = new Date();
+  const fiveMinutesFromNow = new Date(now.getTime() + 5 * 60 * 1000);
+
+  return expiresAt <= fiveMinutesFromNow;
+}
+
+/**
+ * Auto-refresh tokens for accounts that need it
+ */
+export async function autoRefreshTokens(
+  _tenantId: string,
+  _userId: string,
+  _platform: string
+): Promise<void> {
+  // This would be called by a background job or scheduled task
+  // For now, it's available as a utility function
+  // In production, this would query all accounts and refresh those that need it
+}

@@ -121,7 +121,7 @@
       "title": "YouTube OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 21,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect YouTube\" button initiates OAuth 2.0 flow with Google OAuth",
         "OAuth scopes requested: `youtube.upload`, `youtube.force-ssl`, `youtube.readonly`",

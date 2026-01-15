@@ -74,13 +74,23 @@ export const oktaOAuthConfig: OAuthConfig = {
 /**
  * Get OAuth authorization URL for a provider
  */
-export function getOAuthAuthUrl(provider: 'google' | 'microsoft' | 'okta', state?: string): string {
+export function getOAuthAuthUrl(
+  provider: 'google' | 'microsoft' | 'okta' | 'youtube',
+  state?: string
+): string {
   let config: OAuthConfig;
   let additionalParams: Record<string, string> = {};
 
   switch (provider) {
     case 'google':
       config = googleOAuthConfig;
+      additionalParams = {
+        access_type: 'offline',
+        prompt: 'consent',
+      };
+      break;
+    case 'youtube':
+      config = youtubeOAuthConfig;
       additionalParams = {
         access_type: 'offline',
         prompt: 'consent',
@@ -110,6 +120,27 @@ export function getOAuthAuthUrl(provider: 'google' | 'microsoft' | 'okta', state
 
   return `${config.authorizationUrl}?${params.toString()}`;
 }
+
+/**
+ * YouTube OAuth 2.0 Configuration (uses Google OAuth with YouTube scopes)
+ */
+export const youtubeOAuthConfig: OAuthConfig = {
+  clientId: process.env.GOOGLE_CLIENT_ID || '',
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+  redirectUri:
+    process.env.YOUTUBE_REDIRECT_URI ||
+    process.env.GOOGLE_REDIRECT_URI ||
+    'http://localhost:3000/api/v1/social/youtube/callback',
+  scopes: [
+    'openid',
+    'https://www.googleapis.com/auth/youtube.upload',
+    'https://www.googleapis.com/auth/youtube.force-ssl',
+    'https://www.googleapis.com/auth/youtube.readonly',
+  ],
+  authorizationUrl: 'https://accounts.google.com/o/oauth2/v2/auth',
+  tokenUrl: 'https://oauth2.googleapis.com/token',
+  userInfoUrl: 'https://www.googleapis.com/oauth2/v2/userinfo',
+};
 
 /**
  * Get Google OAuth authorization URL (backward compatibility)

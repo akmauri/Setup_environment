@@ -75,6 +75,70 @@ This is a living document that tracks the prioritized TODO list for implementati
 - [ ] Task 1.5.27: Create health check failure detection logic [Complexity: medium] [Dependencies: Task 1.5.18]
 - [ ] Task 1.5.28: Add alerting hook interface for monitoring system integration [Complexity: low] [Dependencies: Task 1.5.27]
 
+## Priority 2: Platform Integrations & OAuth
+
+### Story 2.1: YouTube OAuth Integration
+
+**Story ID**: 2.1  
+**Epic**: Platform Integrations & OAuth  
+**Status**: In Progress
+
+#### YouTube OAuth Configuration
+
+- [x] Task 2.1.1: Create YouTube OAuth config with YouTube-specific scopes [Complexity: low] [Dependencies: none]
+- [x] Task 2.1.2: Add YouTube scopes to OAuth config (youtube.upload, youtube.force-ssl, youtube.readonly) [Complexity: low] [Dependencies: Task 2.1.1]
+
+#### Token Encryption Service
+
+- [x] Task 2.1.3: Install crypto package for AES-256-GCM encryption [Complexity: low] [Dependencies: none]
+- [x] Task 2.1.4: Create encryption service with encrypt function using AES-256-GCM [Complexity: medium] [Dependencies: Task 2.1.3]
+- [x] Task 2.1.5: Create decryption function in encryption service [Complexity: medium] [Dependencies: Task 2.1.4]
+- [x] Task 2.1.6: Store encryption key in environment variable [Complexity: low] [Dependencies: Task 2.1.4]
+
+#### Social Account Service
+
+- [x] Task 2.1.7: Create social account service for storing encrypted tokens [Complexity: medium] [Dependencies: Task 2.1.5]
+- [x] Task 2.1.8: Implement function to save YouTube account with encrypted tokens [Complexity: medium] [Dependencies: Task 2.1.7]
+- [x] Task 2.1.9: Implement function to retrieve YouTube account by user ID [Complexity: low] [Dependencies: Task 2.1.7]
+- [x] Task 2.1.10: Implement function to list all YouTube accounts for user [Complexity: low] [Dependencies: Task 2.1.7]
+- [x] Task 2.1.11: Implement function to delete YouTube account connection [Complexity: low] [Dependencies: Task 2.1.7]
+
+#### YouTube OAuth Flow
+
+- [x] Task 2.1.12: Create YouTube OAuth initiation endpoint [Complexity: low] [Dependencies: Task 2.1.2]
+- [x] Task 2.1.13: Create YouTube OAuth callback handler [Complexity: medium] [Dependencies: Task 2.1.12, Task 2.1.8]
+- [x] Task 2.1.14: Exchange authorization code for YouTube tokens [Complexity: low] [Dependencies: Task 2.1.13]
+- [x] Task 2.1.15: Fetch YouTube channel information using access token [Complexity: medium] [Dependencies: Task 2.1.14]
+- [x] Task 2.1.16: Store YouTube account with channel info and encrypted tokens [Complexity: medium] [Dependencies: Task 2.1.15, Task 2.1.8]
+
+#### Token Refresh Service
+
+- [x] Task 2.1.17: Create token refresh service for YouTube tokens [Complexity: medium] [Dependencies: Task 2.1.5]
+- [x] Task 2.1.18: Implement function to refresh YouTube access token [Complexity: medium] [Dependencies: Task 2.1.17]
+- [x] Task 2.1.19: Implement token rotation on refresh (delete old, store new) [Complexity: medium] [Dependencies: Task 2.1.18]
+- [x] Task 2.1.20: Create auto-refresh mechanism that refreshes 5 minutes before expiry [Complexity: high] [Dependencies: Task 2.1.19]
+- [x] Task 2.1.21: Track token expiry timestamps in database [Complexity: low] [Dependencies: Task 2.1.8]
+
+#### Account Management Endpoints
+
+- [x] Task 2.1.22: Create GET endpoint to list connected YouTube accounts [Complexity: low] [Dependencies: Task 2.1.10]
+- [x] Task 2.1.23: Create DELETE endpoint to disconnect YouTube account [Complexity: medium] [Dependencies: Task 2.1.11]
+- [x] Task 2.1.24: Implement token revocation on account disconnection [Complexity: medium] [Dependencies: Task 2.1.23]
+- [x] Task 2.1.25: Add account labeling support to social_accounts table [Complexity: low] [Dependencies: none]
+- [x] Task 2.1.26: Create PUT endpoint to update account label [Complexity: low] [Dependencies: Task 2.1.25]
+
+#### Tier Limit Enforcement
+
+- [x] Task 2.1.27: Create function to get tenant tier from database [Complexity: low] [Dependencies: none]
+- [x] Task 2.1.28: Create function to check account count against tier limits [Complexity: low] [Dependencies: Task 2.1.27]
+- [x] Task 2.1.29: Enforce tier limits when connecting new YouTube account [Complexity: low] [Dependencies: Task 2.1.28]
+
+#### Token Health Check
+
+- [x] Task 2.1.30: Create function to validate YouTube token using YouTube API [Complexity: medium] [Dependencies: Task 2.1.5]
+- [x] Task 2.1.31: Create endpoint to check token health for all YouTube accounts [Complexity: low] [Dependencies: Task 2.1.30]
+- [x] Task 2.1.32: Implement alert mechanism for invalid/expired tokens [Complexity: medium] [Dependencies: Task 2.1.31]
+
 ## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration

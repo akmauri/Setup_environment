@@ -213,3 +213,54 @@ Useful Context:
 - Health status: 'ok' (all components healthy), 'degraded' (non-critical components down), 'down' (critical components down)
 
 ---
+
+[2026-01-15 17:00:00] Story 2.1: YouTube OAuth Integration
+
+Learnings:
+- YouTube OAuth uses Google OAuth infrastructure with YouTube-specific scopes
+- Token encryption implemented using AES-256-GCM with environment variable key
+- Social accounts stored in tenant schema with encrypted tokens
+- Token refresh implements rotation (old refresh token invalidated, new one issued)
+- Tier limits enforced per platform (free: 0, creator: 3, professional: 10, agency: 50, etc.)
+- Account labeling added to social_accounts table via migration
+- YouTube Data API v3 used for channel information retrieval
+- Token health check validates tokens using YouTube API
+- Token revocation implemented on account disconnection
+
+Patterns:
+- OAuth config extended to support YouTube provider with YouTube scopes
+- Encryption service uses AES-256-GCM with IV and auth tag stored with encrypted data
+- Social account service handles encryption/decryption automatically
+- Token refresh service implements token rotation pattern
+- Tier service centralizes limit checking logic
+- YouTube routes follow RESTful pattern: /api/v1/social/youtube/*
+- Account operations require authentication and ownership verification
+- Token expiry tracked in database for auto-refresh scheduling
+
+Gotchas:
+- YouTube uses Google OAuth, so can reuse Google OAuth infrastructure
+- Encryption key must be 32 bytes (256 bits) for AES-256
+- Token format: iv:authTag:encrypted (all hex strings)
+- Social accounts table label column added via migration (DO $$ block)
+- Token rotation means old refresh token becomes invalid after refresh
+- Tier limits checked before allowing new account connections
+- YouTube API requires access token in Authorization header
+- Channel info retrieval uses /youtube/v3/channels endpoint with mine=true
+
+Useful Context:
+- YouTube OAuth connect: GET /api/v1/social/youtube/connect
+- YouTube OAuth callback: GET /api/v1/social/youtube/callback
+- List YouTube accounts: GET /api/v1/social/youtube/accounts
+- Disconnect account: DELETE /api/v1/social/youtube/accounts/:accountId
+- Update label: PUT /api/v1/social/youtube/accounts/:accountId/label
+- Token health: GET /api/v1/social/youtube/accounts/:accountId/health
+- Encryption key: ENCRYPTION_KEY environment variable (32 bytes hex or string)
+- YouTube scopes: youtube.upload, youtube.force-ssl, youtube.readonly
+- Token expiry: Access tokens expire in 1 hour, refresh tokens are long-lived
+- Auto-refresh: Tokens refreshed 5 minutes before expiry (shouldRefreshToken function)
+- Tier limits service: apps/api/src/services/tier.service.ts
+- Social account service: apps/api/src/services/social-account.service.ts
+- YouTube service: apps/api/src/services/youtube.service.ts
+- Token refresh service: apps/api/src/services/token-refresh.service.ts
+
+---
