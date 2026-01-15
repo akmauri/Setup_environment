@@ -4,7 +4,13 @@
  * Handles OAuth 2.0 flows for authentication providers
  */
 
-import { googleOAuthConfig, validateOAuthConfig } from '../config/oauth.config.js';
+import {
+  googleOAuthConfig,
+  microsoftOAuthConfig,
+  oktaOAuthConfig,
+  validateOAuthConfig,
+  OAuthConfig,
+} from '../config/oauth.config.js';
 
 export interface OAuthTokenResponse {
   access_token: string;
@@ -27,7 +33,7 @@ export interface OAuthUserInfo {
  */
 export async function exchangeCodeForToken(
   code: string,
-  config = googleOAuthConfig
+  config: OAuthConfig = googleOAuthConfig
 ): Promise<OAuthTokenResponse> {
   if (!validateOAuthConfig(config)) {
     throw new Error('Invalid OAuth configuration');
@@ -60,7 +66,7 @@ export async function exchangeCodeForToken(
  */
 export async function getUserInfo(
   accessToken: string,
-  config = googleOAuthConfig
+  config: OAuthConfig = googleOAuthConfig
 ): Promise<OAuthUserInfo> {
   const response = await fetch(config.userInfoUrl, {
     headers: {
@@ -74,6 +80,30 @@ export async function getUserInfo(
 
   const data = await response.json();
 
+  // Handle different OAuth provider response formats
+  if (config === microsoftOAuthConfig) {
+    // Microsoft Graph API format
+    return {
+      id: data.id || data.userPrincipalName,
+      email: data.mail || data.userPrincipalName,
+      name: data.displayName || data.givenName || '',
+      picture: undefined,
+      verified_email: true, // Microsoft emails are verified
+    };
+  }
+
+  if (config === oktaOAuthConfig) {
+    // Okta format
+    return {
+      id: data.sub,
+      email: data.email,
+      name: data.name || '',
+      picture: data.picture,
+      verified_email: data.email_verified !== false,
+    };
+  }
+
+  // Google format (default)
   return {
     id: data.id || data.sub,
     email: data.email,
@@ -88,7 +118,7 @@ export async function getUserInfo(
  */
 export async function refreshAccessToken(
   refreshToken: string,
-  config = googleOAuthConfig
+  config: OAuthConfig = googleOAuthConfig
 ): Promise<OAuthTokenResponse> {
   if (!validateOAuthConfig(config)) {
     throw new Error('Invalid OAuth configuration');

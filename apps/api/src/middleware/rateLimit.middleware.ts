@@ -20,6 +20,10 @@ const store: RateLimitStore = {};
 const WINDOW_MS = 15 * 60 * 1000; // 15 minutes
 const MAX_REQUESTS = 100; // Max requests per window
 
+// Stricter rate limiting for auth endpoints (5 attempts per 15 minutes)
+const AUTH_WINDOW_MS = 15 * 60 * 1000; // 15 minutes
+const AUTH_MAX_REQUESTS = 5; // 5 attempts per 15 minutes for auth endpoints
+
 /**
  * Get client identifier (IP address)
  */
@@ -32,7 +36,7 @@ function getClientId(req: Request): string {
 }
 
 /**
- * Rate limiting middleware
+ * Rate limiting middleware (general purpose)
  *
  * Limits requests per IP address within a time window
  */
@@ -61,7 +65,7 @@ export function rateLimitMiddleware(req: Request, res: Response, next: NextFunct
     res.status(429).json({
       error: {
         code: 'RATE_LIMIT_EXCEEDED',
-        message: 'Too many requests. Please try again later.',
+        message: `Too many requests. Please try again in ${retryAfter} seconds.`,
         retryAfter,
       },
     });
@@ -87,3 +91,51 @@ setInterval(() => {
     }
   });
 }, 60 * 1000); // Clean up every minute
+
+/**
+ * Create rate limiting middleware for auth endpoints
+ * Stricter limits: 5 attempts per 15 minutes
+ */
+export function createAuthRateLimitMiddleware() {
+  const authStore: RateLimitStore = {};
+
+  return (req: Request, res: Response, next: NextFunction): void => {
+    const clientId = getClientId(req);
+    const now = Date.now();
+
+    // Get or create rate limit entry
+    let entry = authStore[clientId];
+
+    if (!entry || now > entry.resetTime) {
+      // Create new entry or reset expired entry
+      entry = {
+        count: 0,
+        resetTime: now + AUTH_WINDOW_MS,
+      };
+      authStore[clientId] = entry;
+    }
+
+    // Increment request count
+    entry.count++;
+
+    // Check if limit exceeded
+    if (entry.count > AUTH_MAX_REQUESTS) {
+      const retryAfter = Math.ceil((entry.resetTime - now) / 1000);
+      res.status(429).json({
+        error: {
+          code: 'RATE_LIMIT_EXCEEDED',
+          message: 'Too many authentication attempts. Please try again later.',
+          retryAfter,
+        },
+      });
+      return;
+    }
+
+    // Add rate limit headers
+    res.setHeader('X-RateLimit-Limit', AUTH_MAX_REQUESTS);
+    res.setHeader('X-RateLimit-Remaining', Math.max(0, AUTH_MAX_REQUESTS - entry.count));
+    res.setHeader('X-RateLimit-Reset', new Date(entry.resetTime).toISOString());
+
+    next();
+  };
+}

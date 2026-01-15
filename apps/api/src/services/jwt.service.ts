@@ -53,7 +53,7 @@ export function generateRefreshToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): 
     throw new Error('JWT_REFRESH_SECRET is not configured');
   }
 
-  const expiresIn = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+  const expiresIn = process.env.JWT_REFRESH_EXPIRES_IN || '30d'; // 30 days // 30 days
 
   return jwt.sign(
     {

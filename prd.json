@@ -51,7 +51,7 @@
       "title": "User Authentication System",
       "epic": "Foundation & Core Infrastructure",
       "priority": 13,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "User registration endpoint accepts email, password, and optional tenant creation",
         "Password hashing implemented using bcrypt with salt rounds (minimum 10)",

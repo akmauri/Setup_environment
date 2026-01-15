@@ -77,3 +77,47 @@ Useful Context:
 - Tenant service functions: createTenant, createTenantSchema, deleteTenantSchema, applyTenantSchemaMigration
 
 ---
+
+[2026-01-15 14:00:00] Story 1.3: User Authentication System
+
+Learnings:
+- Comprehensive authentication system implemented with email/password and OAuth (Google, Microsoft, Okta)
+- Password hashing uses bcrypt with configurable salt rounds (minimum 10, default 10)
+- JWT tokens use separate secrets for access (JWT_SECRET) and refresh (JWT_REFRESH_SECRET) tokens
+- Access tokens expire in 15 minutes, refresh tokens expire in 30 days
+- Token rotation implemented: refresh tokens are single-use, old session deleted when new pair is issued
+- Email verification tokens expire in 24 hours, password reset tokens expire in 1 hour
+- Rate limiting implemented: 5 attempts per 15 minutes for auth endpoints, 100 requests per 15 minutes for general endpoints
+- 2FA (TOTP) implemented using speakeasy library with QR code generation
+- Session management tracks device info (user agent, IP address) and last activity
+- All database queries use parameterized queries (Prisma.sql) to prevent SQL injection
+- OAuth user creation automatically creates default tenant if user doesn't have one
+
+Patterns:
+- Authentication routes organized in apps/api/src/routes/auth.routes.ts
+- Services separated by concern: auth.service.ts, jwt.service.ts, password.service.ts, token.service.ts, oauth.service.ts, totp.service.ts, session.service.ts, email.service.ts
+- OAuth config centralized in apps/api/src/config/oauth.config.ts
+- Rate limiting middleware uses in-memory store (should use Redis in production)
+- Token hashing uses SHA-256 for secure storage
+- All auth endpoints use createAuthRateLimitMiddleware() for stricter rate limiting
+- Session table created dynamically per tenant schema using ensureSessionsTable()
+
+Gotchas:
+- Duplicate imports cause TypeScript errors - always check for duplicate import statements
+- hashToken function was imported multiple times in session.service.ts (fixed)
+- OAuth tokens should be stored encrypted in production (currently TODO in user.service.ts)
+- Rate limiting uses in-memory store which won't work across multiple server instances - need Redis for production
+- Tenant resolution for OAuth users uses simplified email domain lookup - should use proper user-tenant association table in production
+
+Useful Context:
+- JWT_SECRET and JWT_REFRESH_SECRET must be set in environment variables
+- BCRYPT_SALT_ROUNDS defaults to 10 if not set (minimum enforced)
+- OAuth providers require client ID and secret in environment: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, etc.
+- Email service requires SMTP configuration (SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASS)
+- All auth routes mounted at /api/v1/auth
+- OAuth callback routes: /api/v1/auth/callback/:provider (google, microsoft, okta)
+- Refresh token endpoint: POST /api/v1/auth/refresh
+- Logout endpoint: POST /api/v1/auth/logout
+- 2FA endpoints: POST /api/v1/auth/2fa/enable, POST /api/v1/auth/2fa/verify, POST /api/v1/auth/2fa/disable
+
+---
