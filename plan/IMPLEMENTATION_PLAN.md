@@ -328,6 +328,52 @@ This is a living document that tracks the prioritized TODO list for implementati
 - [x] Task 2.5.24: Implement error handling for permission issues [Complexity: low] [Dependencies: Task 2.5.7]
 - [x] Task 2.5.25: Implement error handling for account access problems [Complexity: low] [Dependencies: Task 2.5.8]
 
+### Story 2.6: Facebook OAuth Integration
+
+**Story ID**: 2.6  
+**Epic**: Platform Integrations & OAuth  
+**Status**: Completed
+
+#### Facebook OAuth Configuration
+
+- [x] Task 2.6.1: Create Facebook Pages OAuth config with Facebook Pages scopes [Complexity: low] [Dependencies: none]
+- [x] Task 2.6.2: Add Facebook Pages OAuth scopes (pages_manage_posts, pages_read_engagement, pages_show_list) [Complexity: low] [Dependencies: Task 2.6.1]
+
+#### Facebook Service
+
+- [x] Task 2.6.3: Create Facebook service for OAuth and API operations [Complexity: medium] [Dependencies: Task 2.6.2]
+- [x] Task 2.6.4: Implement function to exchange authorization code for Facebook user token [Complexity: medium] [Dependencies: Task 2.6.3]
+- [x] Task 2.6.5: Implement function to exchange short-lived user token for long-lived user token [Complexity: medium] [Dependencies: Task 2.6.3]
+- [x] Task 2.6.6: Implement function to get Facebook Pages for user [Complexity: medium] [Dependencies: Task 2.6.3]
+- [x] Task 2.6.7: Implement function to get Page Access Token (long-lived, never expires) [Complexity: medium] [Dependencies: Task 2.6.6]
+- [x] Task 2.6.8: Implement function to get Facebook Page information [Complexity: medium] [Dependencies: Task 2.6.7]
+- [x] Task 2.6.9: Implement function to check if Instagram account connected to Facebook Page [Complexity: low] [Dependencies: Task 2.6.8]
+
+#### Facebook OAuth Flow
+
+- [x] Task 2.6.10: Create Facebook OAuth initiation endpoint [Complexity: low] [Dependencies: Task 2.6.2]
+- [x] Task 2.6.11: Create Facebook OAuth callback handler [Complexity: medium] [Dependencies: Task 2.6.10]
+- [x] Task 2.6.12: Support Facebook Page selection in callback flow [Complexity: medium] [Dependencies: Task 2.6.11]
+- [x] Task 2.6.13: Store Facebook Page with encrypted Page Access Token [Complexity: medium] [Dependencies: Task 2.6.8]
+
+#### Account Management
+
+- [x] Task 2.6.14: Create GET endpoint to list connected Facebook Pages [Complexity: low] [Dependencies: none]
+- [x] Task 2.6.15: Create DELETE endpoint to disconnect Facebook Page [Complexity: medium] [Dependencies: Task 2.6.14]
+- [x] Task 2.6.16: Implement token revocation on Facebook Page disconnection [Complexity: medium] [Dependencies: Task 2.6.15]
+- [x] Task 2.6.17: Create PUT endpoint to update Facebook Page label [Complexity: low] [Dependencies: none]
+- [x] Task 2.6.18: Enforce tier limits when connecting new Facebook Page [Complexity: low] [Dependencies: none]
+
+#### Token Health & Crossposting
+
+- [x] Task 2.6.19: Create function to validate Facebook token using Facebook API [Complexity: medium] [Dependencies: none]
+- [x] Task 2.6.20: Create endpoint to check token health for Facebook Pages [Complexity: low] [Dependencies: Task 2.6.19]
+- [x] Task 2.6.21: Display crossposting to Instagram option if Instagram connected to same Page [Complexity: low] [Dependencies: Task 2.6.9]
+- [x] Task 2.6.22: Implement error handling for permission issues [Complexity: low] [Dependencies: Task 2.6.6]
+- [x] Task 2.6.23: Implement error handling for page access problems [Complexity: low] [Dependencies: Task 2.6.6]
+- [x] Task 2.6.24: Implement error handling for token expiration [Complexity: low] [Dependencies: Task 2.6.19]
+- [x] Task 2.6.25: Verify page insights access for analytics features [Complexity: low] [Dependencies: Task 2.6.8]
+
 ## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration

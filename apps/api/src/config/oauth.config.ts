@@ -112,6 +112,21 @@ export const facebookOAuthConfig: OAuthConfig = {
 };
 
 /**
+ * Facebook OAuth 2.0 Configuration (for Facebook Pages)
+ */
+export const facebookPagesOAuthConfig: OAuthConfig = {
+  clientId: process.env.FACEBOOK_APP_ID || '',
+  clientSecret: process.env.FACEBOOK_APP_SECRET || '',
+  redirectUri:
+    process.env.FACEBOOK_PAGES_REDIRECT_URI ||
+    'http://localhost:3000/api/v1/social/facebook/callback',
+  scopes: ['pages_manage_posts', 'pages_read_engagement', 'pages_show_list'],
+  authorizationUrl: 'https://www.facebook.com/v18.0/dialog/oauth',
+  tokenUrl: 'https://graph.facebook.com/v18.0/oauth/access_token',
+  userInfoUrl: 'https://graph.facebook.com/v18.0/me',
+};
+
+/**
  * TikTok OAuth 2.0 Configuration
  */
 export const tiktokOAuthConfig: OAuthConfig = {
@@ -165,7 +180,8 @@ export function getOAuthAuthUrl(
     | 'facebook'
     | 'tiktok'
     | 'twitter'
-    | 'linkedin',
+    | 'linkedin'
+    | 'facebook-pages',
   state?: string
 ): string {
   let config: OAuthConfig;
@@ -216,6 +232,12 @@ export function getOAuthAuthUrl(
       break;
     case 'linkedin':
       config = linkedinOAuthConfig;
+      additionalParams = {
+        response_type: 'code',
+      };
+      break;
+    case 'facebook-pages':
+      config = facebookPagesOAuthConfig;
       additionalParams = {
         response_type: 'code',
       };

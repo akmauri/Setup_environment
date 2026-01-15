@@ -482,3 +482,53 @@ Useful Context:
 - LinkedIn OAuth config: apps/api/src/config/oauth.config.ts (linkedinOAuthConfig)
 
 ---
+
+[2026-01-15 22:00:00] Story 2.6: Facebook OAuth Integration
+
+Learnings:
+- Facebook OAuth uses Facebook Login (already implemented for Instagram)
+- Long-lived Page Access Tokens never expire (unlike user tokens which expire in 60 days)
+- Token exchange: Exchange short-lived user token for long-lived user token, then get Page Access Token
+- Page selection: User must have Admin or Editor role on the page
+- Page Access Tokens obtained from /me/accounts endpoint are already long-lived
+- Page info retrieved from Facebook Graph API
+- Crossposting: Check if Instagram account exists for same Facebook Page ID
+- Token health: Long-lived Page tokens don't expire, but can be revoked
+- Page insights: Access verified via pages_read_engagement scope
+
+Patterns:
+- Facebook Pages OAuth config added with Pages-specific scopes (pages_manage_posts, pages_read_engagement, pages_show_list)
+- Facebook service handles Facebook Graph API operations for Pages
+- Token exchange: User token → Long-lived user token → Page Access Token
+- Page Access Tokens stored (never expire unless revoked)
+- Crossposting option displayed in metadata if Instagram connected
+- Facebook routes follow same RESTful pattern as other platforms
+- Account operations require authentication and ownership verification
+- Page selection endpoint allows user to choose which page to connect
+
+Gotchas:
+- Page Access Tokens never expire (set far future date for tracking)
+- Page Access Tokens obtained from /me/accounts are already long-lived (no additional exchange needed)
+- User must have Admin or Editor role on page (enforced by Facebook)
+- Crossposting requires Instagram account connected to same Facebook Page
+- Page insights access requires pages_read_engagement scope
+- Token revocation revokes both user and page tokens
+
+Useful Context:
+- Facebook OAuth connect: GET /api/v1/social/facebook/connect
+- Facebook OAuth callback: GET /api/v1/social/facebook/callback?page_id=...
+- Get Facebook Pages: GET /api/v1/social/facebook/pages?access_token=...
+- List Facebook Pages: GET /api/v1/social/facebook/accounts
+- Disconnect page: DELETE /api/v1/social/facebook/accounts/:accountId
+- Update label: PUT /api/v1/social/facebook/accounts/:accountId/label
+- Token health: GET /api/v1/social/facebook/accounts/:accountId/health
+- Facebook App ID: FACEBOOK_APP_ID environment variable (same as Instagram)
+- Facebook App Secret: FACEBOOK_APP_SECRET environment variable (same as Instagram)
+- Facebook Pages redirect URI: FACEBOOK_PAGES_REDIRECT_URI environment variable
+- Facebook Pages scopes: pages_manage_posts, pages_read_engagement, pages_show_list
+- Token expiry: Page Access Tokens never expire (unless revoked)
+- Facebook service: apps/api/src/services/facebook.service.ts
+- Facebook routes: apps/api/src/routes/facebook.routes.ts
+- Facebook Pages OAuth config: apps/api/src/config/oauth.config.ts (facebookPagesOAuthConfig)
+
+---

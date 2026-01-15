@@ -241,7 +241,7 @@
       "title": "Facebook OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 26,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect Facebook\" button initiates Facebook Login OAuth flow",
         "OAuth scopes requested: `pages_manage_posts`, `pages_read_engagement`, `pages_show_list`",
