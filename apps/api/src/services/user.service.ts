@@ -18,6 +18,10 @@ export interface User {
   provider_id: string;
   role: string;
   email_verified: boolean;
+  timezone: string | null;
+  preferences: Record<string, unknown> | null;
+  last_login_at: Date | null;
+  deleted_at: Date | null;
   created_at: Date;
   updated_at: Date;
 }
@@ -209,7 +213,9 @@ export async function getUserById(tenantId: string, userId: string): Promise<Use
     /* Ignore agent log errors */
   }
   // #endregion
-  const users = await db.query<User>(Prisma.sql`SELECT * FROM users WHERE id = ${userId}`);
+  const users = await db.query<User>(
+    Prisma.sql`SELECT * FROM users WHERE id = ${userId}::uuid AND deleted_at IS NULL`
+  );
   // #region agent log
   try {
     if (typeof fetch !== 'undefined') {
@@ -241,6 +247,19 @@ export async function getUserById(tenantId: string, userId: string): Promise<Use
 export interface UpdateUserProfileInput {
   name?: string;
   picture?: string;
+  timezone?: string;
+  preferences?: Record<string, unknown>;
+}
+
+export interface UserPreferences {
+  notifications?: {
+    email?: boolean;
+    push?: boolean;
+    inApp?: boolean;
+  };
+  theme?: 'light' | 'dark' | 'auto';
+  language?: string;
+  dateFormat?: string;
 }
 
 export async function updateUserProfile(
@@ -259,14 +278,18 @@ export async function updateUserProfile(
   }
 
   // Update user profile (parameterized query)
+  const preferencesJson = input.preferences ? JSON.stringify(input.preferences) : null;
   const updatedUsers = await db.query<User>(
     Prisma.sql`
       UPDATE users 
       SET 
         name = COALESCE(${input.name || null}, name),
         picture = COALESCE(${input.picture || null}, picture),
+        timezone = COALESCE(${input.timezone || null}, timezone),
+        preferences = COALESCE(${preferencesJson ? Prisma.raw(`'${preferencesJson}'::jsonb`) : Prisma.raw('NULL')}, preferences),
         updated_at = CURRENT_TIMESTAMP
-      WHERE id = ${userId} 
+      WHERE id = ${userId}::uuid
+        AND deleted_at IS NULL
       RETURNING *
     `
   );
@@ -352,4 +375,244 @@ export async function handleOAuthUser(
   );
 
   return { user, tenantId };
+}
+
+/**
+ * Log activity for user actions
+ */
+export async function logActivity(
+  tenantId: string,
+  userId: string,
+  action: string,
+  entityType: string,
+  entityId: string | null,
+  changes: Record<string, unknown>,
+  ipAddress?: string,
+  userAgent?: string
+): Promise<void> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  // Ensure activity_logs table exists
+  await ensureActivityLogsTable(tenantId);
+
+  const changesJson = JSON.stringify(changes);
+  await db.execute(
+    Prisma.sql`
+      INSERT INTO activity_logs (user_id, action, entity_type, entity_id, changes, ip_address, user_agent)
+      VALUES (
+        ${userId}::uuid,
+        ${action},
+        ${entityType},
+        ${entityId ? Prisma.raw(`${entityId}::uuid`) : Prisma.raw('NULL')},
+        ${Prisma.raw(`'${changesJson}'::jsonb`)},
+        ${ipAddress || null},
+        ${userAgent || null}
+      )
+    `
+  );
+}
+
+/**
+ * Request email change (sends verification email to new address)
+ */
+export async function requestEmailChange(
+  tenantId: string,
+  userId: string,
+  newEmail: string
+): Promise<{ token: string; expiresAt: Date }> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  // Check if new email is already in use
+  const existingUsers = await db.query<{ id: string }>(
+    Prisma.sql`SELECT id FROM users WHERE email = ${newEmail} AND deleted_at IS NULL`
+  );
+
+  if (existingUsers.length > 0) {
+    throw new Error('Email address is already in use');
+  }
+
+  // Generate verification token
+  const { generateVerificationToken } = await import('./token.service.js');
+  const token = generateVerificationToken();
+  const expiresAt = new Date();
+  expiresAt.setHours(expiresAt.getHours() + 24); // 24 hours
+
+  // Store new email and verification token
+  await db.execute(
+    Prisma.sql`
+      UPDATE users
+      SET 
+        new_email = ${newEmail},
+        new_email_verification_token = ${token},
+        new_email_verification_expires_at = ${Prisma.raw(`'${expiresAt.toISOString()}'::timestamp`)},
+        updated_at = CURRENT_TIMESTAMP
+      WHERE id = ${userId}::uuid
+        AND deleted_at IS NULL
+    `
+  );
+
+  return { token, expiresAt };
+}
+
+/**
+ * Verify and complete email change
+ */
+export async function verifyEmailChange(
+  tenantId: string,
+  userId: string,
+  token: string
+): Promise<boolean> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  const users = await db.query<{ new_email: string }>(
+    Prisma.sql`
+      UPDATE users
+      SET 
+        email = new_email,
+        new_email = NULL,
+        new_email_verification_token = NULL,
+        new_email_verification_expires_at = NULL,
+        email_verified = false,
+        updated_at = CURRENT_TIMESTAMP
+      WHERE id = ${userId}::uuid
+        AND new_email_verification_token = ${token}
+        AND new_email_verification_expires_at > CURRENT_TIMESTAMP
+        AND deleted_at IS NULL
+      RETURNING new_email
+    `
+  );
+
+  return users.length > 0;
+}
+
+/**
+ * Soft delete user account (30 day retention)
+ */
+export async function deleteUserAccount(
+  tenantId: string,
+  userId: string,
+  password: string
+): Promise<boolean> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  // Get user and verify password
+  const users = await db.query<{ id: string; password_hash: string | null }>(
+    Prisma.sql`SELECT id, password_hash FROM users WHERE id = ${userId}::uuid AND deleted_at IS NULL`
+  );
+
+  if (users.length === 0) {
+    return false;
+  }
+
+  const user = users[0];
+
+  // Verify password (if user has password)
+  if (user.password_hash) {
+    const { verifyPassword } = await import('./password.service.js');
+    const passwordValid = await verifyPassword(password, user.password_hash);
+    if (!passwordValid) {
+      throw new Error('Invalid password');
+    }
+  }
+
+  // Soft delete (set deleted_at to 30 days from now for retention)
+  const deletedAt = new Date();
+  deletedAt.setDate(deletedAt.getDate() + 30);
+
+  await db.execute(
+    Prisma.sql`
+      UPDATE users
+      SET deleted_at = ${Prisma.raw(`'${deletedAt.toISOString()}'::timestamp`)},
+          updated_at = CURRENT_TIMESTAMP
+      WHERE id = ${userId}::uuid
+    `
+  );
+
+  return true;
+}
+
+/**
+ * Export user data in JSON format (GDPR compliance)
+ */
+export async function exportUserData(
+  tenantId: string,
+  userId: string
+): Promise<Record<string, unknown>> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  // Get user data
+  const users = await db.query<User>(
+    Prisma.sql`SELECT * FROM users WHERE id = ${userId}::uuid AND deleted_at IS NULL`
+  );
+
+  if (users.length === 0) {
+    throw new Error('User not found');
+  }
+
+  const user = users[0];
+
+  // Get activity logs
+  await ensureActivityLogsTable(tenantId);
+  const activityLogs = await db.query<Record<string, unknown>>(
+    Prisma.sql`SELECT * FROM activity_logs WHERE user_id = ${userId}::uuid ORDER BY created_at DESC`
+  );
+
+  // Get sessions
+  const { getUserSessions } = await import('./session.service.js');
+  const sessions = await getUserSessions(tenantId, userId);
+
+  // Compile export data
+  return {
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      picture: user.picture,
+      role: user.role,
+      email_verified: user.email_verified,
+      timezone: user.timezone,
+      preferences: user.preferences,
+      created_at: user.created_at,
+      last_login_at: user.last_login_at,
+    },
+    activity_logs: activityLogs,
+    sessions: sessions.map((s) => ({
+      id: s.id,
+      device_info: s.device_info,
+      last_activity_at: s.last_activity_at,
+      created_at: s.created_at,
+    })),
+    exported_at: new Date().toISOString(),
+  };
+}
+
+/**
+ * Ensure activity_logs table exists
+ */
+async function ensureActivityLogsTable(tenantId: string): Promise<void> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  await db.execute(`
+    CREATE TABLE IF NOT EXISTS activity_logs (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      action VARCHAR(100) NOT NULL,
+      entity_type VARCHAR(50) NOT NULL,
+      entity_id UUID,
+      changes JSONB DEFAULT '{}',
+      ip_address VARCHAR(45),
+      user_agent TEXT,
+      created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS activity_logs_user_id_idx ON activity_logs(user_id);
+    CREATE INDEX IF NOT EXISTS activity_logs_action_idx ON activity_logs(action);
+    CREATE INDEX IF NOT EXISTS activity_logs_created_at_idx ON activity_logs(created_at DESC);
+  `);
 }

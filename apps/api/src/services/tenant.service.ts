@@ -112,6 +112,66 @@ export async function applyTenantSchemaMigration(tenantId: string): Promise<void
   // Note: For now, we apply the migration inline. In production, you might want to
   // read from a file, but for simplicity and reliability, we use inline SQL.
   await applyTenantSchemaMigrationInline(tenantId);
+
+  // Migrate existing users table if it exists (add new columns)
+  await migrateUsersTable(tenantId);
+}
+
+/**
+ * Migrate existing users table to add new columns (timezone, preferences, etc.)
+ * This is safe to run multiple times (uses IF NOT EXISTS)
+ */
+async function migrateUsersTable(tenantId: string): Promise<void> {
+  const schemaName = getTenantSchemaName(tenantId);
+  await db.execute(`SET search_path TO ${schemaName}, public`);
+
+  await db.execute(`
+    -- Add new columns if they don't exist
+    DO $$ 
+    BEGIN
+      IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                     WHERE table_schema = '${schemaName}' 
+                     AND table_name = 'users' 
+                     AND column_name = 'timezone') THEN
+        ALTER TABLE users ADD COLUMN timezone VARCHAR(100) DEFAULT 'UTC';
+      END IF;
+
+      IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                     WHERE table_schema = '${schemaName}' 
+                     AND table_name = 'users' 
+                     AND column_name = 'preferences') THEN
+        ALTER TABLE users ADD COLUMN preferences JSONB DEFAULT '{}';
+      END IF;
+
+      IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                     WHERE table_schema = '${schemaName}' 
+                     AND table_name = 'users' 
+                     AND column_name = 'new_email') THEN
+        ALTER TABLE users ADD COLUMN new_email VARCHAR(255);
+      END IF;
+
+      IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                     WHERE table_schema = '${schemaName}' 
+                     AND table_name = 'users' 
+                     AND column_name = 'new_email_verification_token') THEN
+        ALTER TABLE users ADD COLUMN new_email_verification_token VARCHAR(255);
+      END IF;
+
+      IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                     WHERE table_schema = '${schemaName}' 
+                     AND table_name = 'users' 
+                     AND column_name = 'new_email_verification_expires_at') THEN
+        ALTER TABLE users ADD COLUMN new_email_verification_expires_at TIMESTAMP(3);
+      END IF;
+
+      IF NOT EXISTS (SELECT 1 FROM information_schema.columns 
+                     WHERE table_schema = '${schemaName}' 
+                     AND table_name = 'users' 
+                     AND column_name = 'deleted_at') THEN
+        ALTER TABLE users ADD COLUMN deleted_at TIMESTAMP(3);
+      END IF;
+    END $$;
+  `);
 }
 
 /**
@@ -144,6 +204,12 @@ async function applyTenantSchemaMigrationInline(tenantId: string): Promise<void>
       two_factor_enabled BOOLEAN NOT NULL DEFAULT false,
       two_factor_secret VARCHAR(255),
       last_login_at TIMESTAMP(3),
+      timezone VARCHAR(100) DEFAULT 'UTC',
+      preferences JSONB DEFAULT '{}',
+      new_email VARCHAR(255),
+      new_email_verification_token VARCHAR(255),
+      new_email_verification_expires_at TIMESTAMP(3),
+      deleted_at TIMESTAMP(3),
       created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
       updated_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
     );
@@ -319,6 +385,23 @@ async function applyTenantSchemaMigrationInline(tenantId: string): Promise<void>
     CREATE INDEX IF NOT EXISTS notifications_user_id_idx ON notifications(user_id);
     CREATE INDEX IF NOT EXISTS notifications_read_idx ON notifications(is_read);
     CREATE INDEX IF NOT EXISTS notifications_created_at_idx ON notifications(created_at DESC);
+
+    -- Activity logs table (tracks profile changes)
+    CREATE TABLE IF NOT EXISTS activity_logs (
+      id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+      user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      action VARCHAR(100) NOT NULL,
+      entity_type VARCHAR(50) NOT NULL,
+      entity_id UUID,
+      changes JSONB DEFAULT '{}',
+      ip_address VARCHAR(45),
+      user_agent TEXT,
+      created_at TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE INDEX IF NOT EXISTS activity_logs_user_id_idx ON activity_logs(user_id);
+    CREATE INDEX IF NOT EXISTS activity_logs_action_idx ON activity_logs(action);
+    CREATE INDEX IF NOT EXISTS activity_logs_created_at_idx ON activity_logs(created_at DESC);
 
     -- Updated_at trigger function
     CREATE OR REPLACE FUNCTION update_updated_at_column()

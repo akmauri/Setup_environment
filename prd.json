@@ -77,7 +77,7 @@
       "title": "Basic User Management",
       "epic": "Foundation & Core Infrastructure",
       "priority": 14,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "User profile endpoint returns current user's profile (name, email, avatar, timezone, preferences)",
         "Update profile endpoint allows modification of name, avatar, timezone, and preferences",

@@ -72,19 +72,40 @@ export async function sendEmail(options: EmailOptions): Promise<void> {
  */
 export async function sendVerificationEmail(
   email: string,
-  verificationToken: string
+  verificationToken: string,
+  tenantId?: string,
+  type: 'signup' | 'email_change' = 'signup'
 ): Promise<void> {
-  const verificationUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/verify-email?token=${verificationToken}`;
+  const baseUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+  let verificationUrl: string;
+  let subject: string;
+  let html: string;
 
-  await sendEmail({
-    to: email,
-    subject: 'Verify your email address',
-    html: `
+  if (type === 'email_change') {
+    verificationUrl = `${baseUrl}/verify-email-change?token=${verificationToken}${tenantId ? `&tenantId=${tenantId}` : ''}`;
+    subject = 'Verify your new email address';
+    html = `
+      <h1>Verify your new email address</h1>
+      <p>Click the link below to verify your new email address:</p>
+      <p><a href="${verificationUrl}">${verificationUrl}</a></p>
+      <p>This link will expire in 24 hours.</p>
+      <p>If you didn't request this change, please ignore this email.</p>
+    `;
+  } else {
+    verificationUrl = `${baseUrl}/verify-email?token=${verificationToken}${tenantId ? `&tenantId=${tenantId}` : ''}`;
+    subject = 'Verify your email address';
+    html = `
       <h1>Verify your email address</h1>
       <p>Click the link below to verify your email address:</p>
       <p><a href="${verificationUrl}">${verificationUrl}</a></p>
       <p>This link will expire in 24 hours.</p>
-    `,
+    `;
+  }
+
+  await sendEmail({
+    to: email,
+    subject,
+    html,
   });
 }
 

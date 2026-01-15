@@ -121,3 +121,49 @@ Useful Context:
 - 2FA endpoints: POST /api/v1/auth/2fa/enable, POST /api/v1/auth/2fa/verify, POST /api/v1/auth/2fa/disable
 
 ---
+
+[2026-01-15 15:00:00] Story 1.4: Basic User Management
+
+Learnings:
+- User profile management implemented with timezone and preferences support
+- Email change flow requires verification of new email address (24-hour token expiry)
+- Account deletion implements soft delete with 30-day retention period for GDPR compliance
+- Activity logging tracks all profile changes with timestamp, IP address, and user agent
+- User data export provides complete JSON export for GDPR compliance
+- Profile endpoint returns subscription tier from tenant record
+- Preferences stored as JSONB in database for flexible schema
+- Migration function added to update existing user tables with new columns (timezone, preferences, email change fields, deleted_at)
+- Activity logs table created per tenant schema to track user actions
+
+Patterns:
+- Profile updates log changes to activity_logs table before applying updates
+- Soft delete pattern: set deleted_at timestamp instead of hard delete
+- Email change uses same verification token pattern as email verification
+- User preferences use JSONB for flexible schema (notifications, theme, language, date format)
+- All user queries filter by deleted_at IS NULL to exclude soft-deleted accounts
+- Subscription tier retrieved from tenant record, not stored in user table
+
+Gotchas:
+- Prisma.sql template literals require Prisma.raw() for SQL expressions like type casts (::uuid, ::jsonb, ::timestamp)
+- JSON.stringify() must be called before using in Prisma.raw() to avoid template literal issues
+- Activity logs table created dynamically per tenant using ensureActivityLogsTable()
+- Email change verification requires separate endpoint (not same as initial email verification)
+- Account deletion requires password confirmation even for OAuth users (if password_hash exists)
+
+Pending Features:
+- Avatar file upload with image validation (max 5MB, JPG/PNG/WebP) - requires multipart/form-data handling
+- S3-compatible storage integration for avatar uploads - requires AWS SDK or MinIO setup
+- Note: Profile currently accepts avatar URLs via PUT /api/v1/user/profile. File upload can be added when S3 storage is configured.
+
+Useful Context:
+- User profile endpoint: GET /api/v1/user/profile
+- Update profile endpoint: PUT /api/v1/user/profile (supports name, picture URL, timezone, preferences)
+- Email change request: POST /api/v1/user/change-email
+- Email change verification: POST /api/v1/user/verify-email-change
+- Account deletion: DELETE /api/v1/user/account (requires password in body)
+- Data export: GET /api/v1/user/export (returns JSON file download)
+- Activity logs stored in activity_logs table per tenant schema
+- User preferences structure: { notifications: { email, push, inApp }, theme, language, dateFormat }
+- Migration function migrateUsersTable() safely adds new columns to existing user tables
+
+---

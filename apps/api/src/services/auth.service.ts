@@ -131,7 +131,7 @@ export async function registerUser(input: RegisterInput): Promise<AuthResult> {
   const user = users[0];
 
   // Send verification email
-  await sendVerificationEmail(email, verificationToken);
+  await sendVerificationEmail(email, verificationToken, tenantId, 'signup');
 
   // Generate tokens
   const tokens = generateTokenPair({
