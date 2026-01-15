@@ -3,6 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
+import healthRoutes from './routes/health.routes.js';
 import { tenantDbMiddleware } from './middleware/db.middleware.js';
 import { db } from '@mpcas2/db';
 
@@ -34,13 +35,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+// Health check routes (before tenant middleware - no tenant context needed)
+app.use('/', healthRoutes);
+
 // Database tenant context middleware (applies to all routes)
 app.use(tenantDbMiddleware);
-
-// Health check endpoint
-app.get('/health', (_req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
-});
 
 // API routes
 app.get('/api', (_req, res) => {

@@ -167,3 +167,49 @@ Useful Context:
 - Migration function migrateUsersTable() safely adds new columns to existing user tables
 
 ---
+
+[2026-01-15 16:00:00] Story 1.5: Health Check & System Status
+
+Learnings:
+- Health check system implemented with basic and detailed endpoints
+- Version information extracted from package.json and git commit hash
+- Database health check executes SELECT 1 query with response time measurement
+- Redis health check uses PING command with 5-second timeout
+- External service checks (S3, email) verify configuration availability
+- Health check results cached for 30 seconds using node-cache
+- Prometheus metrics endpoint at /metrics with custom metrics registry
+- Health check failure detection triggers alert hooks for monitoring integration
+- Overall health status determined by component status (ok/degraded/down)
+- Detailed health check runs all checks in parallel for performance
+
+Patterns:
+- Health check routes placed before tenant middleware (no tenant context needed)
+- Component status includes response time for performance monitoring
+- Caching prevents excessive database queries on health check endpoints
+- Prometheus metrics updated automatically during health checks
+- Alert hooks registered for monitoring system integration (email, Slack, PagerDuty)
+- Health status codes: 200 for ok/degraded, 503 for down
+
+Gotchas:
+- Package.json path is relative to process.cwd() - use apps/api/package.json in monorepo
+- Git commit hash requires git to be available or GIT_COMMIT_HASH env variable
+- Redis client creation fails gracefully if REDIS_URL not configured
+- S3 and email checks verify configuration, not actual connectivity (for performance)
+- Health check caching uses node-cache with 30-second TTL
+- Prometheus metrics use prom-client library with custom registry
+- Alert hooks are non-blocking to prevent health check delays
+
+Useful Context:
+- Basic health endpoint: GET /health (returns status, timestamp, version, responseTime)
+- Detailed health endpoint: GET /health/detailed (returns all component statuses)
+- Prometheus metrics endpoint: GET /metrics (returns Prometheus format)
+- Health check service: apps/api/src/services/health.service.ts
+- Health check routes: apps/api/src/routes/health.routes.ts
+- Metrics service: apps/api/src/services/metrics.service.ts
+- Redis service: apps/api/src/services/redis.service.ts
+- Version info extracted from package.json and git
+- Cache TTL: 30 seconds for both basic and detailed health checks
+- Alert hooks can be registered via registerAlertHook() function
+- Health status: 'ok' (all components healthy), 'degraded' (non-critical components down), 'down' (critical components down)
+
+---

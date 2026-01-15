@@ -1,7 +1,7 @@
 # Implementation Plan
 
-**Last Updated**: 2026-01-XX
-**Status**: Planning
+**Last Updated**: 2026-01-15
+**Status**: In Progress
 
 This is a living document that tracks the prioritized TODO list for implementation.
 
@@ -13,6 +13,69 @@ This is a living document that tracks the prioritized TODO list for implementati
 4. **Priority**: Tasks are ordered by priority (1 = highest)
 
 ## Priority 1: Foundation & Infrastructure
+
+### Story 1.5: Health Check & System Status
+
+**Story ID**: 1.5  
+**Epic**: Foundation & Core Infrastructure  
+**Status**: In Progress
+
+#### Basic Health Check Endpoint
+
+- [x] Task 1.5.1: Create health check route handler for GET /health [Complexity: low] [Dependencies: none]
+- [x] Task 1.5.2: Return 200 OK status with timestamp in health endpoint [Complexity: low] [Dependencies: Task 1.5.1]
+- [ ] Task 1.5.3: Verify health endpoint responds within 100ms [Complexity: low] [Dependencies: Task 1.5.2]
+
+#### Version Information
+
+- [ ] Task 1.5.4: Extract API version from package.json [Complexity: low] [Dependencies: none]
+- [ ] Task 1.5.5: Get git commit hash at build time [Complexity: low] [Dependencies: none]
+- [ ] Task 1.5.6: Create version info service to aggregate version data [Complexity: low] [Dependencies: Task 1.5.4, Task 1.5.5]
+- [ ] Task 1.5.7: Include version information in health check response [Complexity: low] [Dependencies: Task 1.5.6]
+
+#### Database Health Check
+
+- [x] Task 1.5.8: Create database health check function that executes SELECT 1 query [Complexity: low] [Dependencies: none]
+- [x] Task 1.5.9: Measure database query response time in health check [Complexity: low] [Dependencies: Task 1.5.8]
+- [x] Task 1.5.10: Return database connection status in health check response [Complexity: low] [Dependencies: Task 1.5.8]
+
+#### Redis Health Check
+
+- [x] Task 1.5.11: Create Redis client connection utility [Complexity: medium] [Dependencies: none]
+- [x] Task 1.5.12: Implement Redis PING command in health check [Complexity: low] [Dependencies: Task 1.5.11]
+- [x] Task 1.5.13: Return Redis connection status in health check response [Complexity: low] [Dependencies: Task 1.5.12]
+
+#### External Service Health Checks
+
+- [x] Task 1.5.14: Create S3 service health check function with timeout [Complexity: medium] [Dependencies: none]
+- [x] Task 1.5.15: Create email service health check function with timeout [Complexity: low] [Dependencies: none]
+- [x] Task 1.5.16: Return external service status in detailed health check [Complexity: low] [Dependencies: Task 1.5.14, Task 1.5.15]
+
+#### Detailed Health Check Endpoint
+
+- [x] Task 1.5.17: Create detailed health check route handler for GET /health/detailed [Complexity: low] [Dependencies: none]
+- [x] Task 1.5.18: Aggregate all health check results in detailed endpoint [Complexity: medium] [Dependencies: Task 1.5.10, Task 1.5.13, Task 1.5.16]
+- [ ] Task 1.5.19: Verify detailed health endpoint responds within 500ms [Complexity: low] [Dependencies: Task 1.5.18]
+
+#### Health Check Caching
+
+- [x] Task 1.5.20: Install node-cache or create simple in-memory cache utility [Complexity: low] [Dependencies: none]
+- [x] Task 1.5.21: Implement 30-second cache for health check results [Complexity: low] [Dependencies: Task 1.5.20]
+- [x] Task 1.5.22: Return cached results for health check requests within 30 seconds [Complexity: low] [Dependencies: Task 1.5.21]
+
+#### Prometheus Metrics
+
+- [x] Task 1.5.23: Install prom-client package for Prometheus metrics [Complexity: low] [Dependencies: none]
+- [x] Task 1.5.24: Create Prometheus metrics registry [Complexity: low] [Dependencies: Task 1.5.23]
+- [x] Task 1.5.25: Create GET /metrics endpoint that returns Prometheus format [Complexity: low] [Dependencies: Task 1.5.24]
+- [x] Task 1.5.26: Add basic application metrics to Prometheus registry [Complexity: medium] [Dependencies: Task 1.5.24]
+
+#### Monitoring Integration (Optional)
+
+- [ ] Task 1.5.27: Create health check failure detection logic [Complexity: medium] [Dependencies: Task 1.5.18]
+- [ ] Task 1.5.28: Add alerting hook interface for monitoring system integration [Complexity: low] [Dependencies: Task 1.5.27]
+
+## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration
 
