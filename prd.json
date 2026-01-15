@@ -169,7 +169,7 @@
       "title": "TikTok OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 23,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect TikTok\" button initiates TikTok OAuth flow",
         "User must have TikTok Creator or Business account (age 18+ required for API access)",

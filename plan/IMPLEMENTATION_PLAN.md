@@ -188,6 +188,50 @@ This is a living document that tracks the prioritized TODO list for implementati
 - [x] Task 2.2.24: Implement error handling for unconnected Facebook Pages [Complexity: low] [Dependencies: Task 2.2.9]
 - [x] Task 2.2.25: Implement error handling for permission denials [Complexity: low] [Dependencies: Task 2.2.8]
 
+### Story 2.3: TikTok OAuth Integration
+
+**Story ID**: 2.3  
+**Epic**: Platform Integrations & OAuth  
+**Status**: Completed
+
+#### TikTok OAuth Configuration
+
+- [x] Task 2.3.1: Create TikTok OAuth config with TikTok scopes [Complexity: low] [Dependencies: none]
+- [x] Task 2.3.2: Add TikTok OAuth scopes (video.upload, user.info.basic) [Complexity: low] [Dependencies: Task 2.3.1]
+
+#### TikTok Service
+
+- [x] Task 2.3.3: Create TikTok service for OAuth and API operations [Complexity: medium] [Dependencies: Task 2.3.2]
+- [x] Task 2.3.4: Implement function to exchange authorization code for TikTok tokens [Complexity: medium] [Dependencies: Task 2.3.3]
+- [x] Task 2.3.5: Implement function to refresh TikTok access token [Complexity: medium] [Dependencies: Task 2.3.3]
+- [x] Task 2.3.6: Implement function to get TikTok user information [Complexity: medium] [Dependencies: Task 2.3.3]
+- [x] Task 2.3.7: Validate TikTok account is Creator or Business and age 18+ [Complexity: low] [Dependencies: Task 2.3.6]
+
+#### TikTok OAuth Flow
+
+- [x] Task 2.3.8: Create TikTok OAuth initiation endpoint [Complexity: low] [Dependencies: Task 2.3.2]
+- [x] Task 2.3.9: Create TikTok OAuth callback handler [Complexity: medium] [Dependencies: Task 2.3.8]
+- [x] Task 2.3.10: Store TikTok account with encrypted tokens and account info [Complexity: medium] [Dependencies: Task 2.3.7]
+
+#### Token Refresh
+
+- [x] Task 2.3.11: Update token refresh service to support TikTok tokens [Complexity: low] [Dependencies: Task 2.3.5]
+
+#### Account Management
+
+- [x] Task 2.3.12: Create GET endpoint to list connected TikTok accounts [Complexity: low] [Dependencies: none]
+- [x] Task 2.3.13: Create DELETE endpoint to disconnect TikTok account [Complexity: medium] [Dependencies: Task 2.3.12]
+- [x] Task 2.3.14: Implement token revocation on TikTok account disconnection [Complexity: medium] [Dependencies: Task 2.3.13]
+- [x] Task 2.3.15: Create PUT endpoint to update TikTok account label [Complexity: low] [Dependencies: none]
+- [x] Task 2.3.16: Enforce tier limits when connecting new TikTok account [Complexity: low] [Dependencies: none]
+
+#### Token Health & Upload Limits
+
+- [x] Task 2.3.17: Create function to validate TikTok token using TikTok API [Complexity: medium] [Dependencies: none]
+- [x] Task 2.3.18: Create endpoint to check token health for TikTok accounts [Complexity: low] [Dependencies: Task 2.3.17]
+- [x] Task 2.3.19: Track daily upload limit (20 videos per account per day) [Complexity: low] [Dependencies: Task 2.3.10]
+- [x] Task 2.3.20: Display daily upload limit in account information [Complexity: low] [Dependencies: Task 2.3.19]
+
 ## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration

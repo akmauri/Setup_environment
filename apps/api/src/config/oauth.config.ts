@@ -112,10 +112,24 @@ export const facebookOAuthConfig: OAuthConfig = {
 };
 
 /**
+ * TikTok OAuth 2.0 Configuration
+ */
+export const tiktokOAuthConfig: OAuthConfig = {
+  clientId: process.env.TIKTOK_CLIENT_KEY || '',
+  clientSecret: process.env.TIKTOK_CLIENT_SECRET || '',
+  redirectUri:
+    process.env.TIKTOK_REDIRECT_URI || 'http://localhost:3000/api/v1/social/tiktok/callback',
+  scopes: ['video.upload', 'user.info.basic'],
+  authorizationUrl: 'https://www.tiktok.com/v2/auth/authorize',
+  tokenUrl: 'https://open.tiktokapis.com/v2/oauth/token',
+  userInfoUrl: 'https://open.tiktokapis.com/v2/user/info',
+};
+
+/**
  * Get OAuth authorization URL for a provider
  */
 export function getOAuthAuthUrl(
-  provider: 'google' | 'microsoft' | 'okta' | 'youtube' | 'facebook',
+  provider: 'google' | 'microsoft' | 'okta' | 'youtube' | 'facebook' | 'tiktok',
   state?: string
 ): string {
   let config: OAuthConfig;
@@ -147,6 +161,12 @@ export function getOAuthAuthUrl(
       break;
     case 'facebook':
       config = facebookOAuthConfig;
+      additionalParams = {
+        response_type: 'code',
+      };
+      break;
+    case 'tiktok':
+      config = tiktokOAuthConfig;
       additionalParams = {
         response_type: 'code',
       };

@@ -7,6 +7,7 @@
 import { getSocialAccountById, saveSocialAccount } from './social-account.service.js';
 import { refreshYouTubeToken } from './youtube.service.js';
 import { refreshInstagramToken } from './instagram.service.js';
+import { refreshTikTokToken } from './tiktok.service.js';
 
 /**
  * Refresh token for a social account
@@ -40,6 +41,15 @@ export async function refreshAccountToken(
           access_token: instagramResponse.access_token,
           refresh_token: instagramResponse.access_token, // Facebook uses same token
           expires_in: instagramResponse.expires_in,
+        };
+        break;
+      }
+      case 'tiktok': {
+        const tiktokResponse = await refreshTikTokToken(account.decryptedRefreshToken);
+        tokenResponse = {
+          access_token: tiktokResponse.access_token,
+          refresh_token: tiktokResponse.refresh_token || tiktokResponse.access_token,
+          expires_in: tiktokResponse.expires_in,
         };
         break;
       }

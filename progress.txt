@@ -318,3 +318,57 @@ Useful Context:
 - Facebook OAuth config: apps/api/src/config/oauth.config.ts (facebookOAuthConfig)
 
 ---
+
+[2026-01-15 19:00:00] Story 2.3: TikTok OAuth Integration
+
+Learnings:
+- TikTok OAuth uses standard OAuth 2.0 flow
+- Requires TikTok Developer account and app creation
+- Account must be Creator or Business (not Personal) and age 18+ for API access
+- TikTok API uses client_key and client_secret (not client_id/client_secret)
+- Token response structure may vary (data wrapper vs direct)
+- Daily upload limit: 20 videos per account per day
+- Token refresh uses TikTok OAuth refresh endpoint
+- Account info retrieved from TikTok User Info API
+- Token validation via TikTok API
+- Refresh tokens have separate expiry (refresh_expires_in)
+
+Patterns:
+- TikTok OAuth config added with TikTok-specific scopes (video.upload, user.info.basic)
+- TikTok service handles TikTok API operations
+- Token exchange uses client_key/client_secret (TikTok-specific naming)
+- Account type validation assumed if OAuth succeeds (TikTok enforces during OAuth)
+- Daily upload limit stored in metadata (20 videos per day)
+- Token refresh service updated to handle TikTok token pattern
+- TikTok routes follow same RESTful pattern as YouTube/Instagram routes
+- Account operations require authentication and ownership verification
+- Refresh token expiry tracked separately from access token expiry
+
+Gotchas:
+- TikTok uses client_key and client_secret (not client_id/client_secret)
+- Token response may be wrapped in data object or direct
+- Account type and age validation enforced by TikTok during OAuth (not via API)
+- Daily upload limit: 20 videos per account per day (hard limit)
+- Refresh tokens have separate expiry (refresh_expires_in field)
+- TikTok API endpoints: open.tiktokapis.com (not www.tiktok.com)
+- User info API requires specific fields parameter
+- Token validation requires making API call (no simple endpoint)
+
+Useful Context:
+- TikTok OAuth connect: GET /api/v1/social/tiktok/connect
+- TikTok OAuth callback: GET /api/v1/social/tiktok/callback
+- List TikTok accounts: GET /api/v1/social/tiktok/accounts
+- Disconnect account: DELETE /api/v1/social/tiktok/accounts/:accountId
+- Update label: PUT /api/v1/social/tiktok/accounts/:accountId/label
+- Token health: GET /api/v1/social/tiktok/accounts/:accountId/health
+- TikTok Client Key: TIKTOK_CLIENT_KEY environment variable
+- TikTok Client Secret: TIKTOK_CLIENT_SECRET environment variable
+- TikTok redirect URI: TIKTOK_REDIRECT_URI environment variable
+- TikTok scopes: video.upload, user.info.basic
+- Token expiry: Access tokens expire in 1 hour (3600 seconds), refresh tokens have separate expiry
+- Daily upload limit: 20 videos per account per day
+- TikTok service: apps/api/src/services/tiktok.service.ts
+- TikTok routes: apps/api/src/routes/tiktok.routes.ts
+- TikTok OAuth config: apps/api/src/config/oauth.config.ts (tiktokOAuthConfig)
+
+---
