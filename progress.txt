@@ -264,3 +264,57 @@ Useful Context:
 - Token refresh service: apps/api/src/services/token-refresh.service.ts
 
 ---
+
+[2026-01-15 18:00:00] Story 2.2: Instagram OAuth Integration
+
+Learnings:
+- Instagram OAuth uses Facebook Login (Facebook OAuth infrastructure)
+- Requires Facebook App with Instagram permissions
+- Instagram account must be Professional (Business or Creator) and connected to Facebook Page
+- Long-lived tokens (60 days) vs short-lived (1 hour) - requires token exchange
+- Facebook Page selection required before Instagram account connection
+- Token refresh uses Facebook Graph API token exchange endpoint
+- Account info retrieved from Instagram Graph API
+- Facebook uses same token for access and refresh (unlike YouTube)
+- Error handling needed for: non-professional accounts, unconnected pages, permission denials
+
+Patterns:
+- Facebook OAuth config added with Instagram-specific scopes
+- Instagram service handles Facebook Graph API operations
+- Facebook Page selection in callback flow (can select which page's Instagram account)
+- Long-lived token exchange after initial OAuth flow
+- Professional account validation before storing connection
+- Token refresh service updated to handle Instagram/Facebook token pattern
+- Instagram routes follow same RESTful pattern as YouTube routes
+- Account operations require authentication and ownership verification
+- Error handling with specific error codes for different failure scenarios
+
+Gotchas:
+- Instagram requires Facebook Business Manager setup
+- Instagram account must be Professional (Business or Creator), not Personal
+- Facebook Page must have Instagram account connected before OAuth
+- Long-lived tokens expire in 60 days (not 1 hour like YouTube)
+- Facebook uses same token for access and refresh (unlike YouTube which has separate tokens)
+- Token exchange endpoint: /oauth/access_token with grant_type=fb_exchange_token
+- Instagram Graph API requires page access token (not user access token)
+- Account verification status requires separate API call
+- Error messages must be user-friendly for common issues
+
+Useful Context:
+- Instagram OAuth connect: GET /api/v1/social/instagram/connect
+- Instagram OAuth callback: GET /api/v1/social/instagram/callback?page_id=...
+- Get Facebook Pages: GET /api/v1/social/instagram/pages?access_token=...
+- List Instagram accounts: GET /api/v1/social/instagram/accounts
+- Disconnect account: DELETE /api/v1/social/instagram/accounts/:accountId
+- Update label: PUT /api/v1/social/instagram/accounts/:accountId/label
+- Token health: GET /api/v1/social/instagram/accounts/:accountId/health
+- Facebook App ID: FACEBOOK_APP_ID environment variable
+- Facebook App Secret: FACEBOOK_APP_SECRET environment variable
+- Facebook redirect URI: FACEBOOK_REDIRECT_URI environment variable
+- Instagram scopes: instagram_basic, instagram_content_publish, pages_read_engagement, pages_show_list
+- Token expiry: Long-lived tokens expire in 60 days (5184000 seconds)
+- Instagram service: apps/api/src/services/instagram.service.ts
+- Instagram routes: apps/api/src/routes/instagram.routes.ts
+- Facebook OAuth config: apps/api/src/config/oauth.config.ts (facebookOAuthConfig)
+
+---

@@ -139,6 +139,55 @@ This is a living document that tracks the prioritized TODO list for implementati
 - [x] Task 2.1.31: Create endpoint to check token health for all YouTube accounts [Complexity: low] [Dependencies: Task 2.1.30]
 - [x] Task 2.1.32: Implement alert mechanism for invalid/expired tokens [Complexity: medium] [Dependencies: Task 2.1.31]
 
+### Story 2.2: Instagram OAuth Integration
+
+**Story ID**: 2.2  
+**Epic**: Platform Integrations & OAuth  
+**Status**: Completed
+
+#### Facebook OAuth Configuration
+
+- [x] Task 2.2.1: Create Facebook OAuth config with Instagram scopes [Complexity: low] [Dependencies: none]
+- [x] Task 2.2.2: Add Facebook OAuth scopes (instagram_basic, instagram_content_publish, pages_read_engagement) [Complexity: low] [Dependencies: Task 2.2.1]
+
+#### Instagram Service
+
+- [x] Task 2.2.3: Create Facebook OAuth service for token exchange [Complexity: medium] [Dependencies: Task 2.2.2]
+- [x] Task 2.2.4: Implement function to get Facebook Pages for user [Complexity: medium] [Dependencies: Task 2.2.3]
+- [x] Task 2.2.5: Implement function to get Instagram account connected to Facebook Page [Complexity: medium] [Dependencies: Task 2.2.4]
+- [x] Task 2.2.6: Implement function to exchange short-lived token for long-lived token (60 days) [Complexity: medium] [Dependencies: Task 2.2.3]
+- [x] Task 2.2.13: Create Instagram service for API operations [Complexity: medium] [Dependencies: Task 2.2.3]
+- [x] Task 2.2.14: Implement function to refresh Instagram long-lived token [Complexity: medium] [Dependencies: Task 2.2.6]
+
+#### Instagram OAuth Flow
+
+- [x] Task 2.2.7: Create Instagram OAuth initiation endpoint with Facebook Login [Complexity: low] [Dependencies: Task 2.2.2]
+- [x] Task 2.2.8: Create Instagram OAuth callback handler [Complexity: medium] [Dependencies: Task 2.2.7]
+- [x] Task 2.2.9: Implement Facebook Page selection in callback flow [Complexity: medium] [Dependencies: Task 2.2.8]
+- [x] Task 2.2.10: Fetch Instagram account information using Instagram Graph API [Complexity: medium] [Dependencies: Task 2.2.5]
+- [x] Task 2.2.11: Validate Instagram account is Professional (Business or Creator) [Complexity: low] [Dependencies: Task 2.2.10]
+- [x] Task 2.2.12: Store Instagram account with encrypted tokens and account info [Complexity: medium] [Dependencies: Task 2.2.11]
+
+#### Token Refresh
+
+- [x] Task 2.2.15: Update token refresh service to support Instagram tokens [Complexity: low] [Dependencies: Task 2.2.14]
+
+#### Account Management
+
+- [x] Task 2.2.16: Create GET endpoint to list connected Instagram accounts [Complexity: low] [Dependencies: none]
+- [x] Task 2.2.17: Create DELETE endpoint to disconnect Instagram account [Complexity: medium] [Dependencies: Task 2.2.16]
+- [x] Task 2.2.18: Implement token revocation on Instagram account disconnection [Complexity: medium] [Dependencies: Task 2.2.17]
+- [x] Task 2.2.19: Create PUT endpoint to update Instagram account label [Complexity: low] [Dependencies: none]
+- [x] Task 2.2.20: Enforce tier limits when connecting new Instagram account [Complexity: low] [Dependencies: none]
+
+#### Token Health & Error Handling
+
+- [x] Task 2.2.21: Create function to validate Instagram token using Instagram API [Complexity: medium] [Dependencies: none]
+- [x] Task 2.2.22: Create endpoint to check token health for Instagram accounts [Complexity: low] [Dependencies: Task 2.2.21]
+- [x] Task 2.2.23: Implement error handling for non-professional Instagram accounts [Complexity: low] [Dependencies: Task 2.2.11]
+- [x] Task 2.2.24: Implement error handling for unconnected Facebook Pages [Complexity: low] [Dependencies: Task 2.2.9]
+- [x] Task 2.2.25: Implement error handling for permission denials [Complexity: low] [Dependencies: Task 2.2.8]
+
 ## Priority 1: Foundation & Infrastructure (Legacy Tasks)
 
 ### Test Story 0.1: Task Breakdown Integration

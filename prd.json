@@ -145,7 +145,7 @@
       "title": "Instagram OAuth Integration",
       "epic": "Platform Integrations & OAuth",
       "priority": 22,
-      "passes": false,
+      "passes": true,
       "acceptanceCriteria": [
         "\"Connect Instagram\" button initiates OAuth flow via Facebook Login (Instagram requires Facebook Business Manager)",
         "User must have Instagram Professional account (Business or Creator) connected to Facebook Page",

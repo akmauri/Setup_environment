@@ -6,6 +6,7 @@
 
 import { getSocialAccountById, saveSocialAccount } from './social-account.service.js';
 import { refreshYouTubeToken } from './youtube.service.js';
+import { refreshInstagramToken } from './instagram.service.js';
 
 /**
  * Refresh token for a social account
@@ -27,11 +28,21 @@ export async function refreshAccountToken(
     }
 
     // Refresh token based on platform
-    let tokenResponse;
+    let tokenResponse: { access_token: string; refresh_token?: string; expires_in: number };
     switch (platform) {
       case 'youtube':
         tokenResponse = await refreshYouTubeToken(account.decryptedRefreshToken);
         break;
+      case 'instagram': {
+        // Instagram/Facebook uses the same token for access and refresh
+        const instagramResponse = await refreshInstagramToken(account.decryptedRefreshToken);
+        tokenResponse = {
+          access_token: instagramResponse.access_token,
+          refresh_token: instagramResponse.access_token, // Facebook uses same token
+          expires_in: instagramResponse.expires_in,
+        };
+        break;
+      }
       default:
         return { success: false, error: `Unsupported platform: ${platform}` };
     }
@@ -48,7 +59,7 @@ export async function refreshAccountToken(
       username: account.username || undefined,
       displayName: account.display_name || undefined,
       accessToken: tokenResponse.access_token,
-      refreshToken: tokenResponse.refresh_token, // New refresh token (rotation)
+      refreshToken: tokenResponse.refresh_token || tokenResponse.access_token, // Use access token as refresh if not provided
       tokenExpiresAt: newExpiresAt,
       scopes: account.scopes || undefined,
       metadata: (account.metadata as Record<string, unknown>) || undefined,

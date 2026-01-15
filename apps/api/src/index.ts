@@ -5,6 +5,7 @@ import authRoutes from './routes/auth.routes.js';
 import userRoutes from './routes/user.routes.js';
 import healthRoutes from './routes/health.routes.js';
 import youtubeRoutes from './routes/youtube.routes.js';
+import instagramRoutes from './routes/instagram.routes.js';
 import { tenantDbMiddleware } from './middleware/db.middleware.js';
 import { db } from '@mpcas2/db';
 
@@ -50,8 +51,9 @@ app.get('/api', (_req, res) => {
 // Authentication routes
 app.use('/api/v1/auth', authRoutes);
 
-// Social account routes (YouTube, etc.)
+// Social account routes (YouTube, Instagram, etc.)
 app.use('/api/v1/social/youtube', youtubeRoutes);
+app.use('/api/v1/social/instagram', instagramRoutes);
 
 // User profile routes
 // #region agent log
