@@ -203,6 +203,17 @@ See `.env.example` for required environment variables. Key variables:
 - `COMFYUI_*`: ComfyUI service settings
 - `JWT_SECRET`: JWT token signing secret
 - `OAUTH_*`: OAuth provider credentials
+- `DATABASE_URL`: PostgreSQL connection string (primary)
+- `DATABASE_READ_URL`: PostgreSQL connection string (read replica, optional)
+- `PGBOUNCER_PORT`: PgBouncer port (default: 6432)
+
+### Database Management
+
+- **Migrations**: `cd packages/db && npm run db:migrate`
+- **Studio**: `cd packages/db && npm run db:studio`
+- **Backup Strategy**: See [`docs/DATABASE_BACKUP_STRATEGY.md`](docs/DATABASE_BACKUP_STRATEGY.md)
+- **Read Replicas**: See [`docs/DATABASE_READ_REPLICA.md`](docs/DATABASE_READ_REPLICA.md)
+- **Migration Rollback**: See [`packages/db/docs/MIGRATION_ROLLBACK.md`](packages/db/docs/MIGRATION_ROLLBACK.md)
 
 ## Project Status
 

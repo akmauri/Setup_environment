@@ -42,3 +42,38 @@ Useful Context:
 - Docker Compose services: postgres (5432), redis (6379), n8n (5678), comfyui (8188)
 
 ---
+
+[2026-01-15 13:00:00] Story 1.2: Multi-Tenant Database Architecture
+
+Learnings:
+- Prisma is used for migrations and ORM, but tenant schemas require raw SQL for dynamic schema creation
+- Schema-per-tenant architecture uses PostgreSQL search_path to route queries to correct tenant schema
+- Tenant schema names follow pattern: tenant_{uuid_with_underscores}
+- All tenant-specific tables (users, content, social_accounts, workflows, publish_jobs, analytics, teams, comments, notifications) are created in tenant schemas
+- Public schema contains system-wide tables: tenants, migrations, countries, timezones, platforms
+- PgBouncer connection pooling is configured in docker-compose for production-ready setup
+- Database middleware (tenantDbMiddleware) extracts tenant_id from JWT token and sets search_path automatically
+
+Patterns:
+- Tenant schema creation: CREATE SCHEMA tenant_{id}, then apply migrations
+- Tenant schema deletion: DROP SCHEMA CASCADE for GDPR compliance
+- Database connection uses search_path to route queries: SET search_path TO tenant_{id}, public
+- All tenant tables have updated_at triggers using shared function update_updated_at_column()
+- Foreign keys in tenant schemas reference tables within the same schema (no cross-schema FKs)
+
+Gotchas:
+- Prisma doesn't natively support dynamic schemas - use raw SQL for tenant schema operations
+- Schema names must be sanitized (replace hyphens with underscores) for PostgreSQL compatibility
+- Tenant schema migrations must be applied after schema creation, not via Prisma migrate
+- search_path must be set per connection/transaction, not globally
+- PgBouncer uses transaction pooling mode for best compatibility with search_path
+
+Useful Context:
+- Database connection string: Use DATABASE_URL for primary, DATABASE_READ_URL for read replicas
+- PgBouncer port: 6432 (default), PostgreSQL direct: 5432
+- Backup strategy documented in docs/DATABASE_BACKUP_STRATEGY.md
+- Read replica configuration documented in docs/DATABASE_READ_REPLICA.md
+- Migration rollback procedures documented in packages/db/docs/MIGRATION_ROLLBACK.md
+- Tenant service functions: createTenant, createTenantSchema, deleteTenantSchema, applyTenantSchemaMigration
+
+---
