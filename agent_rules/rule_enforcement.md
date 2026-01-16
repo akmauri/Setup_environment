@@ -185,7 +185,23 @@ Before taking ANY action, agents MUST verify compliance with these rules in orde
 
 **Action if Applicable**: Follow iterative work pattern
 
-### 12. Quality Gates (Before Completion)
+### 12. Git & GitHub Best Practices (Required - During Work)
+
+**Rule**: `agent_rules/git_github_best_practices.md`
+
+**Checklist**:
+
+- [ ] **Periodic commits** (every 30 minutes of active work - MANDATORY for backup safety)
+- [ ] **Regular pushes** (every 2 hours minimum, or after every commit - MANDATORY for remote backup)
+- [ ] Commit messages include: `[Agent-ID] [Task-ID] Description`
+- [ ] All changes committed before ending work session
+- [ ] Pushed to remote before ending work session
+- [ ] Feature branch used (not working directly on main/master)
+- [ ] Branch is up to date with main/master
+
+**Action if Non-Compliant**: Commit and push immediately. Do not leave uncommitted work.
+
+### 13. Quality Gates (Before Completion)
 
 **Rule**: `agent_rules/core_principles.md` (Quality Gates section) and `agent_rules/testing_validation.md`
 
@@ -200,6 +216,8 @@ Before taking ANY action, agents MUST verify compliance with these rules in orde
   - [ ] Results documented (command + output summary)
 - [ ] Documentation updated (if applicable)
 - [ ] No linter errors
+- [ ] **All changes committed** (MANDATORY - see `agent_rules/git_github_best_practices.md`)
+- [ ] **All commits pushed to remote** (MANDATORY - see `agent_rules/git_github_best_practices.md`)
 - [ ] Task status updated in `todo_progress.json`
 - [ ] Lock file removed
 - [ ] Communication sent if needed
@@ -382,6 +400,7 @@ This rule enforcement protocol integrates with:
 - **Core Principles**: Enforces mandatory pre-work checklist
 - **File Discovery**: Ensures comprehensive file discovery before file creation
 - **No Manual Orchestration**: Ensures agents execute directly, not delegate to users
+- **Timestamp Accuracy** (`agent_rules/timestamp_accuracy.md`): Ensures all timestamps use UTC, are labeled, and are validated
 - **Env Var Handling**: Prevents loops on missing env vars, ensures proper .env.example usage
 - **Loop Guard**: Prevents loops through progress tracking and recovery strategies
 - **Autonomy Protocol**: Ensures red line checks before actions
@@ -390,6 +409,7 @@ This rule enforcement protocol integrates with:
 - **Iterative Work Pattern**: Enforces pattern when applicable
 - **Ralph-Wiggum Process**: Ensures process is applied when appropriate
 - **Context Guide**: Ensures context is loaded before actions
+- **Git & GitHub Best Practices** (`agent_rules/git_github_best_practices.md`): Ensures periodic commits and pushes for backup safety
 
 ## Best Practices
 

@@ -11,6 +11,8 @@ This document defines the fundamental principles that all AI agents must follow 
 - Multi-agent coordination when beneficial (or single-session orchestration)
 - All pre-action verification checklists
 - Quality gates and error handling
+- **Timestamp accuracy** - All timestamps must use UTC, be clearly labeled, and be validated (`agent_rules/timestamp_accuracy.md`)
+- **Resource management** - Prevent endless execution and resource waste (`agent_rules/resource_management.md`)
 
 **Rule compliance is MANDATORY and AUTOMATIC** - agents must verify rule compliance before every action without requiring reminders.
 
@@ -38,12 +40,27 @@ For **iterative tasks** (analysis, extraction, review, data collection), conside
 
 ## Task Management Rules
 
+### Epic → Story → Task Execution Strategy
+
+**CRITICAL**: Work follows a hierarchical structure:
+
+1. **Epic Level**: Process epics in order (epic-1, epic-2, epic-3, etc.)
+2. **Story Level**: Within each epic, process stories in order (story-1.1, story-1.2, etc.)
+3. **Task Level**: Within each story, process tasks by priority and dependencies
+
+**After completing a task**:
+
+- The orchestrator automatically assigns you the next available task
+- Continue working autonomously: Epic → Story → Task
+- **DO NOT stop** until all tasks are complete or blocked
+- **DO NOT ask for permission** to continue
+
 ### Task Assignment
 
 - **Never work on unassigned tasks** - All tasks must have an `assigned_agent` field set
 - **Check task status** - Only work on tasks with status `pending` or `in_progress` that are assigned to you
 - **Update status immediately** - When changing task state, update `todo_progress.json` immediately
-- **Lock before work** - Create lock file in `.lock/[task_id].lock` before starting
+- **Lock before work** - Create lock file in `.lock/[task_id].lock` before starting (orchestrator creates it)
 
 ### Status Updates
 
@@ -58,10 +75,27 @@ When changing task status, you MUST:
 ### Task Status Flow
 
 ```
-pending → in_progress → review → completed
+pending → in_progress → completed
                 ↓
-            blocked
+            blocked (needs_human_intervention: true)
 ```
+
+**After task completes or fails**:
+
+- **Continue to next available task** immediately
+- Don't stop, don't ask permission
+- Orchestrator will assign next task automatically
+- Work through Epic → Story → Task systematically
+
+### Human Intervention Tasks
+
+When a task requires human intervention:
+
+- Mark status as `blocked` with `blocked_reason`
+- Set `needs_human_intervention: true`
+- Increment `retry_count` (after 3 failures, mark as blocked)
+- **Continue to next available task** (don't stop progress)
+- Human can review blocked tasks later
 
 ## Error Logging Requirements
 
@@ -72,6 +106,37 @@ All errors MUST be logged:
 3. **Update Task** - Increment `retry_count` in `todo_progress.json`
 4. **Document Error** - Add `last_error` field with error message
 5. **Escalate if Needed** - If `retry_count > 3`, mark task as blocked
+
+## Activity Tracking Requirements
+
+All agent activity MUST be tracked:
+
+1. **Task Status Updates** - Always update `todo_progress.json` when:
+   - Starting work: Set `status` to `in_progress`, update `updated_at`
+   - Completing work: Set `status` to `completed`, set `actual_completion_time`, update `updated_at`
+   - Blocking work: Set `status` to `blocked`, add `blocked_reason`, update `updated_at`
+2. **Progress Logging** - Log significant progress to:
+   - `logs/agent_activity/[date].md` - Daily activity log
+   - Include: timestamp, agent ID, task ID, action taken, result
+3. **Decision Logging** - Document significant decisions to:
+   - `docs/decisions/[date]_[task_id].md` - Decision rationale and impact
+4. **File Changes** - Track file modifications:
+   - Git commits with clear messages: `[Agent] [Task-ID] Description`
+   - **Periodic commits** every 30 minutes (backup safety - see `agent_rules/git_github_best_practices.md`)
+   - **Regular pushes** to GitHub every 2 hours minimum (remote backup)
+   - Update relevant documentation when making changes
+
+   **CRITICAL**: See `agent_rules/git_github_best_practices.md` for complete Git/GitHub requirements.
+
+5. **Creating New Tasks** - If you discover a task that needs to be done:
+   - Add to `todo_progress.json` with `source: "agent-suggested"`
+   - Or use: `node scripts/add_agent_suggested_task.js --description "..." --epic epic-1`
+   - Orchestrator will automatically pick it up (lower priority than plan tasks)
+6. **Synchronization** - Orchestrator handles automatic sync:
+   - ✅ Auto-syncs from `IMPLEMENTATION_PLAN.md` on startup
+   - ✅ Auto-syncs every 5 minutes during execution
+   - ✅ Loads agent-suggested tasks automatically
+   - **You just update `todo_progress.json`** - orchestrator handles the rest
 
 ## Decision Documentation
 

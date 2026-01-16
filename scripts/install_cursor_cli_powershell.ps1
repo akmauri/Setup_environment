@@ -26,7 +26,7 @@ if (Get-Command git -ErrorAction SilentlyContinue) {
 }
 
 if ($gitBashPath) {
-    Write-Host "✓ Git Bash found: $gitBashPath" -ForegroundColor Green
+    Write-Host "[OK] Git Bash found: $gitBashPath" -ForegroundColor Green
     Write-Host ""
     Write-Host "Installing Cursor CLI using Git Bash..." -ForegroundColor Yellow
     Write-Host ""
@@ -48,7 +48,9 @@ curl https://cursor.com/install -fsS | bash
             Write-Host "Verifying installation..." -ForegroundColor Yellow
             
             # Refresh PATH
-            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            $machinePath = [System.Environment]::GetEnvironmentVariable("Path","Machine")
+            $userPath = [System.Environment]::GetEnvironmentVariable("Path","User")
+            $env:Path = "$machinePath;$userPath"
             
             # Check if cursor-agent is available
             Start-Sleep -Seconds 2  # Give time for PATH to update
@@ -56,7 +58,7 @@ curl https://cursor.com/install -fsS | bash
             if (Get-Command cursor-agent -ErrorAction SilentlyContinue) {
                 cursor-agent --version
                 Write-Host ""
-                Write-Host "✓ Cursor CLI installed successfully!" -ForegroundColor Green
+                Write-Host "[OK] Cursor CLI installed successfully!" -ForegroundColor Green
             } else {
                 Write-Host ""
                 Write-Host "⚠ Installation may have succeeded, but cursor-agent is not in PATH yet." -ForegroundColor Yellow
@@ -70,7 +72,7 @@ curl https://cursor.com/install -fsS | bash
             }
         } else {
             Write-Host ""
-            Write-Host "⚠ Installation script failed (Git Bash MINGW64 may not be supported)" -ForegroundColor Yellow
+            Write-Host "[WARNING] Installation script failed (Git Bash MINGW64 may not be supported)" -ForegroundColor Yellow
             Write-Host ""
             Write-Host "Try these alternatives:" -ForegroundColor Yellow
             Write-Host "  1. Use WSL (if installed): wsl then run: curl https://cursor.com/install -fsS | bash" -ForegroundColor Cyan
@@ -84,7 +86,7 @@ curl https://cursor.com/install -fsS | bash
         Write-Host "Try manual installation methods (see docs/CURSOR_CLI_INSTALL_WINDOWS.md)" -ForegroundColor Yellow
     }
 } else {
-    Write-Host "✗ Git Bash not found" -ForegroundColor Red
+    Write-Host "[ERROR] Git Bash not found" -ForegroundColor Red
     Write-Host ""
     Write-Host "Installation options:" -ForegroundColor Yellow
     Write-Host "  1. Install Git for Windows: https://git-scm.com/download/win" -ForegroundColor Cyan

@@ -1,5 +1,8 @@
 # Autonomous Execution Protocol - Rule #1
 
+**Last Updated**: 2026-01-16  
+**Integration**: Epic → Story → Task execution strategy (see `docs/ORCHESTRATOR_EXECUTION_STRATEGY.md`)
+
 **Title**: The "Autonomous Continuity" Principle
 
 ## Directive

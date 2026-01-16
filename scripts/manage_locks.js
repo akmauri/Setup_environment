@@ -133,11 +133,14 @@ function main() {
         console.log(`Active locks (${locks.length}):`);
         locks.forEach(lock => {
           const status = lock.is_expired ? 'EXPIRED' : 'ACTIVE';
-          const expires = new Date(lock.expires_at).toLocaleString();
+          const expiresAt = new Date(lock.expires_at);
+          // Display CST time for user
+          const expiresCST = expiresAt.toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' });
+          const expiresUTC = expiresAt.toISOString();
           console.log(`  ${lock.task_id}:`);
           console.log(`    Agent: ${lock.agent_id}`);
           console.log(`    Status: ${status}`);
-          console.log(`    Expires: ${expires}`);
+          console.log(`    Expires: ${expiresCST} (${expiresUTC} UTC)`);
           console.log(`    Reason: ${lock.reason}`);
         });
       }
@@ -150,8 +153,11 @@ function main() {
       }
       const result = checkLock(args[1]);
       if (result.locked) {
+        const expiresAt = new Date(result.lock.expires_at);
+        const expiresCST = expiresAt.toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' });
+        const expiresUTC = expiresAt.toISOString();
         console.log(`Task ${args[1]} is locked by ${result.lock.agent_id}`);
-        console.log(`Expires: ${new Date(result.lock.expires_at).toLocaleString()}`);
+        console.log(`Expires: ${expiresCST} (${expiresUTC} UTC)`);
       } else if (result.expired) {
         console.log(`Task ${args[1]} has an expired lock`);
       } else {
@@ -164,12 +170,25 @@ function main() {
         console.error('Usage: node scripts/manage_locks.js remove <task_id> [--force]');
         process.exit(1);
       }
-      const force = args.includes('--force');
-      removeLock(args[1], force);
+      const removeForce = args.includes('--force');
+      removeLock(args[1], removeForce);
       break;
       
     case 'cleanup':
-      cleanupExpired();
+      const cleanupForce = args.includes('--force') || args.includes('-f');
+      if (cleanupForce) {
+        // Force remove all locks
+        const locks = listLocks();
+        let removed = 0;
+        for (const lock of locks) {
+          if (removeLock(lock.task_id, true)) {
+            removed++;
+          }
+        }
+        console.log(`Force cleanup: Removed ${removed} locks`);
+      } else {
+        cleanupExpired();
+      }
       break;
       
     default:

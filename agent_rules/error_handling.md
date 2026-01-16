@@ -262,6 +262,8 @@ Document recovery strategy in:
 
 This error handling protocol integrates with:
 
+- **Timestamp Accuracy** (`agent_rules/timestamp_accuracy.md`): Incorrect timestamps are critical errors that must be logged with accurate UTC timestamps
+
 - **Loop Guard** (`agent_rules/loop_guard.md`): Loops are a type of error that needs recovery
 - **Env Var Handling** (`agent_rules/env_var_handling.md`): Missing env vars are Category 1 errors with special handling
 - **Core Principles** (`agent_rules/core_principles.md`): Error handling is part of quality gates

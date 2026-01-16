@@ -17,8 +17,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
     "format:check": "prettier --check \"**/*.{ts,tsx,md,json}\"",
     "prepare": "husky",
-    "orchestrate": "node --max-old-space-size=4096 scripts/orchestrate_agents.js",
-    "orchestrate:low-memory": "node scripts/orchestrate_agents.js",
+    "orchestrate": "node --expose-gc --max-old-space-size=8192 scripts/orchestrate_agents.js",
+    "orchestrate:low-memory": "node --expose-gc --max-old-space-size=2048 scripts/orchestrate_agents.js",
+    "orchestrate:stop": "powershell -ExecutionPolicy Bypass -File scripts/stop_orchestrator.ps1",
     "test:orchestrator": "node scripts/test_orchestrator.js",
     "install:cursor-cli": "powershell -ExecutionPolicy Bypass -File scripts/install_cursor_cli_powershell.ps1",
     "locks:list": "node scripts/manage_locks.js list",
@@ -27,7 +28,14 @@
     "ralph:convert": "node scripts/ralph/convert-prd-to-json.js",
     "ralph:status": "node scripts/ralph/check-status.js",
     "ralph:validate": "node scripts/ralph/validate-prd.js",
-    "ralph:start": "echo Load scripts/ralph/ralph-prompt.md in Cursor chat and say: Start Ralph process"
+    "ralph:start": "echo Load scripts/ralph/ralph-prompt.md in Cursor chat and say: Start Ralph process",
+    "launch:agent": "node scripts/launch_claude_code.js",
+    "monitor:credits": "node scripts/credit_monitor.js",
+    "tasks:populate": "node scripts/populate_tasks_from_plan.js",
+    "tasks:validate": "node scripts/validate_epic_story_task_completeness.js",
+    "tasks:sync": "node scripts/sync_tasks.js",
+    "tasks:sync:watch": "node scripts/sync_tasks.js --watch",
+    "tasks:add": "node scripts/add_agent_suggested_task.js"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.19.1",

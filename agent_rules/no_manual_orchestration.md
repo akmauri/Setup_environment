@@ -10,7 +10,21 @@
 
 **For single-session work**: The agent must orchestrate work INSIDE the current session using task decomposition, locks, checkpoints, and automatic status updates.
 
-**For multi-agent work**: An automated orchestrator script (`scripts/orchestrate_agents.js`) handles spawning and coordinating multiple agent sessions. Agents should NOT manually coordinate with each other - the orchestrator handles this.
+**For multi-agent work**: An automated orchestrator script (`scripts/orchestrate_agents.js`) handles spawning and coordinating multiple agent sessions. The orchestrator automatically opens Claude Code windows using `scripts/launch_claude_code.js`. Agents should NOT manually coordinate with each other - the orchestrator handles this.
+
+**Automated Orchestration is ALLOWED**: The orchestrator script can automatically:
+
+- Open Claude Code windows programmatically
+- Launch multiple agent sessions in parallel
+- Monitor agent progress
+- Handle credit exhaustion and fallback to Cursor Browser
+- Coordinate via lock files and communication protocols
+
+**Manual Orchestration is PROHIBITED**: Agents must NOT ask users to:
+
+- Manually open Cursor/Claude Code windows
+- Manually copy/paste prompts
+- Manually coordinate multiple agents
 
 ## Rule 1: No Manual Orchestration (Mandatory)
 
@@ -18,8 +32,8 @@
 
 The agent MUST NOT instruct the user to:
 
-- Open additional Cursor chats/windows manually
-- Copy/paste prompts into other chats manually
+- Open additional Cursor chats/windows manually (use `scripts/orchestrate_agents.js` instead)
+- Copy/paste prompts into other chats manually (orchestrator handles this)
 - Manually coordinate multiple agents (use orchestrator script instead)
 - Perform routine execution steps that the agent can do itself:
   - Running commands (docker, migrations, tests, scripts)
@@ -28,6 +42,13 @@ The agent MUST NOT instruct the user to:
   - Updating JSON (task trackers, configs, lock files)
   - Creating lock files
   - Updating status trackers
+
+**EXCEPTION - Automated Orchestration**: The orchestrator script (`scripts/orchestrate_agents.js`) is ALLOWED to:
+
+- Automatically open Claude Code windows via `scripts/launch_claude_code.js`
+- Spawn multiple agent sessions programmatically
+- Load prompts automatically into agent windows
+- Monitor and coordinate agents without user intervention
 
 ### Required Behavior
 

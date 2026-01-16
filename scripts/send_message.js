@@ -116,10 +116,16 @@ function main() {
     } else {
       console.log(`Found ${messages.length} message(s):\n`);
       messages.forEach(msg => {
+        // Display timestamp in CST for user
+        const msgDate = new Date(msg.timestamp);
+        const msgCST = msgDate.toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' });
+        const msgUTC = msgDate.toISOString();
+        
         console.log(`From: ${msg.from}`);
         console.log(`Subject: ${msg.subject}`);
         console.log(`Type: ${msg.type}`);
         console.log(`Urgency: ${msg.urgency}`);
+        console.log(`Timestamp: ${msgCST} (${msgUTC} UTC)`);
         console.log(`Message: ${msg.message}`);
         console.log(`---`);
       });

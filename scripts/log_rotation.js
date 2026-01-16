@@ -105,7 +105,10 @@ function main() {
   
   console.log(`Starting log rotation...`);
   console.log(`Retention period: ${retentionDays} days`);
-  console.log(`Cutoff date: ${cutoffDate.toISOString().split('T')[0]}`);
+  // Display cutoff date in CST for user
+  const cutoffCST = cutoffDate.toLocaleString('en-US', { timeZone: 'America/Chicago', timeZoneName: 'short' });
+  const cutoffUTC = cutoffDate.toISOString();
+  console.log(`Cutoff date: ${cutoffCST.split(',')[0]} (${cutoffUTC.split('T')[0]} UTC)`);
   console.log(`Logs directory: ${LOGS_DIR}`);
   
   if (!fs.existsSync(LOGS_DIR)) {
